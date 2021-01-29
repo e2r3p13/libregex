@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/28 23:29:59 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/01/29 09:41:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #define LIBREGEX_H
 
 #include <stdbool.h>
+#include <stddef.h>
+
+#define DFL_VEC_CAPACITY 5
 
 typedef struct s_nfa t_nfa;
 typedef struct s_lnk t_lnk;
@@ -54,6 +57,9 @@ struct s_nfa
 };
 
 
-t_nfa *strtonfa(const char *regexp);
+t_nfa *nfa_new_node(bool is_final_state);
+int nfa_add_link(t_nfa *node, char c, t_nfa *next);
+t_nfa *exprtonfa(const char *regexp);
+bool dostrmatch(t_nfa *nfa, const char *str);
 
 #endif
