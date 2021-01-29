@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nfa.c                                              :+:      :+:    :+:   */
+/*   regex.nfa.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 08:54:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/01/29 10:45:00 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/01/29 16:21:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,16 @@
 #include <stdio.h>
 #include "libregex.h"
 
-static int lnkv_init(t_lnkv *vec)
+bool nfa_match(t_substr *substring, char c)
 {
-	vec->size = 0;
-	vec->capacity = DFL_VEC_CAPACITY;
-	if (!(vec->links = malloc(sizeof(t_lnk) * vec->capacity)))
-		return (-1);
-	return (0);
+	return (false);
 }
 
-static int lnkv_realloc(t_lnkv *vec)
+static void	nfa_link_init(t_link *link)
 {
-	t_lnk	*new_links;
-	size_t	new_cap;
-
-	new_cap = 2 * vec->capacity;
-	if (!(new_links = malloc(sizeof(t_lnk) * new_cap)))
-		return (-1);
-	for (size_t i = 0; i < vec->size; i++)
-	{
-		new_links[i].c = vec->links[i].c;
-		new_links[i].next = vec->links[i].next;
-	}
-	free(vec->links);
-	vec->links = new_links;
-	vec->capacity = new_cap;
-	return (0);
-}
-
-static int lnkv_push(t_lnkv *vec, char c, t_nfa *next)
-{
-	if (vec->size == vec->capacity && lnkv_realloc(vec) < 0)
-		return (-1);
-	vec->links[vec->size].c = c;
-	vec->links[vec->size].next = next;
-	vec->size++;
-	return (0);
+	link->match = &nfa_match;
+	ft_bzero(link->substr, sizeof(t_substr));
+	link->next = NULL;
 }
 
 t_nfa *nfa_new_node(bool is_final_state)
@@ -58,18 +32,25 @@ t_nfa *nfa_new_node(bool is_final_state)
 
 	if (!(node = malloc(sizeof(t_nfa))))
 		return (NULL);
-	if (lnkv_init(&node->links) < 0)
-	{
-		free(node);
-		return (NULL);
-	}
 	node->is_final_state = is_final_state;
+	nfa_link_init(node->left);
+	nfa_link_init(node->right);
+
 	return (node);
 }
 
-int nfa_add_link(t_nfa *node, char c, t_nfa *next)
+void nfa_add_link(t_nfa *node, t_substr substr, t_nfa *next)
 {
-	return (lnkv_push(&node->links, c, next));
+	if (!node->left.next)
+	{
+		node->left.next = next;
+		node->left.substr = substr;
+	}
+	else
+	{
+		node->right.next = next;
+		node->right.substr = substr;
+	}
 }
 
 bool dostrmatch(t_nfa *nfa, const char *str)

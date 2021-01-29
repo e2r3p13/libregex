@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/29 09:41:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/01/29 16:20:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,43 +19,39 @@
 #define DFL_VEC_CAPACITY 5
 
 typedef struct s_nfa t_nfa;
-typedef struct s_lnk t_lnk;
-typedef struct s_lnkv t_lnkv;
+typedef struct s_link t_link;
+typedef struct s_substr t_substr;
 
-/*
-//	This structure represent the epsilon transition between two states of an NFA
-//	It keeps a char, that must match our next string's char in order to go to
-//	the next state
-//	This next state is stored as a t_nfa pointer
-*/
-struct s_lnk
+struct s_substr;
 {
-	char	c;
-	t_nfa	*next;
+	const char *start;
+	const char *end;
 };
 
 /*
-//	A dynamic array used by a NFA nodes to keep their epslion links
-//	A reallocation occur when size == capacity
+**	This structure represent the epsilon transition between two states of an NFA
+**	It keeps a char, that must match our next string's char in order to go to
+**	the next state
+**	This next state is stored as a t_nfa pointer
 */
-struct s_lnkv
+struct s_link
 {
-	t_lnk	*links;
-	size_t	size;
-	size_t	capacity;
+	bool		(*match)(t_substr s, char c);
+	t_substr	substr;
+	t_nfa		*next;
 };
 
 /*
-//	NFA stands for nondeterministic finite automaton
-//	We will use this kind of automate to search for regex patterns
-//	This structure stores a nfa node
+**	NFA stands for nondeterministic finite automaton
+**	We will use this kind of automate to search for regex patterns
+**	This structure stores a nfa node
 */
 struct s_nfa
 {
-	bool		is_final_state;
-	t_lnkv		links;
+	bool	is_final_state;
+	t_link	left;
+	t_link	right;
 };
-
 
 t_nfa *nfa_new_node(bool is_final_state);
 int nfa_add_link(t_nfa *node, char c, t_nfa *next);
