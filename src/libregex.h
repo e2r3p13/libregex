@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/29 16:20:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/01/29 22:42:44 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,71 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#define DFL_VEC_CAPACITY 5
-
-typedef struct s_nfa t_nfa;
+typedef struct s_state t_state;
 typedef struct s_link t_link;
-typedef struct s_substr t_substr;
+typedef struct s_pattern t_pattern;
+typedef struct s_automaton t_nfa;
+typedef struct s_automaton t_dfa;
 
-struct s_substr;
+/*
+**	This structure represents a pattern substring from a regex string.
+**	It internally keeps a pointer to the beginning of the substring,
+**	and another one to the end.
+*/
+struct s_pattern;
 {
 	const char *start;
 	const char *end;
 };
 
 /*
-**	This structure represent the epsilon transition between two states of an NFA
-**	It keeps a char, that must match our next string's char in order to go to
-**	the next state
-**	This next state is stored as a t_nfa pointer
+**	This structure represents a link to go from one state to another.
+**	In order to follow the link, the next input character must
+**	match the stored pattern.
+**	It can be evaluated with the match function.
+**	A link with a next set to NULL is considered to be an epsilon link,
+**	meaning the match function will always return true.
 */
 struct s_link
 {
-	bool		(*match)(t_substr s, char c);
-	t_substr	substr;
-	t_nfa		*next;
+	bool		(*match)(t_pattern s, char c);
+	t_pattern	pattern;
+	t_state		*next;
 };
 
 /*
-**	NFA stands for nondeterministic finite automaton
-**	We will use this kind of automate to search for regex patterns
-**	This structure stores a nfa node
+**	t_state represents a state of an automaton.
+**	It keeps two links which can lead to its two children (at most).
+**	t_state nodes are used to construct our nfa / dfa.
 */
-struct s_nfa
+struct s_state
 {
-	bool	is_final_state;
+	bool	is_final;
 	t_link	left;
 	t_link	right;
 };
 
-t_nfa *nfa_new_node(bool is_final_state);
-int nfa_add_link(t_nfa *node, char c, t_nfa *next);
-t_nfa *exprtonfa(const char *regexp);
-bool dostrmatch(t_nfa *nfa, const char *str);
+/*
+**	This structure represents an automaton, it keeps a pointer to its
+**	entrypoint state (q0).
+**	As this automaton will be used to store NFA and DFA, it also keeps a pointer
+**	to an allocated string, containing the regex expression.
+**	all t_pattern pointers that belongs to the automaton will point
+**	somewhere in the regexpr string.
+*/
+struct s_automaton
+{
+	t_state *entrypoint;
+	char	*regexpr;
+};
 
-#endif
+/*
+**	t_state external functions, will be used to construct an automaton.
+*/
+t_state *state_new(bool is_final);
+void state_add_link(t_state *st, char c, t_state *next);
+
+t_nfa *str_to_nfa(const char *str);
+t_dfa *nfa_to_dfa(t_nfa *entrypoint);
+
+#endif /* LIBREGEX_H */
