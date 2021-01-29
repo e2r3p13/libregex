@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 08:54:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/01/29 16:21:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/01/29 17:30:33 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 #include <stdio.h>
 #include "libregex.h"
 
-bool nfa_match(t_substr *substring, char c)
+bool nfa_match(t_substr *s, char c)
 {
-	return (false);
-}
-
-static void	nfa_link_init(t_link *link)
-{
-	link->match = &nfa_match;
-	ft_bzero(link->substr, sizeof(t_substr));
-	link->next = NULL;
+	if (!s)
+		return (true);
+	if (s->start == s->end && *(s->start) == c)
+		return (true);
 }
 
 t_nfa *nfa_new_node(bool is_final_state)
@@ -37,6 +33,13 @@ t_nfa *nfa_new_node(bool is_final_state)
 	nfa_link_init(node->right);
 
 	return (node);
+}
+
+static void	nfa_link_init(t_link *link)
+{
+	link->match = &nfa_match;
+	ft_bzero(link->substr, sizeof(t_substr));
+	link->next = NULL;
 }
 
 void nfa_add_link(t_nfa *node, t_substr substr, t_nfa *next)
@@ -53,24 +56,15 @@ void nfa_add_link(t_nfa *node, t_substr substr, t_nfa *next)
 	}
 }
 
-bool dostrmatch(t_nfa *nfa, const char *str)
+bool nfa_dostrmatch(t_nfa *nfa, const char *str)
 {
 	while (*str)
 	{
-		char current = *str;
-		bool found = false;
-
-		for (size_t i = 0; i < nfa->links.size; i++)
-		{
-			t_lnk link = nfa->links.links[i];
-			if (current == link.c)
-			{
-				found = true;
-				nfa = link.next;
-				break ;
-			}
-		}
-		if (!found)
+		if (nfa->left.match(nfa->left.substr, *str))
+			nfa = nfa->left;
+		else if (nfa->right.match(nfa->right.substr, *str))
+			nfa = nfa->right;
+		else
 			return (false);
 		str++;
 	}
