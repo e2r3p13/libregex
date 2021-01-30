@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:29:49 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/29 22:16:16 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/01/30 15:26:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ t_state *state_new(bool is_final)
 	return (node);
 }
 
-void state_add_link(t_state *st, char c, t_state *next)
+void state_add_link(t_state *st, t_pattern pattern, t_state *next)
 {
 	if (!st->left.next)
 	{
 		st->left.next = next;
-		st->left.substr = substr;
+		st->left.substr = pattern;
 	}
 	else
 	{
 		st->right.next = next;
-		st->right.substr = substr;
+		st->right.substr = pattern;
 	}
 }

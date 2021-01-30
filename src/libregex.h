@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/29 22:42:44 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/01/30 15:27:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_link t_link;
 typedef struct s_pattern t_pattern;
 typedef struct s_automaton t_nfa;
 typedef struct s_automaton t_dfa;
+typedef struct s_automaton t_re;
 
 /*
 **	This structure represents a pattern substring from a regex string.
@@ -71,14 +72,15 @@ struct s_state
 struct s_automaton
 {
 	t_state *entrypoint;
-	char	*regexpr;
+	t_state *finalstate;
+	char	*re_expr;
 };
 
 /*
-**	t_state external functions, will be used to construct an automaton.
+**	t_state functions, will be used to construct an automaton.
 */
 t_state *state_new(bool is_final);
-void state_add_link(t_state *st, char c, t_state *next);
+void state_add_link(t_state *st, t_pattern pattern, t_state *next);
 
 t_nfa *str_to_nfa(const char *str);
 t_dfa *nfa_to_dfa(t_nfa *entrypoint);
