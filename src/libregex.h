@@ -6,15 +6,15 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/30 15:27:09 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/01 16:54:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBREGEX_H
 #define LIBREGEX_H
 
-#include <stdbool.h>
 #include <stddef.h>
+#include "libft.h"
 
 typedef struct s_state t_state;
 typedef struct s_link t_link;
@@ -28,7 +28,7 @@ typedef struct s_automaton t_re;
 **	It internally keeps a pointer to the beginning of the substring,
 **	and another one to the end.
 */
-struct s_pattern;
+struct s_pattern
 {
 	const char *start;
 	const char *end;
@@ -44,7 +44,7 @@ struct s_pattern;
 */
 struct s_link
 {
-	bool		(*match)(t_pattern s, char c);
+	t_bool		(*match)(t_pattern s, char c);
 	t_pattern	pattern;
 	t_state		*next;
 };
@@ -56,7 +56,7 @@ struct s_link
 */
 struct s_state
 {
-	bool	is_final;
+	t_bool	is_final;
 	t_link	left;
 	t_link	right;
 };
@@ -79,7 +79,7 @@ struct s_automaton
 /*
 **	t_state functions, will be used to construct an automaton.
 */
-t_state *state_new(bool is_final);
+t_state *state_new();
 void state_add_link(t_state *st, t_pattern pattern, t_state *next);
 
 t_nfa *str_to_nfa(const char *str);

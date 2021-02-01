@@ -6,13 +6,13 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:45:24 by bccyv             #+#    #+#             */
-/*   Updated: 2021/01/29 22:42:57 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/01 16:47:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libregex.h"
 
-t_dfa *nfa_to_dfa(t_nfa *entrypoint)
+t_dfa *nfa_to_dfa(__unused t_nfa *entrypoint)
 {
-
+	return (NULL);
 }
