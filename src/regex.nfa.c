@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 08:54:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/01/30 15:30:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/01 13:26:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static t_nfa *nfa_new(const char *str)
 		nfa_free(nfa);
 		return (NULL);
 	}
-	if (!(nfa->entrypoint = state_new(true)))
+	if (!(nfa->entrypoint = state_new(false)))
 	{
 		nfa_free(nfa);
 		return (NULL);
 	}
-	nfa->finalstate = nfa->entrypoint;
+	nfa->finalstate = NULL;
 
 	return (nfa);
 }
@@ -39,44 +39,64 @@ static void nfa_free(t_nfa *nfa)
 	// TODO
 }
 
-t_state *nfa_build_wildcard(t_nfa *nfa)
+static int nfa_add_char_to(t_state *beg, const char *ptr)
 {
 
 }
 
-int nfa_build_plus()
+static int nfa_build_quantifier()
 {
 
 }
 
-int nfa_build_imark()
+static int nfa_build_or(t_nfa *left, t_nfa *right)
 {
 
 }
 
-int nfa_build_or(t_nfa *left, t_nfa *right)
+static t_state *nfa_create(t_state *beg const char **ptr)
 {
+	t_state *end;
 
-}
+	if (!beg) return (NULL);
+	if (!end) end = beg;
 
-int nfa_add_char(t_nfa *nfa, const char *ptr)
-{
-	t_state		*new;
-	t_pattern	pattern;
-
-	new = state_new(true);
-	if (!new)
-		return (-1);
-	state_add_link(nfa->finalstate, pattern, new);
-	nfa->finalstate.is_final = false;
-	nfa->finalstate = new;
-	
-	return (0);
+	while (is_parenthesis ? **ptr && **ptr != ')' : **ptr)
+	{
+		t_state *tmp = end;
+		if (**ptr == '(' && (*ptr)++)
+		{
+			if (!(end = nfa_create(end, ptr)) || **ptr != ')')
+				return (NULL);
+			(*ptr)++;
+		}
+		else
+		{
+			if (!(end = nfa_add_char_to(end, &ptr)))
+				return (NULL);
+		}
+		if (!(end = nfa_build_quantifier(tmp, end, &ptr)))
+			return (NULL);
+		if (*ptr == '|' && !(end = nfa_build_or(&being, end, &ptr)))
+			return (NULL);
+	}
+	return (end);
 }
 
 t_nfa *str_to_nfa(const char *str)
 {
 	t_nfa *nfa;
+	char *ptr;
 
-	nfa = nfa_new(str, new);
+	if (!(nfa = nfa_new(str)))
+		return (NULL);
+	ptr = nfa->re_expr;
+	if (!(nfa->finalstate = nfa_create(nfa->entrypoint, &ptr)))
+	{
+		nfa_free(nfa);
+		return (NULL);
+	}
+	nfa->finalstate->is_final = true;
+
+	return (nfa);
 }
