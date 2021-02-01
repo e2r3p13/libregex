@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 08:54:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/01 16:59:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/01 20:42:28 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libregex.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void *g_esc_table[128] =
 {
@@ -31,7 +32,24 @@ void *g_esc_table[128] =
 	['f'] = &ft_isffeed
 };
 
-static void nfa_free(t_nfa *nfa)
+t_bool nfa_match(t_nfa *nfa, const char *str)
+{
+	t_state *curr = nfa->entrypoint;
+
+	while (*str)
+	{
+		if (curr->left.next && curr->left.match(curr->left.pattern, *str))
+			curr = curr->left.next;
+		else if (curr->right.next && curr->right.match(curr->right.pattern, *str))
+			curr = curr->right.next;
+		else
+			return (false);
+		str++;
+	}
+	return (curr->is_final);
+}
+
+void nfa_free(t_nfa *nfa)
 {
 	// TODO: free each allocated states
 	free(nfa->re_expr);

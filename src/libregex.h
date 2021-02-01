@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/01 16:54:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/01 20:53:00 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ t_state *state_new();
 void state_add_link(t_state *st, t_pattern pattern, t_state *next);
 
 t_nfa *str_to_nfa(const char *str);
+t_bool nfa_match(t_nfa *nfa, const char *str);
+void nfa_free(t_nfa *nfa);
 t_dfa *nfa_to_dfa(t_nfa *entrypoint);
 
 #endif /* LIBREGEX_H */
