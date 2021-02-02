@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/01 20:53:00 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/02 14:50:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ struct s_pattern
 */
 struct s_link
 {
-	t_bool		(*match)(t_pattern s, char c);
+	int			(*match)(t_pattern s, int c);
 	t_pattern	pattern;
 	t_state		*next;
 };
@@ -79,12 +79,17 @@ struct s_automaton
 /*
 **	t_state functions, will be used to construct an automaton.
 */
-t_state *state_new();
-void state_add_link(t_state *st, t_pattern pattern, t_state *next);
-
-t_nfa *str_to_nfa(const char *str);
-t_bool nfa_match(t_nfa *nfa, const char *str);
-void nfa_free(t_nfa *nfa);
-t_dfa *nfa_to_dfa(t_nfa *entrypoint);
+t_state		*state_new();
+void		link_init(t_link *ln);
+void		link_add(t_state *st, t_pattern pattern, t_state *next);
+void		links_destroy(t_state *st);
+void		links_cpy(t_state *dst, t_state *src);
+t_nfa		*str_to_nfa(const char *str);
+t_bool		nfa_match(t_nfa *nfa, const char *str);
+void		nfa_free(t_nfa *nfa);
+t_dfa		*nfa_to_dfa(t_nfa *entrypoint);
+t_pattern	pattern_epsilon();
+t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
+void		nfa_print(t_state *st, int lvl);
 
 #endif /* LIBREGEX_H */

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 08:54:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/01 20:42:28 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/02 15:23:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,39 @@ void *g_esc_table[128] =
 	['f'] = &ft_isffeed
 };
 
+void nfa_print(t_state *st, int lvl)
+{
+	for (int i = 0; i < lvl; i++)
+		printf("\t");
+	printf("ST: %p, LEFT: %p (%.*s), RIGHT: %p (%.*s)\n", st, st->left.next, st->left.pattern.start ? (int)(st->left.pattern.end - st->left.pattern.start) + 1 : 0 , st->left.pattern.start, st->right.next, st->right.pattern.start ? (int)(st->right.pattern.end - st->right.pattern.start) + 1 : 0 , st->right.pattern.start);
+	if ( st->left.next)
+		nfa_print(st->left.next, lvl + 1);
+	if ( st->right.next)
+		nfa_print(st->right.next, lvl + 1);
+}
+
 t_bool nfa_match(t_nfa *nfa, const char *str)
 {
-	t_state *curr = nfa->entrypoint;
+	t_state	*curr = nfa->entrypoint;
+	int		ret;
 
 	while (*str)
 	{
-		if (curr->left.next && curr->left.match(curr->left.pattern, *str))
+		if (curr->left.next && (ret = curr->left.match(curr->left.pattern, *str)))
 			curr = curr->left.next;
-		else if (curr->right.next && curr->right.match(curr->right.pattern, *str))
+		else if (curr->right.next && (ret = curr->right.match(curr->right.pattern, *str)))
 			curr = curr->right.next;
 		else
 			return (false);
-		str++;
+		if (ret == 1)
+			str++;
 	}
+	if (curr->left.next && (ret = curr->left.match(curr->left.pattern, *str)))
+		curr = curr->left.next;
+	else if (curr->right.next && (ret = curr->right.match(curr->right.pattern, *str)))
+		curr = curr->right.next;
 	return (curr->is_final);
+
 }
 
 void nfa_free(t_nfa *nfa)
@@ -100,7 +118,7 @@ static t_state *nfa_add_char_to(t_state *beg, const char **p)
 	pattern.start = ptr;
 	if (*ptr == '[' && (plen = pattern_length(ptr)))
 		ptr += plen - 1;
-	else if (*ptr == 92 && g_esc_table[(int)*ptr]) // 92 is backslash
+	else if (*ptr == 92 && g_esc_table[(int)*(ptr + 1)]) // 92 is backslash
 		ptr++;
 	else if (*ptr == 92 || *ptr == '[' || !ft_isprint(*ptr))
 	{
@@ -109,7 +127,7 @@ static t_state *nfa_add_char_to(t_state *beg, const char **p)
 	}
 	pattern.end = ptr;
 	*p = ptr + 1;
-	state_add_link(beg, pattern, new);
+	link_add(beg, pattern, new);
 	return (new);
 }
 
@@ -117,13 +135,45 @@ static t_state *nfa_add_char_to(t_state *beg, const char **p)
 // {
 //
 // }
-//
-// static t_state *nfa_build_or(t_state **beg, t_state *end)
-// {
-//
-// }
 
-static t_state *nfa_create(t_state *beg, const char **ptr, t_bool nested)
+static t_state *nfa_build_or(t_state *beg, t_state *lend, const char **ptr, t_bool nested)
+{
+	t_state *new_beg;
+	t_state *new_end;
+	t_state *rend;
+	t_state *reps;
+
+	if (!(new_beg = state_new()))
+		return (NULL);
+	if (!(new_end = state_new()))
+	{
+		free(new_beg);
+		return (NULL);
+	}
+	links_cpy(new_beg, beg);
+	links_destroy(beg);
+	link_add(beg, pattern_epsilon(), new_beg);
+	if (!(reps = state_new()))
+	{
+		free(new_beg);
+		free(new_end);
+		return (NULL);
+	}
+	link_add(beg, pattern_epsilon(), reps);
+	(*ptr)++;
+	if (!(rend = nfa_create(reps, ptr, nested)))
+	{
+		free(new_end);
+		free(new_end);
+		free(reps);
+		return (NULL);
+	}
+	link_add(lend, pattern_epsilon(), new_end);
+	link_add(rend, pattern_epsilon(), new_end);
+	return (new_end);
+}
+
+t_state *nfa_create(t_state *beg, const char **ptr, t_bool nested)
 {
 	t_state *end;
 
@@ -141,14 +191,12 @@ static t_state *nfa_create(t_state *beg, const char **ptr, t_bool nested)
 			(*ptr)++;
 		}
 		else
-		{
 			if (!(end = nfa_add_char_to(end, ptr)))
 				return (NULL);
-		}
 		// if (!(end = nfa_build_quantifier(tmp, end, &ptr)))
 		// 	return (NULL);
-		// if (*ptr == '|' && !(end = nfa_build_or(&being, end, &ptr)))
-		// 	return (NULL);
+		if (**ptr == '|' && !(end = nfa_build_or(beg, end, ptr, nested)))
+			return (NULL);
 	}
 	return (end);
 }
