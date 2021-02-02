@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 08:54:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/02 15:23:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/02 16:00:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,6 @@ void nfa_print(t_state *st, int lvl)
 		nfa_print(st->left.next, lvl + 1);
 	if ( st->right.next)
 		nfa_print(st->right.next, lvl + 1);
-}
-
-t_bool nfa_match(t_nfa *nfa, const char *str)
-{
-	t_state	*curr = nfa->entrypoint;
-	int		ret;
-
-	while (*str)
-	{
-		if (curr->left.next && (ret = curr->left.match(curr->left.pattern, *str)))
-			curr = curr->left.next;
-		else if (curr->right.next && (ret = curr->right.match(curr->right.pattern, *str)))
-			curr = curr->right.next;
-		else
-			return (false);
-		if (ret == 1)
-			str++;
-	}
-	if (curr->left.next && (ret = curr->left.match(curr->left.pattern, *str)))
-		curr = curr->left.next;
-	else if (curr->right.next && (ret = curr->right.match(curr->right.pattern, *str)))
-		curr = curr->right.next;
-	return (curr->is_final);
-
 }
 
 void nfa_free(t_nfa *nfa)
