@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/02 14:50:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 08:44:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ struct s_automaton
 	char	*re_expr;
 };
 
-/*
-**	t_state functions, will be used to construct an automaton.
-*/
 t_state		*state_new();
 void		link_init(t_link *ln);
 void		link_add(t_state *st, t_pattern pattern, t_state *next);
@@ -91,5 +88,9 @@ t_dfa		*nfa_to_dfa(t_nfa *entrypoint);
 t_pattern	pattern_epsilon();
 t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
 void		nfa_print(t_state *st, int lvl);
+t_state 	*nfa_build_or(t_state *beg, t_state *lend, const char **ptr, t_bool nested);
+t_state		*nfa_add_char_to(t_state *beg, const char **p);
+
+
 
 #endif /* LIBREGEX_H */
