@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 09:16:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 09:27:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,21 @@ static int	pattern_length(const char *ptr)
 **	nfa_add_pattern push a new state to the nfa and try to create a link
 **	between begin and this new state, with the next pattern in *ptr
 **	returns a pointer to the new state on success, NULL otherwise
+**
+**	begin --> NULL	to	begin -[pattern]-> next_state
 */
 
-t_state		*nfa_add_pattern(t_state *beg, const char **ptr)
+t_state		*nfa_add_pattern(t_state *begin, const char **ptr)
 {
 	t_state		*next_state;
 	t_pattern	pattern;
-	int			plen;
+	int			pattern_length;
 
 	if (!(next_state = state_new()))
 		return (NULL);
 	pattern.start = *ptr;
-	if (**ptr == '[' && (plen = pattern_length(*ptr)))
-		*ptr += plen;
+	if (**ptr == '[' && (pattern_length = pattern_length(*ptr)))
+		*ptr += pattern_length;
 	else if (**ptr == 92 && (g_esc_table[(int)*(*ptr + 1)] ||
 		ft_isinset(SPE_CHAR, **ptr)))
 		(*ptr)++;
@@ -78,6 +80,6 @@ t_state		*nfa_add_pattern(t_state *beg, const char **ptr)
 	}
 	pattern.end = *ptr;
 	(*ptr)++;
-	link_add(beg, pattern, next_state);
+	link_add(begin, pattern, next_state);
 	return (next_state);
 }
