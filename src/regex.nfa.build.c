@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 08:41:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 08:48:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_state *nfa_create(t_state *beg, const char **ptr, t_bool nested)
 			(*ptr)++;
 		}
 		else
-			if (!(end = nfa_add_char_to(end, ptr)))
+			if (!(end = nfa_add_pattern(end, ptr)))
 				return (NULL);
 		// if (!(end = nfa_build_quantifier(tmp, end, &ptr)))
 		// 	return (NULL);

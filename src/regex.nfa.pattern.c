@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 08:45:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 08:48:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int pattern_length(const char *ptr)
 	return (*ptr ? i : 0);
 }
 
-t_state *nfa_add_char_to(t_state *beg, const char **p)
+t_state *nfa_add_pattern(t_state *beg, const char **p)
 {
 	t_state		*new;
 	t_pattern	pattern;

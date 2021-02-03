@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/03 08:44:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 08:48:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_pattern	pattern_epsilon();
 t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
 void		nfa_print(t_state *st, int lvl);
 t_state 	*nfa_build_or(t_state *beg, t_state *lend, const char **ptr, t_bool nested);
-t_state		*nfa_add_char_to(t_state *beg, const char **p);
+t_state		*nfa_add_pattern(t_state *beg, const char **p);
 
 
 
