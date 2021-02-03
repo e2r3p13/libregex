@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/03 08:48:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 09:21:25 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,23 @@
 #include <stddef.h>
 #include "libft.h"
 
-typedef struct s_state t_state;
-typedef struct s_link t_link;
-typedef struct s_pattern t_pattern;
-typedef struct s_automaton t_nfa;
-typedef struct s_automaton t_dfa;
-typedef struct s_automaton t_re;
+/*
+**	Following characters need to be escaped to be part of a pattern
+*/
+
+#define SPE_CHAR "[]{}()|*+?^"
+
+typedef struct s_state		t_state;
+typedef struct s_link		t_link;
+typedef struct s_pattern	t_pattern;
+typedef struct s_nfa		t_nfa;
 
 /*
 **	This structure represents a pattern substring from a regex string.
 **	It internally keeps a pointer to the beginning of the substring,
 **	and another one to the end.
 */
-struct s_pattern
+struct	s_pattern
 {
 	const char *start;
 	const char *end;
@@ -42,7 +46,7 @@ struct s_pattern
 **	A link with a next set to NULL is considered to be an epsilon link,
 **	meaning the match function will always return true.
 */
-struct s_link
+struct	s_link
 {
 	int			(*match)(t_pattern s, int c);
 	t_pattern	pattern;
@@ -54,7 +58,7 @@ struct s_link
 **	It keeps two links which can lead to its two children (at most).
 **	t_state nodes are used to construct our nfa / dfa.
 */
-struct s_state
+struct	s_state
 {
 	t_bool	is_final;
 	t_link	left;
@@ -69,7 +73,7 @@ struct s_state
 **	all t_pattern pointers that belongs to the automaton will point
 **	somewhere in the regexpr string.
 */
-struct s_automaton
+struct	s_nfa
 {
 	t_state *entrypoint;
 	t_state *finalstate;
@@ -88,9 +92,7 @@ t_dfa		*nfa_to_dfa(t_nfa *entrypoint);
 t_pattern	pattern_epsilon();
 t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
 void		nfa_print(t_state *st, int lvl);
-t_state 	*nfa_build_or(t_state *beg, t_state *lend, const char **ptr, t_bool nested);
+t_state		*nfa_build_or(t_state *b, t_state *e, const char **p, t_bool n);
 t_state		*nfa_add_pattern(t_state *beg, const char **p);
-
-
 
 #endif /* LIBREGEX_H */
