@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/02 14:52:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 11:23:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(__unused int ac, char **av)
 		printf("Error while creating nfa\n");
 		return (1);
 	}
-	nfa_print(regex->entrypoint, 0);
+	// nfa_print(regex->entrypoint, 0);
 	//printf(nfa_match(regex, av[2]) ? "match" : "don't match");
 
 	nfa_free(regex);

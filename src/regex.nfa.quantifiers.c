@@ -6,16 +6,38 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:26 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 10:43:54 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 11:26:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libregex.h"
 #include <stdlib.h>
 
-static t_state	*spe_length(t_state *beg, t_state *end, const char **p)
+static t_state	*spe_length(__unused t_state *beg, t_state *end, const char **ptr)
 {
-	return (NULL);
+	int min;
+	int max;
+
+	(*ptr)++;
+	if ((min = ft_atoi(*ptr)) <= 0)
+		return (NULL);
+	while (ft_isdigit(**ptr))
+		(*ptr)++;
+	if (**ptr == ',')
+	{
+		(*ptr)++;
+		if (**ptr == '}')
+			max = -1;
+		else if ((max = ft_atoi(*ptr)) < min)
+			return (NULL);
+		else
+			while (ft_isdigit(**ptr))
+				(*ptr)++;
+	}
+	if (**ptr != '}')
+		return (NULL);
+	(*ptr)++;
+	return (end);
 }
 
 static t_state	*wildcard(t_state *beg, t_state *end, const char **ptr)
