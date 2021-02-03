@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/03 09:21:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 09:45:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,12 @@ void		links_cpy(t_state *dst, t_state *src);
 t_nfa		*str_to_nfa(const char *str);
 t_bool		nfa_match(t_nfa *nfa, const char *str);
 void		nfa_free(t_nfa *nfa);
-t_dfa		*nfa_to_dfa(t_nfa *entrypoint);
 t_pattern	pattern_epsilon();
 t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
 void		nfa_print(t_state *st, int lvl);
 t_state		*nfa_build_or(t_state *b, t_state *e, const char **p, t_bool n);
 t_state		*nfa_add_pattern(t_state *beg, const char **p);
+t_state		*nfa_build_quantifier(t_state *b, t_state *e, const char **p);
+
 
 #endif /* LIBREGEX_H */
