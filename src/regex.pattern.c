@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nfa.pattern.c                                      :+:      :+:    :+:   */
+/*   regex.pattern.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:40:33 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/02 13:54:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 10:49:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libregex.h"
 
-t_pattern	pattern_epsilon()
+t_pattern	pattern_epsilon(void)
 {
 	t_pattern p;
 

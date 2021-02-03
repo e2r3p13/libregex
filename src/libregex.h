@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/03 10:40:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 10:50:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ struct	s_nfa
 	char	*re_expr;
 };
 
-t_state		*state_new();
+t_state		*state_new(void);
 void		link_init(t_link *ln);
 void		link_add(t_state *st, t_pattern pattern, t_state *next);
 void		links_destroy(t_state *st);
@@ -88,7 +88,7 @@ void		links_cpy(t_state *dst, t_state *src);
 t_nfa		*str_to_nfa(const char *str);
 t_bool		nfa_match(t_nfa *nfa, const char *str);
 void		nfa_free(t_nfa *nfa);
-t_pattern	pattern_epsilon();
+t_pattern	pattern_epsilon(void);
 t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
 void		nfa_print(t_state *st, int lvl);
 t_state		*nfa_build_or(t_state *b, t_state *e, const char **p, t_bool n);
