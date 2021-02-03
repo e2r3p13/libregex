@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 09:46:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/03 10:41:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ static t_nfa	*nfa_new(const char *str)
 	}
 	nfa->finalstate = NULL;
 	return (nfa);
+}
+
+int				nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne)
+{
+	if (!(*nb = state_new()))
+		return (-1);
+	if (!(*ne = state_new()))
+	{
+		free(*nb);
+		return (-1);
+	}
+	links_cpy(*nb, b);
+	links_destroy(b);
+	link_add(b, pattern_epsilon(), *nb);
+	link_add(e, pattern_epsilon(), *ne);
+	return (0);
 }
 
 t_state			*nfa_create(t_state *beg, const char **ptr, t_bool nested)
