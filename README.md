@@ -12,4 +12,4 @@ Then, several functions helps you to find occurrences of a valid sentence for th
     char		*re_rfind(t_regex *re, const char*str);
 
 ## supported regex operators
-![supported operators](https://goopics.net/i/XJVlb)
+![Image](https://i.goopics.net/XJVlb.png)
