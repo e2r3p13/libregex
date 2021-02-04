@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 09:32:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/04 10:13:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_state		*nfa_add_pattern(t_state *begin, const char **ptr)
 	if (**ptr == '[' && (p_length = pattern_length(*ptr)))
 		*ptr += p_length;
 	else if (**ptr == 92 && (g_esc_table[(int)*(*ptr + 1)] ||
-		ft_isinset(SPE_CHAR, **ptr)))
+		ft_isinset(SPE_CHAR, **ptr) || *(*ptr + 1) == '.'))
 		(*ptr)++;
 	else if (**ptr == 92 || **ptr == '[' || !ft_isprint(**ptr) ||
 		ft_isinset(SPE_CHAR, **ptr))
