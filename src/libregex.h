@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/03 10:50:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/04 10:12:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_state		t_state;
 typedef struct s_link		t_link;
 typedef struct s_pattern	t_pattern;
 typedef struct s_nfa		t_nfa;
+typedef struct s_vec		t_vec;
 
 /*
 **	This structure represents a pattern substring from a regex string.
@@ -60,9 +61,10 @@ struct	s_link
 */
 struct	s_state
 {
-	t_bool	is_final;
-	t_link	left;
-	t_link	right;
+	t_bool			is_final;
+	t_link			left;
+	t_link			right;
+	unsigned int	flag : 1;
 };
 
 /*
@@ -80,6 +82,15 @@ struct	s_nfa
 	char	*re_expr;
 };
 
+/*
+**	A simple vector structure used to store nfa states addresses.
+*/
+struct s_vec
+{
+	size_t	size;
+	void	**addr;
+};
+
 t_state		*state_new(void);
 void		link_init(t_link *ln);
 void		link_add(t_state *st, t_pattern pattern, t_state *next);
@@ -95,6 +106,5 @@ t_state		*nfa_build_or(t_state *b, t_state *e, const char **p, t_bool n);
 t_state		*nfa_add_pattern(t_state *beg, const char **p);
 t_state		*nfa_build_quantifier(t_state *b, t_state *e, const char **p);
 int			nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne);
-
 
 #endif /* LIBREGEX_H */
