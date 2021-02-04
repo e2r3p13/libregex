@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/04 10:34:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/04 14:53:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_state		t_state;
 typedef struct s_link		t_link;
 typedef struct s_pattern	t_pattern;
 typedef struct s_nfa		t_nfa;
+typedef struct s_dfa		t_dfa;
 typedef struct s_vec		t_vec;
 
 /*
@@ -68,12 +69,10 @@ struct	s_state
 };
 
 /*
-**	This structure represents an automaton, it keeps a pointer to its
-**	entrypoint state (q0).
-**	As this automaton will be used to store NFA and DFA, it also keeps a pointer
-**	to an allocated string, containing the regex expression.
-**	all t_pattern pointers that belongs to the automaton will point
-**	somewhere in the regexpr string.
+**	This structure represents a non deterministic finite automaton.
+**	It keeps a pointer to its entry state, and to its final state.
+**	It also keeps a pointer to an allocated string,
+**	containing the regex expression.
 */
 struct	s_nfa
 {
@@ -83,12 +82,24 @@ struct	s_nfa
 };
 
 /*
+**	This structure represents a deterministic finite automaton.
+**	It keeps a pointer to its (possibly several) entry states.
+**	It also keeps a pointer to an allocated string,
+**	containing the regex expression.
+*/
+struct s_dfa
+{
+	t_state	**entrypoints;
+	char	*re_expr;
+};
+
+/*
 **	A simple vector structure used to store nfa states addresses.
 */
 struct s_vec
 {
 	size_t	size;
-	void	**addr;
+	t_state	**addr;
 };
 
 t_state		*state_new(void);
@@ -101,11 +112,11 @@ t_bool		nfa_match(t_nfa *nfa, const char *str);
 void		nfa_free(t_nfa *nfa);
 t_pattern	pattern_epsilon(void);
 t_state		*nfa_create(t_state *beg, const char **ptr, t_bool nested);
-void		nfa_print(t_state *st, int lvl);
 t_state		*nfa_build_or(t_state *b, t_state *e, const char **p, t_bool n);
 t_state		*nfa_add_pattern(t_state *beg, const char **p);
 t_state		*nfa_build_quantifier(t_state *b, t_state *e, const char **p);
 int			nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne);
 t_nfa		*nfa_new(const char *str);
+void		nfa_print(t_nfa *nfa);
 
 #endif /* LIBREGEX_H */
