@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:26 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 11:26:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/04 08:36:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ t_state			*nfa_build_quantifier(t_state *b, t_state *e, const char **p)
 		return (plus(b, e, p));
 	if (**p == '?')
 		return (imark(b, e, p));
-	return (b);
+	return (e);
 }
