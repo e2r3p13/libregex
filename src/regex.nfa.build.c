@@ -6,38 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 10:41:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/04 10:10:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libregex.h"
 #include <stdlib.h>
-
-void			nfa_free(t_nfa *nfa)
-{
-	(void)nfa;
-}
-
-static t_nfa	*nfa_new(const char *str)
-{
-	t_nfa *nfa;
-
-	if (!str || !(nfa = malloc(sizeof(t_nfa))))
-		return (NULL);
-	ft_bzero(nfa, sizeof(t_nfa));
-	if (!(nfa->re_expr = ft_strdup(str)))
-	{
-		free(nfa);
-		return (NULL);
-	}
-	if (!(nfa->entrypoint = state_new()))
-	{
-		nfa_free(nfa);
-		return (NULL);
-	}
-	nfa->finalstate = NULL;
-	return (nfa);
-}
 
 int				nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne)
 {
