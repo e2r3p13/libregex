@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/04 10:10:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/04 10:34:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		nfa_get_addresses(t_state *st, t_vec *v)
 	nfa_get_addresses(st->right.next, v);
 }
 
-static t_nfa	*nfa_new(const char *str)
+t_nfa			*nfa_new(const char *str)
 {
 	t_nfa *nfa;
 
