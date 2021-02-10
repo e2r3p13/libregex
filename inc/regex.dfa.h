@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:41:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:30:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 12:50:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,15 @@
 
 #include <regex.fa.h>
 
+typedef struct s_link_lst	t_link_lst;
 typedef struct s_dfa_state	t_ds;
 typedef struct s_dfa		t_dfa;
+
+struct s_link_lst
+{
+	t_link		link;
+	t_link_lst	*next;
+};
 
 /*
 **	t_ns represents a state of an automaton.
@@ -26,7 +33,7 @@ typedef struct s_dfa		t_dfa;
 struct	s_dfa_state
 {
 	t_bool			is_final;
-	t_vlink			links;
+	t_link_lst		*links;
 	unsigned int	flag : 1;
 };
 

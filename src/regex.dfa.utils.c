@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.dfa.c                                        :+:      :+:    :+:   */
+/*   regex.dfa.utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 13:56:51 by lfalkau          ###   ########.fr       */
+/*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
+/*   Updated: 2021/02/10 12:59:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.nfa.h>
-#include <regex.dfa.h>
+#include <regex.dfa.c>
 
-t_dfa *nfa_to_dfa(t_nfa *nfa)
+t_dfa	*dfa_new(void)
 {
 	t_dfa	*dfa;
-	t_map	*map;
 
-	map = NULL;
-	if (!(dfa = dfa_new()))
+	if (!(dfa = malloc(sizeof(t_dfa))))
 		return (NULL);
-
-	for (lettre in nfa's alphabet)
+	if (!(dfa->entrypoint = dfa_state_new()))
 	{
-
+		free(dfa);
+		return (NULL);
 	}
+	dfa->re_expr = nfa->re_expr;
+	return (dfa);
 }
