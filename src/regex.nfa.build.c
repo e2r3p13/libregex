@@ -6,12 +6,21 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:24:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:37:42 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libregex.h>
+#include <regex.nfa.h>
 #include <stdlib.h>
+
+t_pattern	pattern_epsilon(void)
+{
+	t_pattern p;
+
+	p.start = NULL;
+	p.end = NULL;
+	return (p);
+}
 
 int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 {

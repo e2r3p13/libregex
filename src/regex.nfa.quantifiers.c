@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:26 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:24:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:38:03 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libregex.h>
+#include <regex.nfa.h>
 #include <stdlib.h>
 
 static t_ns	*wildcard(t_ns *beg, t_ns *end, const char **ptr)

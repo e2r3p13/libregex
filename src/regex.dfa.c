@@ -6,13 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:05:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:39:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libregex.h>
+#include <regex.nfa.h>
+#include <regex.dfa.h>
 
 t_dfa *nfa_to_dfa(t_nfa *nfa)
 {
-	
+
 }

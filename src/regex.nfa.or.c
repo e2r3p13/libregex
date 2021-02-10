@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:24:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:37:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libregex.h>
+#include <regex.nfa.h>
 #include <stdlib.h>
 
 t_ns	*nfa_build_or(t_ns *beg, t_ns *end, const char **ptr, t_bool nstd)

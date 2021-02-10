@@ -6,11 +6,11 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:29:49 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/10 11:24:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:38:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libregex.h>
+#include <regex.nfa.h>
 #include <stdlib.h>
 
 t_ns	*state_new(void)
