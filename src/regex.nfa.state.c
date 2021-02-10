@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.state.c                                      :+:      :+:    :+:   */
+/*   regex.nfa.state.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:29:49 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/10 11:05:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:24:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <stdlib.h>
 
-t_state	*state_new(void)
+t_ns	*state_new(void)
 {
-	t_state *st;
+	t_ns *st;
 
-	if (!(st = malloc(sizeof(t_state))))
+	if (!(st = malloc(sizeof(t_ns))))
 		return (NULL);
 	st->is_final = false;
 	link_init(&st->left);

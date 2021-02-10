@@ -6,17 +6,17 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:26 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:05:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:24:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <stdlib.h>
 
-static t_state	*wildcard(t_state *beg, t_state *end, const char **ptr)
+static t_ns	*wildcard(t_ns *beg, t_ns *end, const char **ptr)
 {
-	t_state *new_beg;
-	t_state *new_end;
+	t_ns *new_beg;
+	t_ns *new_end;
 
 	if (nfa_surruond(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
@@ -26,10 +26,10 @@ static t_state	*wildcard(t_state *beg, t_state *end, const char **ptr)
 	return (new_end);
 }
 
-static t_state	*plus(t_state *beg, t_state *end, const char **ptr)
+static t_ns	*plus(t_ns *beg, t_ns *end, const char **ptr)
 {
-	t_state *new_beg;
-	t_state *new_end;
+	t_ns *new_beg;
+	t_ns *new_end;
 
 	if (nfa_surruond(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
@@ -38,10 +38,10 @@ static t_state	*plus(t_state *beg, t_state *end, const char **ptr)
 	return (new_end);
 }
 
-static t_state	*imark(t_state *beg, t_state *end, const char **ptr)
+static t_ns	*imark(t_ns *beg, t_ns *end, const char **ptr)
 {
-	t_state *new_beg;
-	t_state *new_end;
+	t_ns *new_beg;
+	t_ns *new_end;
 
 	if (nfa_surruond(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
@@ -75,12 +75,12 @@ static int		parse_length(int *min, int *max, const char **ptr)
 	return (0);
 }
 
-static t_state	*spe_length(__unused t_state *beg, t_state *end, const char **ptr)
+static t_ns	*spe_length(__unused t_ns *beg, t_ns *end, const char **ptr)
 {
 	int		min;
 	int		max;
 	// int		i;
-	// t_state	*tmp;
+	// t_ns	*tmp;
 
 	if (parse_length(&min, &max, ptr) < 0)
 		return (NULL);
@@ -105,7 +105,7 @@ static t_state	*spe_length(__unused t_state *beg, t_state *end, const char **ptr
 	return (end);
 }
 
-t_state			*nfa_build_quantifier(t_state *b, t_state *e, const char **p)
+t_ns			*nfa_build_quantifier(t_ns *b, t_ns *e, const char **p)
 {
 	if (**p == '{')
 		return (spe_length(b, e, p));

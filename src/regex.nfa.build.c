@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:05:22 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:24:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <stdlib.h>
 
-int				nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne)
+int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 {
 	if (!(*nb = state_new()))
 		return (-1);
@@ -29,10 +29,10 @@ int				nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne)
 	return (0);
 }
 
-t_state			*nfa_create(t_state *beg, const char **ptr, t_bool nested)
+t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested)
 {
-	t_state	*end;
-	t_state	*tmp;
+	t_ns	*end;
+	t_ns	*tmp;
 
 	if (!beg)
 		return (NULL);
@@ -56,11 +56,11 @@ t_state			*nfa_create(t_state *beg, const char **ptr, t_bool nested)
 	return (end);
 }
 
-t_nfa			*str_to_nfa(const char *str)
+t_nfa	*str_to_nfa(const char *str)
 {
 	t_nfa		*nfa;
 	const char	*ptr;
-	t_state		*final;
+	t_ns		*final;
 
 	if (!(nfa = nfa_new(str)))
 		return (NULL);

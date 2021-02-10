@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:05:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:25:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static size_t	nfa_get_size(t_state *st)
+static size_t	nfa_get_size(t_ns *st)
 {
 	if (!st || st->flag == 1)
 		return (0);
@@ -22,7 +22,7 @@ static size_t	nfa_get_size(t_state *st)
 	return (1 + nfa_get_size(st->left.next) + nfa_get_size(st->right.next));
 }
 
-static void		nfa_get_addresses(t_state *st, t_vec *v)
+static void		nfa_get_addresses(t_ns *st, t_vec *v)
 {
 	if (!st || st->flag == 0)
 		return ;
@@ -72,7 +72,7 @@ void			nfa_free(t_nfa *nfa)
 	free(nfa);
 }
 
-static int	fa(t_state *st, t_vec *v)
+static int	fa(t_ns *st, t_vec *v)
 {
 	for (size_t i = 0; i < v->size; i++)
 		if (v->addr[i] == st)
