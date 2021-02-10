@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/04 14:57:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:05:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libregex.h"
+#include <libregex.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -49,7 +49,6 @@ t_nfa			*nfa_new(const char *str)
 		nfa_free(nfa);
 		return (NULL);
 	}
-	nfa->finalstate = NULL;
 	return (nfa);
 }
 

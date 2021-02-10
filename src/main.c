@@ -6,12 +6,12 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/04 14:48:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:05:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "libregex.h"
+#include <libregex.h>
 #include <stdlib.h>
 
 void __attribute__((destructor)) calledLast();

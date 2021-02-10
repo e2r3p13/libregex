@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/04 10:10:57 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:05:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libregex.h"
+#include <libregex.h>
 #include <stdlib.h>
 
 int				nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne)
@@ -60,15 +60,16 @@ t_nfa			*str_to_nfa(const char *str)
 {
 	t_nfa		*nfa;
 	const char	*ptr;
+	t_state		*final;
 
 	if (!(nfa = nfa_new(str)))
 		return (NULL);
 	ptr = nfa->re_expr;
-	if (!(nfa->finalstate = nfa_create(nfa->entrypoint, &ptr, false)))
+	if (!(final = nfa_create(nfa->entrypoint, &ptr, false)))
 	{
 		nfa_free(nfa);
 		return (NULL);
 	}
-	nfa->finalstate->is_final = true;
+	final->is_final = true;
 	return (nfa);
 }

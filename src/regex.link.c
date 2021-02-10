@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:30:26 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/03 10:51:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:05:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libregex.h"
+#include <libregex.h>
 #include <stdio.h>
 
 extern void *g_esc_table[128];

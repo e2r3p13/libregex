@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libregex.h                                         :+:      :+:    :+:   */
+/*   regex.nfa.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/04 14:53:08 by lfalkau          ###   ########.fr       */
+/*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
+/*   Updated: 2021/02/10 11:11:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBREGEX_H
-#define LIBREGEX_H
+#ifndef REGEX_NFA_H
+#define REGEX_NFA_H
 
-#include <stddef.h>
-#include "libft.h"
+#include <libft.h>
 
-/*
-**	Following characters need to be escaped to be part of a pattern
-*/
-
-#define SPE_CHAR "[]{}()|*+?^"
-
-typedef struct s_state		t_state;
-typedef struct s_link		t_link;
 typedef struct s_pattern	t_pattern;
-typedef struct s_nfa		t_nfa;
-typedef struct s_dfa		t_dfa;
+typedef struct s_link		t_link;
+typedef struct s_state		t_state;
 typedef struct s_vec		t_vec;
+typedef struct s_nfa		t_nfa;
 
 /*
 **	This structure represents a pattern substring from a regex string.
@@ -52,7 +44,7 @@ struct	s_link
 {
 	int			(*match)(t_pattern s, int c);
 	t_pattern	pattern;
-	t_state		*next;
+	void		*next;
 };
 
 /*
@@ -69,6 +61,15 @@ struct	s_state
 };
 
 /*
+**	A simple vector structure used to store nfa states addresses.
+*/
+struct s_vec
+{
+	size_t	size;
+	t_state	**addr;
+};
+
+/*
 **	This structure represents a non deterministic finite automaton.
 **	It keeps a pointer to its entry state, and to its final state.
 **	It also keeps a pointer to an allocated string,
@@ -76,30 +77,8 @@ struct	s_state
 */
 struct	s_nfa
 {
-	t_state *entrypoint;
-	t_state *finalstate;
+	t_state	*entrypoint;
 	char	*re_expr;
-};
-
-/*
-**	This structure represents a deterministic finite automaton.
-**	It keeps a pointer to its (possibly several) entry states.
-**	It also keeps a pointer to an allocated string,
-**	containing the regex expression.
-*/
-struct s_dfa
-{
-	t_state	**entrypoints;
-	char	*re_expr;
-};
-
-/*
-**	A simple vector structure used to store nfa states addresses.
-*/
-struct s_vec
-{
-	size_t	size;
-	t_state	**addr;
 };
 
 t_state		*state_new(void);
@@ -119,4 +98,4 @@ int			nfa_surruond(t_state *b, t_state *e, t_state **nb, t_state **ne);
 t_nfa		*nfa_new(const char *str);
 void		nfa_print(t_nfa *nfa);
 
-#endif /* LIBREGEX_H */
+#endif /* REGEX_NFA_H */

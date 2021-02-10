@@ -6,11 +6,11 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 21:29:49 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/04 08:09:07 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:05:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libregex.h"
+#include <libregex.h>
 #include <stdlib.h>
 
 t_state	*state_new(void)

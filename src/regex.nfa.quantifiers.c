@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:26 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/04 14:50:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/10 11:05:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libregex.h"
+#include <libregex.h>
 #include <stdlib.h>
 
 static t_state	*wildcard(t_state *beg, t_state *end, const char **ptr)
