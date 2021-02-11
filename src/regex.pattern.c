@@ -6,12 +6,17 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/11 07:34:07 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/11 10:29:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <libft.h>
+
+int			is_epsilon(t_pattern pattern)
+{
+	return (pattern_match(pattern, '\0'));
+}
 
 int			pattern_match(t_pattern pattern, int c)
 {
@@ -54,7 +59,7 @@ t_pattern	pattern_parse(const char **ptr)
 {
 	t_pattern	pattern;
 
-	memset(pattern, 0, PATTERN_MAX_LENGTH);
+	ft_memset(pattern, 0, PATTERN_MAX_LENGTH);
 	while (**ptr || **ptr != ']')
 	{
 		if (**ptr == '\\')
@@ -75,5 +80,3 @@ t_pattern	pattern_parse(const char **ptr)
 	}
 	return ();
 }
-
-

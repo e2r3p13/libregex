@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 07:39:12 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/11 10:25:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_nfa_state	t_ns;
 typedef struct s_nfa_state	t_nfa_state;
 typedef struct s_vec		t_vec;
 typedef struct s_nfa		t_nfa;
+typedef struct s_alphabet	t_alphabet;
 
 /*
 **	t_ns represents a state of an automaton.
@@ -41,6 +42,15 @@ struct s_vec
 {
 	size_t	size;
 	t_ns	**addr;
+};
+
+/*
+//	A linked list containing all accepted patterns
+*/
+struct s_alphabet
+{
+	t_pattern	pattern;
+	t_alphabet	*next;
 };
 
 /*

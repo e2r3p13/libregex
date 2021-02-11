@@ -6,24 +6,19 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 07:45:08 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/11 10:17:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REGEX_FA_H
-# define REGEX_FA_H
+#define REGEX_FA_H
 
 /*
-**	This structure store all character in the pattern with 128bits.
+**	This typedef stores accepted characters in the pattern
+**	with a 128 bits bitfield.
 */
-# define PATTERN_MAX_LENGTH 16
+#define PATTERN_MAX_LENGTH 16
 typedef char	t_pattern[PATTERN_MAX_LENGTH];
-
-typedef struct	s_alphabet
-{
-	t_pattern	pattern;
-	t_alphabet	*next;
-}				t_alphabet;
 
 /*
 **	This structure represents a link to go from one state to another.
@@ -41,5 +36,7 @@ typedef struct	s_link
 }				t_link;
 
 t_pattern	pattern_parse(const char **ptr);
+int			is_epsilon(t_pattern pattern);
+int			pattern_match(t_pattern pattern, int c);
 
 #endif /* REGEX_FA_H */

@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:34:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:36:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 09:29:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
+#include <libft.h>
 
 void	link_add(t_ns *st, t_pattern pattern, t_ns *next)
 {
@@ -36,4 +37,10 @@ void	links_cpy(t_ns *dst, t_ns *src)
 {
 	dst->left = src->left;
 	dst->right = src->right;
+}
+
+void	link_init(t_link *ln)
+{
+	ft_bzero(ln, sizeof(t_link));
+	ln->match = &pattern_match;
 }

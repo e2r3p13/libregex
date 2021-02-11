@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 12:59:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 10:27:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.c>
+#include <regex.dfa.h>
+#include <stdlib.h>
 
 t_dfa	*dfa_new(void)
 {
@@ -23,6 +24,5 @@ t_dfa	*dfa_new(void)
 		free(dfa);
 		return (NULL);
 	}
-	dfa->re_expr = nfa->re_expr;
 	return (dfa);
 }

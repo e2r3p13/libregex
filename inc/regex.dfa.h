@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:41:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 12:50:34 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 10:24:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define REGEX_DFA_H
 
 #include <regex.fa.h>
+#include <libft.h>
 
 typedef struct s_link_lst	t_link_lst;
 typedef struct s_dfa_state	t_ds;
@@ -48,5 +49,8 @@ struct s_dfa
 	t_ds	*entrypoint;
 	char	*re_expr;
 };
+
+t_dfa	*dfa_new(void);
+t_ds	*dfa_state_new(void);
 
 #endif /* REGEX_DFA_H */
