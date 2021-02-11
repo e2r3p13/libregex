@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 12:03:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 13:18:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ int	dfa_build(t_map *m, t_map *t, t_alphabet *a)
 		{
 			d = dfa_push(m->state, p->pattern);
 			m = map_push(t, d, set);
+			if (contains_final_state(m->set))
+				d->is_final = true;
 			dfa_build(m, t, a);
 		}
 		else
