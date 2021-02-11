@@ -1,0 +1,11 @@
+11/02/2021 (glafond-):
+	*	J'ai deplacer les fonction pour parser match et creer les patern de
+		ragex.nfa.pattern.c a regex.pattern.c (a voir pour changer le nom)
+	*	J'ai cree la structure alphabet et changer pattern
+	*	J'ai set les retour de pattern_match true = 1, false = 0 et ceux de
+		pattern_add_char added = 0, error = -1 (on verra pour armoniser les
+		retours de fonction match et autre dans toute la lib)
+	*	ajout de typedef struct s_nfa_state t_nfa_state pour dans le future
+		remplace le t_ns (pas tres comprehensible)
+	*	Ajout du prototype de pattern_parse dans ragex.fa.h
+	*	fonction nfa_add_pattern en cours reecriture.

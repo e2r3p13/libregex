@@ -6,26 +6,24 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:28:42 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 07:45:08 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REGEX_FA_H
-#define REGEX_FA_H
-
-typedef struct s_pattern	t_pattern;
-typedef struct s_link		t_link;
+# define REGEX_FA_H
 
 /*
-**	This structure represents a pattern substring from a regex string.
-**	It internally keeps a pointer to the beginning of the substring,
-**	and another one to the end.
+**	This structure store all character in the pattern with 128bits.
 */
-struct	s_pattern
+# define PATTERN_MAX_LENGTH 16
+typedef char	t_pattern[PATTERN_MAX_LENGTH];
+
+typedef struct	s_alphabet
 {
-	const char *start;
-	const char *end;
-};
+	t_pattern	pattern;
+	t_alphabet	*next;
+}				t_alphabet;
 
 /*
 **	This structure represents a link to go from one state to another.
@@ -35,11 +33,13 @@ struct	s_pattern
 **	A link with a next set to NULL is considered to be an epsilon link,
 **	meaning the match function will always return true.
 */
-struct	s_link
+typedef struct	s_link
 {
 	int			(*match)(t_pattern s, int c);
 	t_pattern	pattern;
 	void		*next;
-};
+}				t_link;
+
+t_pattern	pattern_parse(const char **ptr);
 
 #endif /* REGEX_FA_H */

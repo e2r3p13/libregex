@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:46:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 07:39:12 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <regex.fa.h>
 
 typedef struct s_nfa_state	t_ns;
+typedef struct s_nfa_state	t_nfa_state;
 typedef struct s_vec		t_vec;
 typedef struct s_nfa		t_nfa;
 

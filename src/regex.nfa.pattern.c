@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:42:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/11 07:48:56 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ void *g_esc_table[128] =
 	['f'] = &ft_isffeed
 };
 
-/*
-**	pattern_length returns 0 if a [] pattern is invalid, otherwise, it returns
-**	the length of the pattern, including the enclosing "[]"
-*/
-
-static int	pattern_length(const char *ptr)
-{
-	int i;
-
-	i = 0;
-	while (*ptr && *ptr != ']')
-	{
-		i++;
-		ptr++;
-	}
-	return (*ptr ? i : 0);
-}
 
 /*
 **	nfa_add_pattern push a new state to the nfa and try to create a link
@@ -56,6 +39,21 @@ static int	pattern_length(const char *ptr)
 **
 **	begin --> NULL	to	begin -[pattern]-> next_ns
 */
+
+
+/*
+
+******** EN REECRITURE ********
+
+t_nfa_state	*nfa_add_pattern(t_nfa_state *ns_begin, const char **ptr)
+{
+	t_nfa_state	*ns_next;
+	t_pattern	pattern;
+
+	if (**ptr == '[' )
+}
+*/
+
 
 t_ns		*nfa_add_pattern(t_ns *begin, const char **ptr)
 {
