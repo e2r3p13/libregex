@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/12 08:44:04 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/12 15:48:10 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void		pattern_epsilon(t_pattern *pattern)
 	pattern_add_char(pattern, '\0');
 }
 
-
 int			is_epsilon(t_pattern pattern)
 {
 	return (pattern_match(pattern, '\0'));
@@ -112,4 +111,12 @@ int			pattern_match(t_pattern pattern, int c)
 	if (pattern[div] & (1 << (c % 8)))
 		return (1);
 	return (0);
+}
+
+/*
+**	Returns 0 if patterns a end b are equal
+*/
+int		pattern_cmp(t_pattern *a, t_pattern *b)
+{
+	return (ft_memcmp(a, b, sizeof(t_pattern)));
 }

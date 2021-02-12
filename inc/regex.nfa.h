@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 13:12:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 15:39:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ t_ns		*nfa_build_quantifier(t_ns *b, t_ns *e, const char **p);
 int			nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
 t_nfa		*nfa_new(const char *str);
 void		nfa_print(t_nfa *nfa);
+t_bool		nfa_has_link(t_pattern *p, t_ns *state);
+t_bool		pattern_cmp(t_pattern *a, t_pattern *b);
 
 #endif /* REGEX_NFA_H */

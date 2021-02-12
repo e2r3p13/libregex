@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:41:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 10:24:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 15:28:20 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,30 @@
 #define REGEX_DFA_H
 
 #include <regex.fa.h>
+#include <regex.nfa.h>
 #include <libft.h>
 
+#define SET_DFL_SIZE 8
+
+typedef struct s_set		t_set;
+typedef struct s_map		t_map;
 typedef struct s_link_lst	t_link_lst;
 typedef struct s_dfa_state	t_ds;
 typedef struct s_dfa		t_dfa;
+
+struct s_set
+{
+	t_ns	**addr;
+	size_t	size;
+	size_t	capacity;
+};
+
+struct s_map
+{
+	t_ds	*state;
+	t_set	*set;
+	t_map	*next;
+};
 
 struct s_link_lst
 {
@@ -52,5 +71,17 @@ struct s_dfa
 
 t_dfa	*dfa_new(void);
 t_ds	*dfa_state_new(void);
+int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last);
+t_set	*set_new();
+int		set_push(t_ns *state, t_set *set);
+t_bool	is_state_in_set(t_ns *state, t_set *set);
+void	set_free(t_set *set);
+t_bool	set_cmp(t_set *a, t_set *b);
+t_ds	*state_in_map(t_map *map, t_set *set);
+void	dfa_links_free(t_link_lst *links);
+t_map	*map_new(t_ds *state, t_set *set);
+void	map_push(t_map *dst, t_map *src);
+void	dfa_state_free(t_ds *state);
+void	map_free(t_map *map);
 
 #endif /* REGEX_DFA_H */
