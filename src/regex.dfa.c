@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 15:19:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 18:27:49 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <libft.h>
 
-static int e_closure(t_ns *state, t_set *dst)
+static int	e_closure(t_ns *state, t_set *dst)
 {
 	if (!is_state_in_set(state, dst))
 	{
@@ -48,7 +48,7 @@ static int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
 **	Converts an nfa into a dfa, following the subset construction method:
 **	https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf
 */
-int	dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
+int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 {
 	t_alphabet	*current_letter;
 	t_set		*move_set;
@@ -95,7 +95,7 @@ int	dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 **	the epsilon closure of our nfa's entrypoint as its set.
 **	The dfa_build call will construct our dfa from its first node.
 */
-t_dfa *nfa_to_dfa(t_nfa *nfa)
+t_dfa		*nfa_to_dfa(t_nfa *nfa)
 {
 	t_dfa	*dfa;
 	t_map	*map;
@@ -113,7 +113,7 @@ t_dfa *nfa_to_dfa(t_nfa *nfa)
 		free(map);
 		return (NULL);
 	}
-	if (!dfa_build(map, map, nfa->alphabet))
+	if (dfa_build(map, map, nfa->alphabet) < 0)
 	{
 		free(dfa);
 		free(map);

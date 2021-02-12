@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:38:10 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 18:38:36 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void		nfa_print(t_nfa *nfa)
 	i = 0;
 	while (i < vec.size)
 	{
-		int l = fa(vec.addr[i]->left.next, &vec);
-		int r = fa(vec.addr[i]->right.next, &vec);
+		int l = fa(((t_nfa_state *)(vec.addr)[i])->left.next, &vec);
+		int r = fa(((t_nfa_state *)(vec.addr)[i])->right.next, &vec);
 		printf("%zu:\tleft --> %d\tright --> %d\n", i + 1, l, r);
 		i++;
 	}

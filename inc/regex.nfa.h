@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 15:39:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 17:57:06 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ struct	s_nfa_state
 struct s_vec
 {
 	size_t	size;
-	t_ns	**addr;
+	void	**addr;
 };
 
 /*
