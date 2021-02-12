@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 18:45:41 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/12 21:36:53 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+**	Allocates a dfa structure, and its entrypoint.
+**	TODO: Maybe init the re_expr string here
+*/
 t_dfa	*dfa_new(void)
 {
 	t_dfa	*dfa;
@@ -28,6 +32,11 @@ t_dfa	*dfa_new(void)
 	return (dfa);
 }
 
+/*
+**	Fill a vector with all addresses of a dfa, in order to free them or
+**	whatever else (printing...).
+**	Sets all states flag of the dfa to 0
+*/
 static void		dfa_get_addresses(t_ds *st, t_vec *v)
 {
 	if (!st || st->flag == 0)
@@ -42,6 +51,11 @@ static void		dfa_get_addresses(t_ds *st, t_vec *v)
 	}
 }
 
+/*
+**	compute recursively the size of a dfa, in order to free them or
+**	whatever else (printing...).
+**	Sets all states flag of the dfa to 0
+*/
 static size_t	dfa_get_size(t_ds *st)
 {
 	int total = 1;
@@ -57,6 +71,10 @@ static size_t	dfa_get_size(t_ds *st)
 	return (total);
 }
 
+/*
+**	get the "index" of a state in the traversal order, using the addresses
+**	vector obtained with dfa_get_addresses.
+*/
 static int	fa(t_ds *st, t_vec *v)
 {
 	for (size_t i = 0; i < v->size; i++)
@@ -65,6 +83,9 @@ static int	fa(t_ds *st, t_vec *v)
 	return (0);
 }
 
+/*
+**	Prints a dfa in a pretty way.
+*/
 void		dfa_print(t_dfa *dfa)
 {
 	t_vec	vec;
