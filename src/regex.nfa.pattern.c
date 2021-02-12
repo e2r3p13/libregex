@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 08:38:04 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:33:26 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ t_nfa_state	*nfa_add_pattern(t_nfa_state *ns_begin, const char **ptr)
 		(*ptr)++;
 		if (pattern_escape(&pattern, ptr))
 			return (NULL);
+	}
+	else
+	{
+		(*ptr)++; // Characters needs to be escaped too
 	}
 	if (!(ns_next = state_new()))
 		return (NULL);

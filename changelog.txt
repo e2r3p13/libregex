@@ -1,4 +1,4 @@
-Loic Buckwell - 12/02/2021
+Loic Buckwell - 12/02/2021, le midi
 
 Bien le bonjour cher partenaire, que je ne nommerai pas ici pour des soucis
 evidents de confidentialite.
@@ -19,3 +19,13 @@ Ce que j'ai prevu de faire:
 
 Merde, je voulais faire un msg plus complet mais je dois partir j'ai pas reservé je vais me faire TIG !!!
 A bientôt !
+
+-----
+
+Loic Buckwell - 12/02/2021, le soir
+
+Re.
+J'ai voulu tester mon dfa mais y avait une boucle inf qui venait de add_pattern
+T'as géré le cas des [, des \, mais pas le cas des caractères normaux.. ?
+C'était fait exprès ? J'ai incrémenté le pointeur sans m'occuper de remplir le
+pattern juste pour pouvoir tester le dfa, oublie pas de t'en occuper. Bisous
