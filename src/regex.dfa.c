@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 18:27:49 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/12 19:16:49 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include <stdlib.h>
 #include <libft.h>
 
+/*
+**	Fill a dst set with all states that can be reached after a e* move
+**	from a given nfa state.
+*/
 static int	e_closure(t_ns *state, t_set *dst)
 {
 	if (!is_state_in_set(state, dst))
@@ -31,6 +35,10 @@ static int	e_closure(t_ns *state, t_set *dst)
 	return (0);
 }
 
+/*
+**	Fill a dst set with all states that can be reached after a p move, followed
+**	by e* moves, from each nfa states of src set.
+*/
 static int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
 {
 	size_t i = 0;

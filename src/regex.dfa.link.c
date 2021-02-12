@@ -6,13 +6,17 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 15:51:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 19:59:20 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
 
+/*
+**	Connects first state to last state with the p pattern.
+**	p pattern is added to the link linked list of first.
+*/
 int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 {
 	t_link_lst	*lklst;
@@ -33,6 +37,9 @@ int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 	return (0);
 }
 
+/*
+**	Recursively free a link linked list. Used by dfa_free
+*/
 void	dfa_links_free(t_link_lst *links)
 {
 	if (links)
