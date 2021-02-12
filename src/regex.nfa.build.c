@@ -6,24 +6,17 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/10 11:37:42 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 03:21:38 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
 #include <stdlib.h>
 
-t_pattern	pattern_epsilon(void)
-{
-	t_pattern p;
-
-	p.start = NULL;
-	p.end = NULL;
-	return (p);
-}
-
 int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 {
+	t_pattern	epsilon;
+
 	if (!(*nb = state_new()))
 		return (-1);
 	if (!(*ne = state_new()))
@@ -33,15 +26,16 @@ int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 	}
 	links_cpy(*nb, b);
 	links_destroy(b);
-	link_add(b, pattern_epsilon(), *nb);
-	link_add(e, pattern_epsilon(), *ne);
+	pattern_epsilon(&epsilon);
+	link_add(b, epsilon, *nb);
+	link_add(e, epsilon, *ne);
 	return (0);
 }
 
 t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested)
 {
-	t_ns	*end;
-	t_ns	*tmp;
+	t_ns		*end;
+	t_ns		*tmp;
 
 	if (!beg)
 		return (NULL);

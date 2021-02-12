@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 10:25:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 03:58:49 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		links_cpy(t_ns *dst, t_ns *src);
 t_nfa		*str_to_nfa(const char *str);
 t_bool		nfa_match(t_nfa *nfa, const char *str);
 void		nfa_free(t_nfa *nfa);
-t_pattern	pattern_epsilon(void);
+void		pattern_epsilon(t_pattern *pattern);
 t_ns		*nfa_create(t_ns *beg, const char **ptr, t_bool nested);
 t_ns		*nfa_build_or(t_ns *b, t_ns *e, const char **p, t_bool n);
 t_ns		*nfa_add_pattern(t_ns *beg, const char **p);

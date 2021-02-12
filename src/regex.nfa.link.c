@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:34:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 09:29:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 08:43:07 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	link_add(t_ns *st, t_pattern pattern, t_ns *next)
 	if (!st->left.next)
 	{
 		st->left.next = next;
-		st->left.pattern = pattern;
+		ft_memcpy(st->left.pattern, pattern, sizeof(t_pattern));
 	}
 	else
 	{
 		st->right.next = next;
-		st->right.pattern = pattern;
+		ft_memcpy(st->right.pattern, pattern, sizeof(t_pattern));
 	}
 }
 
@@ -41,6 +41,6 @@ void	links_cpy(t_ns *dst, t_ns *src)
 
 void	link_init(t_link *ln)
 {
-	ft_bzero(ln, sizeof(t_link));
+	ft_memset(ln, 0, sizeof(t_link));
 	ln->match = &pattern_match;
 }

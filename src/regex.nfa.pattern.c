@@ -6,13 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 07:48:56 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/12 08:38:04 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <stdlib.h>
 
+/*
 void *g_esc_table[128] =
 {
 	['c'] = &ft_iscontrol,
@@ -30,7 +31,7 @@ void *g_esc_table[128] =
 	['v'] = &ft_isvtab,
 	['f'] = &ft_isffeed
 };
-
+*/
 
 /*
 **	nfa_add_pattern push a new state to the nfa and try to create a link
@@ -40,27 +41,38 @@ void *g_esc_table[128] =
 **	begin --> NULL	to	begin -[pattern]-> next_ns
 */
 
-
-/*
-
-******** EN REECRITURE ********
-
 t_nfa_state	*nfa_add_pattern(t_nfa_state *ns_begin, const char **ptr)
 {
 	t_nfa_state	*ns_next;
 	t_pattern	pattern;
 
-	if (**ptr == '[' )
+	ft_memset(pattern, 0, sizeof(pattern));
+	if (**ptr == '[')
+	{
+		(*ptr)++;
+		if (pattern_parse(&pattern, ptr))
+			return (NULL);
+	}
+	else if (**ptr == '\\')
+	{
+		(*ptr)++;
+		if (pattern_escape(&pattern, ptr))
+			return (NULL);
+	}
+	if (!(ns_next = state_new()))
+		return (NULL);
+	link_add(ns_begin, pattern, ns_next);
+	return (ns_next);
 }
-*/
 
-
+/*
 t_ns		*nfa_add_pattern(t_ns *begin, const char **ptr)
 {
 	t_ns		*next_ns;
 	t_pattern	pattern;
 	int			p_length;
 
+	ft_memset(pattern, 0, PATTERN_MAX_LENGTH);
 	if (!(next_ns = state_new()))
 		return (NULL);
 	pattern.start = *ptr;
@@ -80,3 +92,4 @@ t_ns		*nfa_add_pattern(t_ns *begin, const char **ptr)
 	link_add(begin, pattern, next_ns);
 	return (next_ns);
 }
+*/
