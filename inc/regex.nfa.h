@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 03:58:49 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/12 13:12:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ struct s_alphabet
 */
 struct	s_nfa
 {
-	t_ns	*entrypoint;
-	char	*re_expr;
+	t_ns		*entrypoint;
+	char		*re_expr;
+	t_alphabet	*alphabet;
 };
 
 t_ns		*state_new(void);

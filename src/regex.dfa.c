@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/11 13:18:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/12 14:10:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ static int	move(t_set *t, t_pattern *p, t_set *set)
 
 	while (i < t->size)
 	{
-		if (is_state_in_set(s, set))
+		// if (is_state_in_set(s, set))
 	}
 	return (0);
 }
@@ -155,46 +155,89 @@ static t_map *map_new(t_ds *state, t_set *set)
 	return (map);
 }
 
-int	dfa_build(t_map *m, t_map *t, t_alphabet *a)
+int dfa_push(t_ds *state, t_pattern p)
 {
-	t_alphabet	*p;
-	t_set		*s;
-	t_ds		*d;
+	t_ds	*new;
 
-	p = a;
-	while (p)
-	{
-		set = set_new();
-		move(m->set, p->pattern, set);
-		if (!(node = set_in_table(set, table)))
-		{
-			d = dfa_push(m->state, p->pattern);
-			m = map_push(t, d, set);
-			if (contains_final_state(m->set))
-				d->is_final = true;
-			dfa_build(m, t, a);
-		}
-		else
-		{
-			free(set);
-			dfa_create_connection(m->state, node->state ,p->pattern);
-		}
-		p = p->next;
-	}
-	return (0);
+	if (!(new = dfa_state_new()))
+		return (-1);
+	dfa_create_connection(state, new, pattern);
 }
 
+/*
+**	Converts an nfa into a dfa, following the subset construction method:
+**	https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf
+*/
+int	dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
+{
+	t_alphabet	*current_letter;
+	t_set		*move_set;
+	t_ds		*next_state;
+	t_map		*next_st_map;
+
+	current_letter = a;
+	while (current_letter)
+	{
+		if (!(move_set = set_new()))
+			return (NULL);
+		if (move_epsilon(st_map->set, current_letter->pattern, move_set) < 0)
+		{
+			set_free(move_set);
+			return (NULL);
+		}
+		if (!(next_state = state_in_map(hole_map, move_set)))
+		{
+			if (!(next_state = dfa_state_new()))
+			{
+				set_free(move_set);
+				return (NULL);
+			}
+			if (!(next_st_map = map_new(next_state, move_set)))
+			{
+				set_free(move_set);
+				dfa_state_free(next_state);
+				return (NULL);
+			}
+			map_push(hole_map, next_st_map);
+			dfa_build(next_st_map, hole_map, a);
+		}
+		else
+			set_free(move_set);
+		if (dfa_create_connection(st_map->state, next_state, current_letter) < 0)
+			return (NULL);
+		current_letter = current_letter->next;
+	}
+}
+
+/*
+**	Builds the first node of the dfa, and stores it in a t_map structure with
+**	the epsilon closure of our nfa's entrypoint as its set.
+**	The dfa_build call will construct our dfa from its first node.
+*/
 t_dfa *nfa_to_dfa(t_nfa *nfa)
 {
 	t_dfa	*dfa;
-	t_map	*table;
+	t_map	*map;
 
-	dfa = dfa_new();
-	table = map_new(dfa->entrypoint, NULL);
-	e_closure(nfa->entrypoint, table->set);
-	if (contains_final_state(table->set))
-		dfa->entrypoint->is_final = true;
-	dfa_build(dfa->entrypoint, table, nfa->s_alphabet);
-	map_free(table);
+	if (!(dfa = dfa_new()))
+		return (NULL);
+	if (!(map = map_new(dfa->entrypoint, NULL)))
+	{
+		free(dfa);
+		return (NULL);
+	}
+	if (e_closure(nfa->entrypoint, map->set) < 0)
+	{
+		free(dfa);
+		free(map);
+		return (NULL);
+	}
+	if (!dfa_build(map, map, nfa->alphabet)
+	{
+		free(dfa);
+		free(map);
+		return (NULL);
+	}
+	map_free(map);
 	return (dfa);
 }
