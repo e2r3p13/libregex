@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 13:21:10 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 19:43:03 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@
 
 /*
 **	Connects first state to last state with the p pattern.
-**	p pattern is added to the link linked list of first.
+**	p pattern is added in front of links linked list of first if not
+**	already present.
 */
 int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 {
-	t_link_lst	*lklst;
-	t_link_lst	*tmp;
+	t_link_lst	*new_link;
+	t_link_lst	*checker;
 
-	if (!(lklst = malloc(sizeof(t_link_lst))))
-		return (-1);
-	pattern_copy(lklst->link.pattern, *p);
-
-	lklst->link.next = last;
-	lklst->next = NULL;
-	if ((tmp = first->links))
+	checker = first->links;
+	while (checker)
 	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = lklst;
+		if (!pattern_cmp(checker->link.pattern, *p))
+			return (0);
+		checker = checker->next;
 	}
-	else
-		first->links = lklst;
+	if (!(new_link = malloc(sizeof(t_link_lst))))
+		return (-1);
+	pattern_copy(new_link->link.pattern, *p);
+	new_link->link.next = last;
+	new_link->next = first->links;
+	first->links = new_link;
 	return (0);
 }
 
