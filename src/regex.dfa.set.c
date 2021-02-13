@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 12:11:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 12:36:47 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_set		*set_new()
 		free(set);
 		return (NULL);
 	}
+	ft_memset(set->addr, 0, sizeof(t_ns *) * SET_DFL_SIZE);
 	set->capacity = SET_DFL_SIZE;
 	set->size = 0;
 	return (set);

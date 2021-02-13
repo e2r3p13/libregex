@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 11:08:58 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 12:31:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ void		nfa_print(t_nfa *nfa)
 		int l = fa(node->left.next, &vec);
 		int r = fa(node->right.next, &vec);
 		printf("%zu: left -> %d ", i + 1, l);
-		pattern_print(node->left.pattern);
+		// pattern_print(node->left.pattern);
 		printf(" right -> %d ", r);
-		pattern_print(node->right.pattern);
+		// pattern_print(node->right.pattern);
 		printf("\n");
 		i++;
 	}

@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 19:59:20 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 12:57:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
 **	Connects first state to last state with the p pattern.
@@ -24,12 +25,17 @@ int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 
 	if (!(lklst = malloc(sizeof(t_link_lst))))
 		return (-1);
-	ft_memcpy(lklst->link.pattern, p, sizeof(t_pattern));
+	pattern_copy(lklst->link.pattern, *p);
+
 	lklst->link.next = last;
+	lklst->next = NULL;
 	if ((tmp = first->links))
 	{
 		while (tmp->next)
+		{
 			tmp = tmp->next;
+			printf("%p\n", tmp);
+		}
 		tmp->next = lklst;
 	}
 	else
