@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:34:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 15:52:23 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 10:13:45 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	link_init(t_link *ln)
 
 t_bool	nfa_has_link(t_pattern *p, t_ns *state)
 {
-	return (!pattern_cmp(p, &state->left.pattern) ||
-		!pattern_cmp(p, &state->right.pattern));
+	return (!pattern_cmp(*p, state->left.pattern) ||
+		!pattern_cmp(*p, state->right.pattern));
 }

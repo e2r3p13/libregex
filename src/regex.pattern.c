@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 09:44:14 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 10:14:50 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ int			pattern_match(t_pattern pattern, int c)
 
 int			pattern_copy(t_pattern dest, t_pattern src)
 {
-	return (ft_memcpy(dest, src, sizeof(t_pattern)));
+	ft_memcpy(dest, src, sizeof(t_pattern));
+	return (0);
 }
 
 /*
