@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/10 11:41:34 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 09:03:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,5 @@
 
 #include <regex.nfa.h>
 #include <regex.dfa.h>
-
-/*
-**	Following characters need to be escaped to be part of a pattern
-*/
-#define SPE_CHAR "[]{}()|*+?^"
 
 #endif /* LIBREGEX_H */
