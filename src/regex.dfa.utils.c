@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 10:16:44 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 12:13:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ void		dfa_print(t_dfa *dfa)
 	i = 0;
 	while (i < vec.size)
 	{
-		printf("%zu:", i + 1);
+		printf("%zu", i + 1);
 		t_ds *st = (t_ds *)(vec.addr[i]);
+		if (st->is_final)
+			printf("f");
+		printf(":");
 		t_link_lst *links = st->links;
 		while (links)
 		{

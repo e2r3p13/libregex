@@ -6,12 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 20:13:58 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 12:11:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <libft.h>
 
 /*
 **	Allocates a new set (which basically is a dynamic array of states addresses)
@@ -85,6 +87,20 @@ t_bool		is_state_in_set(t_ns *state, t_set *set)
 	return (false);
 }
 
+t_bool		set_contains_final_state(t_set *set)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < set->size)
+	{
+		if (set->addr[i]->is_final)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 /*
 **	Too obvious to comment, I guess
 */
@@ -124,4 +140,16 @@ t_bool		set_cmp(t_set *a, t_set *b)
 		i++;
 	}
 	return (true);
+}
+
+void	set_print(t_set *set)
+{
+	printf("{");
+	for (size_t i = 0; i < set->size; i++)
+	{
+		printf("%p", set->addr[i]);
+		if (i < set->size - 1)
+			printf(", ");
+	}
+	printf("}");
 }

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:41:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 18:20:34 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 12:10:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ t_map	*map_new(t_ds *state, t_set *set);
 void	map_push(t_map *dst, t_map *src);
 void	dfa_state_free(t_ds *state);
 void	map_free(t_map *map);
-t_dfa	*nfa_to_dfa(t_nfa *nfa);
+t_dfa	*nfa_to_dfa(t_nfa *nfa, t_alphabet *a);
 void	dfa_print(t_dfa *dfa);
+void	map_print(t_map *map);
+void	set_print(t_set *set);
+t_bool	set_contains_final_state(t_set *set);
 
 #endif /* REGEX_DFA_H */

@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 20:06:13 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 11:33:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
 **	Allocates and returns a t_map node. its set member is eithen given in
@@ -75,4 +76,14 @@ void	map_free(t_map *map)
 		set_free(map->set);
 		free(map);
 	}
+}
+
+void	map_print(t_map *map)
+{
+	if (!map)
+		return ;
+	printf("state: %p set: ", map->state);
+	set_print(map->set);
+	map_print(map->next);
+	printf("\n");
 }
