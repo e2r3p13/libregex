@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 10:14:50 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 10:36:04 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ int			pattern_escape(t_pattern *pattern, const char **ptr)
 	return (0);
 }
 
+#include <stdio.h>
+
 int			pattern_parse(t_pattern *pattern, const char **ptr)
 {
-	while (**ptr || **ptr != ']')
+	while (**ptr && **ptr != ']')
 	{
 		if (**ptr == '\\')
 		{
@@ -86,8 +88,9 @@ int			pattern_parse(t_pattern *pattern, const char **ptr)
 		else if (pattern_add_char(pattern, *(*ptr)++))
 				return (-1);
 	}
-	if (**ptr)
-		(*ptr)++;
+	if (!**ptr)
+		return (-1);
+	(*ptr)++;
 	return (0);
 }
 
