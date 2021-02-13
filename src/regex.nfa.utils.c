@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 09:33:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 11:08:58 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -80,10 +81,30 @@ static int	fa(t_ns *st, t_vec *v)
 	return (0);
 }
 
+void		pattern_print(t_pattern pattern)
+{
+	int		i;
+	char	b;
+	char	c;
+
+	i = 0;
+	while (i < PATTERN_MAX_LENGTH)
+	{
+		b = 1;
+		c = pattern[i++];
+		while (b)
+		{
+			printf("%c", c & b ? '1' : '0');
+			b <<= 1;
+		}
+	}
+}
+
 void		nfa_print(t_nfa *nfa)
 {
 	t_vec	vec;
 	size_t	i;
+	t_ns	*node;
 
 	vec.size = 0;
 	vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa->entrypoint));
@@ -91,9 +112,14 @@ void		nfa_print(t_nfa *nfa)
 	i = 0;
 	while (i < vec.size)
 	{
-		int l = fa(((t_nfa_state *)(vec.addr)[i])->left.next, &vec);
-		int r = fa(((t_nfa_state *)(vec.addr)[i])->right.next, &vec);
-		printf("%zu:\tleft --> %d\tright --> %d\n", i + 1, l, r);
+		node = (t_nfa_state *)(vec.addr)[i];
+		int l = fa(node->left.next, &vec);
+		int r = fa(node->right.next, &vec);
+		printf("%zu: left -> %d ", i + 1, l);
+		pattern_print(node->left.pattern);
+		printf(" right -> %d ", r);
+		pattern_print(node->right.pattern);
+		printf("\n");
 		i++;
 	}
 }

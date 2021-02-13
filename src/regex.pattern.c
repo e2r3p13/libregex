@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 10:36:04 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:10:48 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static int	pattern_add_range(t_pattern *pattern, int s, int e)
 		return (-1);
 	if (s / 8 > PATTERN_MAX_LENGTH || e / 8 > PATTERN_MAX_LENGTH)
 		return (-1);
-	while (s > e)
+	while (s <= e)
 	{
-		(*pattern)[s / 8] |= (1 << (s % 8));
+		(*pattern)[s/8] |= (1 << (s % 8));
 		s++;
 	}
 	return (0);
@@ -66,8 +66,6 @@ int			pattern_escape(t_pattern *pattern, const char **ptr)
 		pattern_add_char(pattern, *(*ptr)++);
 	return (0);
 }
-
-#include <stdio.h>
 
 int			pattern_parse(t_pattern *pattern, const char **ptr)
 {
