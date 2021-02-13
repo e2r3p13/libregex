@@ -3,9 +3,60 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+         #
+#    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/01/28 16:31:07 by bccyv             #+#    #+#              #
-#    Updated: 2021/01/28 16:31:15 by bccyv            ###   ########.fr        #
+#    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
+#    Updated: 2021/02/13 04:44:19 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# ****************
+#	Varriables:
+
+LIBNAME	=	libregex.a
+
+AR		=	ar
+ARFLAGS	=	rc
+
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror
+
+SRCDIR	=	src
+INCDIR	=	inc
+OBJDIR	=	obj
+SRCS	=	$(notdir $(shell ls -1 $(SRCDIR)/*.c))
+OBJS	=	$(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
+DPDCS	=	$(OBJS:.o=.d)
+
+# ****************
+#	Rules:
+
+all: $(LIBNAME)
+
+$(LIBNAME): $(OBJS)
+	@$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
+	@printf "[\e[32mOK\e[0m] %s\n" $@
+
+-include $(DPDCS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS) -MMD -I$(INCDIR) -c $< -o $@
+	@printf "[\e[32mOK\e[0m] %s\n" $@
+
+clean: _clean
+
+fclean: _clean
+ifeq ($(shell ls -1 | grep $(LIBNAME)),$(LIBNAME))
+	@rm -rf $(LIBNAME)
+	@printf "[\e[31mCLEAN\e[0m] %s\n" $(LIBNAME)
+endif
+
+_clean:
+ifeq ($(shell ls -1 | grep $(OBJDIR)),$(OBJDIR))
+	@rm -rf $(OBJS) $(DPDCS)
+	@printf "[\e[31mCLEAN\e[0m] %s\n" $(OBJS)
+	@rm -rf $(OBJDIR)
+endif
+
+re: fclean all
