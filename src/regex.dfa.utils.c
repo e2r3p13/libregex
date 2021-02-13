@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 12:13:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 18:53:20 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void		dfa_get_addresses(t_ds *st, t_vec *v)
 	t_link_lst *links = st->links;
 	while (links)
 	{
-		dfa_get_addresses(st->links->link.next, v);
+		dfa_get_addresses(links->link.next, v);
 		links = links->next;
 	}
 }
@@ -65,7 +65,7 @@ static size_t	dfa_get_size(t_ds *st)
 	t_link_lst *links = st->links;
 	while (links)
 	{
-		total += dfa_get_size(st->links->link.next);
+		total += dfa_get_size(links->link.next);
 		links = links->next;
 	}
 	return (total);
@@ -105,7 +105,7 @@ void		dfa_print(t_dfa *dfa)
 		t_link_lst *links = st->links;
 		while (links)
 		{
-			printf("\t%d", fa(st->links->link.next, &vec));
+			printf("\t%d", fa(links->link.next, &vec));
 			links = links->next;
 		}
 		i++;

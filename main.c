@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/13 12:30:26 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 18:55:06 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **av)
 	printf("nfa:\n");
 	nfa_print(nfa);
 	regex = nfa_to_dfa(nfa, alphabet);
-	printf("dfa:\n");
+	printf("\ndfa:\n");
 	dfa_print(regex);
 	nfa_free(nfa);
 

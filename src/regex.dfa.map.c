@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 13:32:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 18:40:09 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,11 @@ void	map_print(t_map *map)
 	printf("state: %p set: ", map->state);
 	set_print(map->set);
 	printf("\n");
+	t_link_lst	*lst = map->state->links;
+	while (lst)
+	{
+		printf("connected to %p\n", lst->link.next);
+		lst = lst->next;
+	}
 	map_print(map->next);
 }
