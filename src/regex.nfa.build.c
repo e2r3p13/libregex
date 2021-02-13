@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 09:51:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 10:11:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ t_ns	*nfa_create(t_ns *beg, t_alphabet **alphabet, const char **ptr, t_bool nest
 		tmp = end;
 		if (**ptr == '(' && (*ptr)++)
 		{
-			if (!(end = nfa_create(end, ptr, true)) || **ptr != ')')
+			if (!(end = nfa_create(end, alphabet, ptr, true)) || **ptr != ')')
 				return (NULL);
 			(*ptr)++;
 		}
-		else if (!(end = nfa_add_pattern(end, alphabet ptr)))
+		else if (!(end = nfa_add_pattern(end, alphabet, ptr)))
 			return (NULL);
 		if (!(end = nfa_build_quantifier(tmp, end, ptr)))
 			return (NULL);
-		if (**ptr == '|' && !(end = nfa_build_or(beg, end, ptr, nested)))
+		if (**ptr == '|' && !(end = nfa_build_or(beg, alphabet, end, ptr, nested)))
 			return (NULL);
 	}
 	return (end);
