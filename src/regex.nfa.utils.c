@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 18:38:36 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 09:33:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_nfa			*nfa_new(const char *str)
 
 	if (!str || !(nfa = malloc(sizeof(t_nfa))))
 		return (NULL);
-	ft_bzero(nfa, sizeof(t_nfa));
+	ft_memset(nfa, 0, sizeof(t_nfa));
 	if (!(nfa->re_expr = ft_strdup(str)))
 	{
 		free(nfa);
