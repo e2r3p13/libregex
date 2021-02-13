@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 09:22:31 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 09:44:14 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int			pattern_match(t_pattern pattern, int c)
 	return (0);
 }
 
-int			pattern_copy(t_pattern *dest, t_pattern *src)
+int			pattern_copy(t_pattern dest, t_pattern src)
 {
 	return (ft_memcpy(dest, src, sizeof(t_pattern)));
 }
@@ -121,7 +121,7 @@ int			pattern_copy(t_pattern *dest, t_pattern *src)
 /*
 **	Returns 0 if patterns a end b are equal
 */
-int		pattern_cmp(t_pattern *a, t_pattern *b)
+int		pattern_cmp(t_pattern a, t_pattern b)
 {
 	return (ft_memcmp(a, b, sizeof(t_pattern)));
 }

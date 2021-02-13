@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 05:13:38 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 09:03:42 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 10:03:54 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ static t_alphabet	*alphabet_new_pattern(t_pattern pattern)
 	return (node);
 }
 
-int					*alphabet_add_pattern(t_alphabet **head, t_pattern pattern)
+int					alphabet_add_pattern(t_alphabet **head, t_pattern pattern)
 {
 	t_alphabet	*walk;
-	t_alphabet	**ptr;
 
 	if (!*head)
 	{
-		if (!(*head = alphabet_new_pattern(t_pattern pattern)))
+		if (!(*head = alphabet_new_pattern(pattern)))
 			return (-1);
 		return (0);
 	}
@@ -43,7 +42,7 @@ int					*alphabet_add_pattern(t_alphabet **head, t_pattern pattern)
 			return (0);
 		walk = walk->next;
 	}
-	if (!(walk->next = alphabet_new_pattern(t_pattern pattern)))
+	if (!(walk->next = alphabet_new_pattern(pattern)))
 		return (-1);
 	return (0);
 }

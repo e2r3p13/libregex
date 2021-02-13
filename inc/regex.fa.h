@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 09:39:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 10:03:39 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ typedef struct	s_link
 }				t_link;
 
 
-int			*alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
+int			alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
 int			pattern_add_char(t_pattern *pattern, int c);
 int			pattern_parse(t_pattern *pattern, const char **ptr);
 int			pattern_escape(t_pattern *pattern, const char **ptr);
 void		pattern_epsilon(t_pattern *pattern);
 int			is_epsilon(t_pattern pattern);
 int			pattern_match(t_pattern pattern, int c);
-int			pattern_cmp(t_pattern *a, t_pattern *b);
+int			pattern_copy(t_pattern dest, t_pattern src);
+int			pattern_cmp(t_pattern a, t_pattern b);
 
 #endif /* REGEX_FA_H */

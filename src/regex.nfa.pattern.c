@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 08:10:16 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 09:55:21 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void *g_esc_table[128] =
 **	begin --> NULL	to	begin -[pattern]-> next_ns
 */
 
-t_nfa_state	*nfa_add_pattern(t_nfa_state *ns_begin, const char **ptr)
+t_ns	*nfa_add_pattern(t_ns *ns_begin, t_alphabet **a, const char **ptr)
 {
 	t_nfa_state	*ns_next;
 	t_pattern	pattern;
@@ -60,6 +60,8 @@ t_nfa_state	*nfa_add_pattern(t_nfa_state *ns_begin, const char **ptr)
 			return (NULL);
 	}
 	else if (pattern_add_char(&pattern, *(*ptr)++))
+		return (NULL);
+	if (alphabet_add_pattern(a, pattern))
 		return (NULL);
 	if (!(ns_next = state_new()))
 		return (NULL);
