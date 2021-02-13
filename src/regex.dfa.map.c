@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 11:33:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 13:32:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ void	map_print(t_map *map)
 		return ;
 	printf("state: %p set: ", map->state);
 	set_print(map->set);
-	map_print(map->next);
 	printf("\n");
+	map_print(map->next);
 }
