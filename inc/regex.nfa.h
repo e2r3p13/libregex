@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 09:39:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 09:52:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void		link_init(t_link *ln);
 void		link_add(t_ns *st, t_pattern pattern, t_ns *next);
 void		links_destroy(t_ns *st);
 void		links_cpy(t_ns *dst, t_ns *src);
-t_nfa		*str_to_nfa(const char *str);
+t_nfa		*str_to_nfa(const char *str, t_alphabet **alphabet);
 t_bool		nfa_match(t_nfa *nfa, const char *str);
 void		nfa_free(t_nfa *nfa);
-t_ns		*nfa_create(t_ns *beg, const char **ptr, t_bool nested);
+t_ns		*nfa_create(t_ns *beg, t_alphabet **alphabet, const char **ptr, t_bool nested);
 t_ns		*nfa_build_or(t_ns *b, t_ns *e, const char **p, t_bool n);
-t_ns		*nfa_add_pattern(t_ns *beg, const char **p);
+t_ns		*nfa_add_pattern(t_ns *beg, t_alphabet **alphabet, const char **p);
 t_ns		*nfa_build_quantifier(t_ns *b, t_ns *e, const char **p);
 int			nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
 t_nfa		*nfa_new(const char *str);

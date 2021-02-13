@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 03:21:38 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 09:51:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 	return (0);
 }
 
-t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested)
+t_ns	*nfa_create(t_ns *beg, t_alphabet **alphabet, const char **ptr, t_bool nested)
 {
 	t_ns		*end;
 	t_ns		*tmp;
@@ -49,7 +49,7 @@ t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested)
 				return (NULL);
 			(*ptr)++;
 		}
-		else if (!(end = nfa_add_pattern(end, ptr)))
+		else if (!(end = nfa_add_pattern(end, alphabet ptr)))
 			return (NULL);
 		if (!(end = nfa_build_quantifier(tmp, end, ptr)))
 			return (NULL);
@@ -59,7 +59,7 @@ t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested)
 	return (end);
 }
 
-t_nfa	*str_to_nfa(const char *str)
+t_nfa	*str_to_nfa(const char *str, t_alphabet **alphabet)
 {
 	t_nfa		*nfa;
 	const char	*ptr;
@@ -68,7 +68,7 @@ t_nfa	*str_to_nfa(const char *str)
 	if (!(nfa = nfa_new(str)))
 		return (NULL);
 	ptr = nfa->re_expr;
-	if (!(final = nfa_create(nfa->entrypoint, &ptr, false)))
+	if (!(final = nfa_create(nfa->entrypoint, alphabet, &ptr, false)))
 	{
 		nfa_free(nfa);
 		return (NULL);
