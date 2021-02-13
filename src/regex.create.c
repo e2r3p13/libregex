@@ -1,21 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libregex.h                                         :+:      :+:    :+:   */
+/*   regex.create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
+/*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/13 09:31:50 by glafond-         ###   ########.fr       */
+/*   Created: 2021/02/13 09:11:02 by glafond-          #+#    #+#             */
+/*   Updated: 2021/02/13 09:22:31 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBREGEX_H
-#define LIBREGEX_H
-
-#include <regex.nfa.h>
-#include <regex.dfa.h>
-
-
-
-#endif /* LIBREGEX_H */
+t_regex

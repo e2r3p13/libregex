@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 17:57:06 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 07:25:55 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ struct s_vec
 };
 
 /*
-//	A linked list containing all accepted patterns
+**	A linked list containing all accepted patterns
 */
 struct s_alphabet
 {
@@ -74,7 +74,6 @@ void		links_cpy(t_ns *dst, t_ns *src);
 t_nfa		*str_to_nfa(const char *str);
 t_bool		nfa_match(t_nfa *nfa, const char *str);
 void		nfa_free(t_nfa *nfa);
-void		pattern_epsilon(t_pattern *pattern);
 t_ns		*nfa_create(t_ns *beg, const char **ptr, t_bool nested);
 t_ns		*nfa_build_or(t_ns *b, t_ns *e, const char **p, t_bool n);
 t_ns		*nfa_add_pattern(t_ns *beg, const char **p);
@@ -83,6 +82,5 @@ int			nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
 t_nfa		*nfa_new(const char *str);
 void		nfa_print(t_nfa *nfa);
 t_bool		nfa_has_link(t_pattern *p, t_ns *state);
-t_bool		pattern_cmp(t_pattern *a, t_pattern *b);
 
 #endif /* REGEX_NFA_H */

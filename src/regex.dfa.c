@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/12 19:16:49 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/13 08:57:16 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ static int	e_closure(t_ns *state, t_set *dst)
 		if (set_push(state, dst) < 0)
 			return (-1);
 		if (is_epsilon(state->left.pattern))
+		{
 			if (e_closure(state->left.next, dst) < 0)
 				return (-1);
+		}
 		if (is_epsilon(state->right.pattern))
+		{
 			if (e_closure(state->left.next, dst) < 0)
 				return (-1);
+		}
 	}
 	return (0);
 }
