@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 09:07:49 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/13 09:39:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@
 */
 #define PATTERN_MAX_LENGTH 16
 typedef char	t_pattern[PATTERN_MAX_LENGTH];
+
+typedef struct s_alphabet	t_alphabet;
+
+/*
+**	A linked list containing all accepted patterns
+*/
+struct s_alphabet
+{
+	t_pattern	pattern;
+	t_alphabet	*next;
+};
 
 /*
 **	This structure represents a link to go from one state to another.
