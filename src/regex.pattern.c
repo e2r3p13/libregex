@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/12 15:48:10 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/13 03:04:36 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,6 @@ static char *esc_table[128] =
 	['f'] = "\x00\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 };
 
-static int	pattern_add_char(t_pattern *pattern, int c)
-{
-	int			div;
-
-	div = c / 8;
-	if (div > PATTERN_MAX_LENGTH)
-		return (-1);
-	(*pattern)[div] |= (1 << (c % 8));
-	return (0);
-}
-
 static int	pattern_add_range(t_pattern *pattern, int s, int e)
 {
 	if (s > e)
@@ -53,6 +42,17 @@ static int	pattern_add_range(t_pattern *pattern, int s, int e)
 		(*pattern)[s / 8] |= (1 << (s % 8));
 		s++;
 	}
+	return (0);
+}
+
+int			pattern_add_char(t_pattern *pattern, int c)
+{
+	int			div;
+
+	div = c / 8;
+	if (div > PATTERN_MAX_LENGTH)
+		return (-1);
+	(*pattern)[div] |= (1 << (c % 8));
 	return (0);
 }
 
