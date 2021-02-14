@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:13:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 12:54:29 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ static int	e_closure(t_ns *state, t_set *dst)
 
 static int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < src->size)
 	{
-		if (!pattern_cmp(*p, src->addr[i]->left.pattern) &&
-			e_closure(src->addr[i]->left.next, dst) < 0)
+		if (!pattern_cmp(*p, src->addr[i]->left.pattern)
+			&& e_closure(src->addr[i]->left.next, dst) < 0)
 			return (-1);
-		if (!pattern_cmp(*p, src->addr[i]->right.pattern) &&
-			e_closure(src->addr[i]->right.next, dst) < 0)
+		if (!pattern_cmp(*p, src->addr[i]->right.pattern)
+			&& e_closure(src->addr[i]->right.next, dst) < 0)
 			return (-1);
 		i++;
 	}
@@ -68,35 +68,39 @@ static int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
 **	https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf
 */
 
-int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
+int	dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 {
-	t_alphabet	*current_letter;
+	t_alphabet	*c;
 	t_set		*move_set;
 	t_ds		*next_state;
 	t_map		*next_st_map;
 
 	if (set_contains_final_state(st_map->set))
 		st_map->state->is_final = true;
-	current_letter = a;
-	while (current_letter)
+	c = a;
+	while (c)
 	{
-		if (!(move_set = set_new()))
+		move_set = set_new();
+		if (!move_set)
 			return (-1);
-		if (e_move_closure(st_map->set, &current_letter->pattern, move_set) < 0)
+		if (e_move_closure(st_map->set, &c->pattern, move_set) < 0)
 		{
 			set_free(move_set);
 			return (-1);
 		}
 		if (move_set->size > 0)
 		{
-			if (!(next_state = state_in_map(hole_map, move_set)))
+			next_state = state_in_map(hole_map, move_set);
+			if (!next_state)
 			{
-				if (!(next_state = dfa_state_new()))
+				next_state = dfa_state_new();
+				if (!next_state)
 				{
 					set_free(move_set);
 					return (-1);
 				}
-				if (!(next_st_map = map_new(next_state, move_set)))
+				next_st_map = map_new(next_state, move_set);
+				if (!next_st_map)
 				{
 					set_free(move_set);
 					dfa_free(next_state);
@@ -107,12 +111,12 @@ int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 			}
 			else
 				set_free(move_set);
-			if (dfa_create_connection(st_map->state, &current_letter->pattern, next_state) < 0)
+			if (dfa_create_connection(st_map->state, &c->pattern, next_state) < 0)
 				return (-1);
 		}
 		else
 			set_free(move_set);
-		current_letter = current_letter->next;
+		c = c->next;
 	}
 	return (0);
 }
@@ -123,11 +127,12 @@ int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 **	The dfa_build call will construct our dfa from its first node.
 */
 
-int			nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet)
+int	nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet)
 {
 	t_map	*map;
 
-	if (!(map = map_new(entrypoint, NULL)))
+	map = map_new(entrypoint, NULL);
+	if (!map)
 		return (-1);
 	if (e_closure(nfa, map->set) < 0)
 	{
@@ -143,16 +148,18 @@ int			nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet)
 	return (0);
 }
 
-t_ds		*dfa_generate(const char *str)
+t_ds	*dfa_generate(const char *str)
 {
 	t_ds		*entrypoint;
 	t_ns		*nfa;
 	t_alphabet	*alphabet;
 
 	alphabet = NULL;
-	if (!(nfa = str_to_nfa(str, &alphabet)))
+	nfa = str_to_nfa(str, &alphabet);
+	if (!nfa)
 		return (NULL);
-	if (!(entrypoint = dfa_state_new()))
+	entrypoint = dfa_state_new();
+	if (!entrypoint)
 	{
 		nfa_free(nfa);
 		return (NULL);

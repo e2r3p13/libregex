@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:11:00 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 11:57:24 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 **	already present.
 */
 
-int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
+int	dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 {
 	t_link_lst	*new_link;
 	t_link_lst	*checker;
@@ -31,7 +31,8 @@ int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 			return (0);
 		checker = checker->next;
 	}
-	if (!(new_link = malloc(sizeof(t_link_lst))))
+	new_link = malloc(sizeof(t_link_lst));
+	if (!new_link)
 		return (-1);
 	pattern_copy(new_link->link.pattern, *p);
 	new_link->link.next = last;

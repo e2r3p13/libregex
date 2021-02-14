@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/14 08:46:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 13:11:14 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 #include <libregex.h>
 #include <stdlib.h>
 
-void __attribute__((destructor)) calledLast();
-
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_regex	regex;
 	int		ret;
@@ -34,13 +32,8 @@ int main(int ac, char **av)
 	}
 	ret = re_execute(&regex, av[2]);
 	if (!ret)
-		printf("Regex not match!\n");
+		printf("No match found!\n");
 	else
-		printf("Regex match: %d\n",  ret);
+		printf("Regex matches: %d\n", ret);
 	return (0);
-}
-
-void calledLast()
-{
-    // system("leaks a.out");
 }

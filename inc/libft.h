@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:57:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:30:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 11:35:20 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 # include <stddef.h>
 # include <sys/stat.h>
 
-typedef enum	e_bool
+typedef enum e_bool	t_bool;
+
+enum e_bool
 {
 	false = 0,
 	true = 1,
-}				t_bool;
+};
 
 size_t	ft_strlen(const char *s);
 void	*ft_memcpy(void *dst, const void *src, size_t n);

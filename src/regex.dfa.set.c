@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:17:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 12:00:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 **	Return true if a state is in a set, false otherwise
 */
 
-t_bool		is_state_in_set(t_ns *state, t_set *set)
+t_bool	is_state_in_set(t_ns *state, t_set *set)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < set->size)
@@ -32,7 +32,7 @@ t_bool		is_state_in_set(t_ns *state, t_set *set)
 	return (false);
 }
 
-t_bool		set_contains_final_state(t_set *set)
+t_bool	set_contains_final_state(t_set *set)
 {
 	size_t	i;
 
@@ -51,7 +51,7 @@ t_bool		set_contains_final_state(t_set *set)
 **	{0, 3, 2, 1} and {0, 1, 2, 3} are equal
 */
 
-t_bool		set_cmp(t_set *a, t_set *b)
+t_bool	set_cmp(t_set *a, t_set *b)
 {
 	t_bool	found;
 	size_t	i;

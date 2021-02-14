@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:11:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 11:59:47 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,21 @@ t_map	*map_new(t_ds *state, t_set *set)
 {
 	t_map	*map;
 
-	if (!(map = malloc(sizeof(t_map))))
+	map = malloc(sizeof(t_map));
+	if (!map)
 		return (NULL);
 	map->state = state;
 	map->next = NULL;
 	if (set)
 		map->set = set;
-	else if (!(map->set = set_new()))
+	else
 	{
-		free(map);
-		return (NULL);
+		map->set = set_new();
+		if (!map->set)
+		{
+			free(map);
+			return (NULL);
+		}
 	}
 	return (map);
 }

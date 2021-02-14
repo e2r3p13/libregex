@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:15:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 12:36:03 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 **	Allocates and initialize a new dfa state.
 */
 
-t_ds			*dfa_state_new(void)
+t_ds	*dfa_state_new(void)
 {
-	t_ds *st;
+	t_ds	*st;
 
-	if (!(st = malloc(sizeof(t_ds))))
+	st = malloc(sizeof(t_ds));
+	if (!st)
 		return (NULL);
 	st->is_final = false;
 	st->links = NULL;
@@ -35,7 +36,7 @@ t_ds			*dfa_state_new(void)
 **	Sets all states flag of the dfa to 0
 */
 
-static void		dfa_get_addresses(t_ds *st, t_vec *v)
+static void	dfa_get_addresses(t_ds *st, t_vec *v)
 {
 	t_link_lst	*links;
 
@@ -79,7 +80,7 @@ static size_t	dfa_get_size(t_ds *st)
 **	Free each states of a dfa, and their links.
 */
 
-void			dfa_free(t_ds *dfa)
+void	dfa_free(t_ds *dfa)
 {
 	t_vec	vec;
 	size_t	i;

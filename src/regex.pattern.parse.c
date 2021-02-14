@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.pattern.c                                    :+:      :+:    :+:   */
+/*   regex.pattern.parse.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 10:18:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 13:08:45 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <libft.h>
 
-static char *g_esc_table[128] =
-{
+static char	*g_esc_table[128] = {
 	['c'] = "\x80\x3f\x00\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
 	['s'] = "\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
 	['S'] = "\xfe\xff\xff\xff\xfe\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f",
@@ -45,7 +44,7 @@ static int	pattern_add_range(t_pattern *pattern, int s, int e)
 	return (0);
 }
 
-int			pattern_add_char(t_pattern *pattern, int c)
+int	pattern_add_char(t_pattern *pattern, int c)
 {
 	int			div;
 
@@ -56,7 +55,7 @@ int			pattern_add_char(t_pattern *pattern, int c)
 	return (0);
 }
 
-int			pattern_escape(t_pattern *pattern, const char **ptr)
+int	pattern_escape(t_pattern *pattern, const char **ptr)
 {
 	if (**ptr == '\0')
 		return (-1);
@@ -67,7 +66,7 @@ int			pattern_escape(t_pattern *pattern, const char **ptr)
 	return (0);
 }
 
-int			pattern_parse(t_pattern *pattern, const char **ptr)
+int	pattern_parse(t_pattern *pattern, const char **ptr)
 {
 	while (**ptr && **ptr != ']')
 	{
@@ -90,37 +89,4 @@ int			pattern_parse(t_pattern *pattern, const char **ptr)
 		return (-1);
 	(*ptr)++;
 	return (0);
-}
-
-void		pattern_epsilon(t_pattern *pattern)
-{
-	pattern_add_char(pattern, '\0');
-}
-
-int			is_epsilon(t_pattern pattern)
-{
-	return (pattern_match(pattern, '\0'));
-}
-
-int			pattern_match(t_pattern pattern, int c)
-{
-	int			div;
-
-	div = c / 8;
-	if (div > PATTERN_BYTES_LENGTH)
-		return (0);
-	if (pattern[div] & (1 << (c % 8)))
-		return (1);
-	return (0);
-}
-
-int			pattern_copy(t_pattern dest, t_pattern src)
-{
-	ft_memcpy(dest, src, sizeof(t_pattern));
-	return (0);
-}
-
-int			pattern_cmp(t_pattern a, t_pattern b)
-{
-	return (ft_memcmp(a, b, sizeof(t_pattern)));
 }
