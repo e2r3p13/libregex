@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 19:09:02 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 19:15:09 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ t_ns	*str_to_nfa(const char *str, t_alphabet **a)
 	t_ns		*entrypoint;
 	t_ns		*final;
 
+	if (*str == '\0')
+		return (NULL);
 	entrypoint = nfa_new_state();
 	if (!entrypoint)
 		return (NULL);
