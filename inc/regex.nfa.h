@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:12:42 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:56:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ void				links_cpy(t_ns *dst, t_ns *src);
 t_ns				*str_to_nfa(const char *str, t_alphabet **a);
 void				nfa_free(t_ns *nfa);
 t_ns				*nfa_create(t_ns *b, t_alphabet **a, const char **p, t_bool n);
-t_ns				*nfa_build_or(t_ns *b, t_alphabet **a, t_ns *e, const char **p, t_bool n);
-t_ns				*nfa_add_pattern(t_ns *beg, t_alphabet **a, const char **p);
-t_ns				*nfa_build_quantifier(t_ns *b, t_ns *e, const char **p);
 int					nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
 t_bool				nfa_has_link(t_pattern *p, t_ns *state);
 
