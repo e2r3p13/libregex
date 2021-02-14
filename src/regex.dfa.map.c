@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 09:16:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:11:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 /*
 **	Allocates and returns a t_map node. its set member is eithen given in

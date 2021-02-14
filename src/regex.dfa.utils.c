@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 09:29:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:15:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 /*
 **	Allocates and initialize a new dfa state.
@@ -99,48 +98,45 @@ void			dfa_free(t_ds *dfa)
 }
 
 /*
-**	Gets the "index" of a state in the traversal order, using the addresses
-**	vector obtained with dfa_get_addresses.
+**	static int		fa(t_ds *st, t_vec *v)
+**	{
+**		size_t i;
+**
+**		i = 0;
+**		while (i < v->size)
+**		{
+**			if (v->addr[i] == st)
+**				return (i + 1);
+**			i++;
+**		}
+**		return (0);
+**	}
+**
+**	void			dfa_print(t_ds *entrypoint)
+**	{
+**		t_vec		vec;
+**		size_t		i;
+**		t_link_lst	*links;
+**
+**		vec.size = 0;
+**		vec.addr = malloc(sizeof(void *) * dfa_get_size(entrypoint));
+**		dfa_get_addresses(entrypoint, &vec);
+**		i = 0;
+**		while (i < vec.size)
+**		{
+**			printf("%zu", i + 1);
+**			if (((t_ds *)vec.addr[i])->is_final)
+**				printf("f");
+**			printf(": ");
+**			links = ((t_ds *)vec.addr[i])->links;
+**			while (links)
+**			{
+**				printf("\t%d ", fa(links->link.next, &vec));
+**				links = links->next;
+**			}
+**			printf("\n");
+**			i++;
+**		}
+**		printf("\n");
+**	}
 */
-
-static int		fa(t_ds *st, t_vec *v)
-{
-	size_t i;
-
-	i = 0;
-	while (i < v->size)
-	{
-		if (v->addr[i] == st)
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
-void			dfa_print(t_ds *entrypoint)
-{
-	t_vec		vec;
-	size_t		i;
-	t_link_lst	*links;
-
-	vec.size = 0;
-	vec.addr = malloc(sizeof(void *) * dfa_get_size(entrypoint));
-	dfa_get_addresses(entrypoint, &vec);
-	i = 0;
-	while (i < vec.size)
-	{
-		printf("%zu", i + 1);
-		if (((t_ds *)vec.addr[i])->is_final)
-			printf("f");
-		printf(": ");
-		links = ((t_ds *)vec.addr[i])->links;
-		while (links)
-		{
-			printf("\t%d ", fa(links->link.next, &vec));
-			links = links->next;
-		}
-		printf("\n");
-		i++;
-	}
-	printf("\n");
-}

@@ -6,11 +6,11 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:11:02 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 09:14:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:02:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.h>
+#include <libregex.h>
 
 int	re_compile(t_regex *regex, const char *str)
 {

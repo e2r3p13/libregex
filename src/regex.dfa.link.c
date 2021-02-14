@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 09:14:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:11:00 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 /*
 **	Connects first state to last state with the p pattern.

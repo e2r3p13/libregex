@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 09:41:54 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:18:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	pattern_add_range(t_pattern *pattern, int s, int e)
 {
 	if (s > e)
 		return (-1);
-	if (s / 8 > PATTERN_MAX_LENGTH || e / 8 > PATTERN_MAX_LENGTH)
+	if (s / 8 > PATTERN_BYTES_LENGTH || e / 8 > PATTERN_BYTES_LENGTH)
 		return (-1);
 	while (s <= e)
 	{
@@ -50,7 +50,7 @@ int			pattern_add_char(t_pattern *pattern, int c)
 	int			div;
 
 	div = c / 8;
-	if (div > PATTERN_MAX_LENGTH)
+	if (div > PATTERN_BYTES_LENGTH)
 		return (-1);
 	(*pattern)[div] |= (1 << (c % 8));
 	return (0);
@@ -61,7 +61,7 @@ int			pattern_escape(t_pattern *pattern, const char **ptr)
 	if (**ptr == '\0')
 		return (-1);
 	if (g_esc_table[(int)**ptr])
-		ft_memcpy(*pattern, g_esc_table[(int)*(*ptr)++], PATTERN_MAX_LENGTH);
+		ft_memcpy(*pattern, g_esc_table[(int)*(*ptr)++], PATTERN_BYTES_LENGTH);
 	else
 		pattern_add_char(pattern, *(*ptr)++);
 	return (0);
@@ -107,7 +107,7 @@ int			pattern_match(t_pattern pattern, int c)
 	int			div;
 
 	div = c / 8;
-	if (div > PATTERN_MAX_LENGTH)
+	if (div > PATTERN_BYTES_LENGTH)
 		return (0);
 	if (pattern[div] & (1 << (c % 8)))
 		return (1);
@@ -119,10 +119,6 @@ int			pattern_copy(t_pattern dest, t_pattern src)
 	ft_memcpy(dest, src, sizeof(t_pattern));
 	return (0);
 }
-
-/*
-**	Returns 0 if patterns a end b are equal
-*/
 
 int			pattern_cmp(t_pattern a, t_pattern b)
 {

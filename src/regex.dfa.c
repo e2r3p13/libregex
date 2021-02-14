@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 09:42:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:13:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <regex.dfa.h>
 #include <stdlib.h>
 #include <libft.h>
-#include <stdio.h>
 
 /*
 **	Fill a dst set with all states that can be reached after a e* move
@@ -164,7 +163,6 @@ t_ds		*dfa_generate(const char *str)
 		free(entrypoint);
 		return (NULL);
 	}
-	dfa_print(entrypoint);
 	nfa_free(nfa);
 	return (entrypoint);
 }

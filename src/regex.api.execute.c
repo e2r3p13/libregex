@@ -6,11 +6,11 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 05:06:37 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 10:03:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.h>
+#include <libregex.h>
 
 static char	*match(t_ds *state, const char *str)
 {

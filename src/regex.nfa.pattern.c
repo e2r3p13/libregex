@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:38:12 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 08:43:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:11:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libregex.h>
+#include <regex.nfa.h>
 #include <stdlib.h>
 
 /*
@@ -23,7 +23,7 @@
 
 t_ns	*nfa_add_pattern(t_ns *ns_begin, t_alphabet **a, const char **ptr)
 {
-	t_nfa_state	*ns_next;
+	t_ns		*ns_next;
 	t_pattern	pattern;
 
 	ft_memset(pattern, 0, sizeof(pattern));
