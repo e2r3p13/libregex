@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:41:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 03:30:48 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 08:47:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct	s_regex
 }				t_regex;
 
 
-t_dfa	*dfa_new(void);
 t_ds	*dfa_state_new(void);
 int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last);
 t_set	*set_new();
@@ -91,13 +90,12 @@ t_map	*map_new(t_ds *state, t_set *set);
 void	map_push(t_map *dst, t_map *src);
 void	dfa_state_free(t_ds *state);
 void	map_free(t_map *map);
-//t_dfa	*nfa_to_dfa(t_nfa *nfa, t_alphabet *a);
 void	dfa_print(t_ds *entrypoint);
 void	map_print(t_map *map);
 void	set_print(t_set *set);
 t_bool	set_contains_final_state(t_set *set);
 
 t_ds	*dfa_generate(const char *str);
-int		nfa_to_dfa(t_ds *entrypoint, t_nfa *nfa, t_alphabet *alphabet);
+int		nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet);
 
 #endif /* REGEX_DFA_H */

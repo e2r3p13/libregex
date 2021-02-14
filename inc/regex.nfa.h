@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 10:10:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 08:44:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 typedef struct s_nfa_state	t_ns;
 typedef struct s_nfa_state	t_nfa_state;
 typedef struct s_vec		t_vec;
-typedef struct s_nfa		t_nfa;
 
 /*
 **	t_ns represents a state of an automaton.
@@ -43,34 +42,19 @@ struct s_vec
 	void	**addr;
 };
 
-/*
-**	This structure represents a non deterministic finite automaton.
-**	It keeps a pointer to its entry state, and to its final state.
-**	It also keeps a pointer to an allocated string,
-**	containing the regex expression.
-*/
-struct	s_nfa
-{
-	t_ns		*entrypoint;
-	char		*re_expr;
-	t_alphabet	*alphabet;
-};
-
-t_ns		*state_new(void);
+t_ns		*nfa_new_state(void);
 void		link_init(t_link *ln);
 void		link_add(t_ns *st, t_pattern pattern, t_ns *next);
 void		links_destroy(t_ns *st);
 void		links_cpy(t_ns *dst, t_ns *src);
-t_nfa		*str_to_nfa(const char *str, t_alphabet **alphabet);
-t_bool		nfa_match(t_nfa *nfa, const char *str);
-void		nfa_free(t_nfa *nfa);
+t_ns		*str_to_nfa(const char *str, t_alphabet **alphabet);
+void		nfa_free(t_ns *nfa);
 t_ns		*nfa_create(t_ns *beg, t_alphabet **alphabet, const char **ptr, t_bool nested);
 t_ns		*nfa_build_or(t_ns *b, t_alphabet **alphabet, t_ns *e, const char **p, t_bool n);
 t_ns		*nfa_add_pattern(t_ns *beg, t_alphabet **alphabet, const char **p);
 t_ns		*nfa_build_quantifier(t_ns *b, t_ns *e, const char **p);
 int			nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
-t_nfa		*nfa_new(const char *str);
-void		nfa_print(t_nfa *nfa);
+void		nfa_print(t_ns *nfa);
 t_bool		nfa_has_link(t_pattern *p, t_ns *state);
 
 #endif /* REGEX_NFA_H */

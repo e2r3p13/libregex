@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:15:25 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 09:22:57 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 08:53:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	*ft_memset(void *b, int c, size_t len)
 		*tmp++ = d;
 	return (b);
 }
-
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {

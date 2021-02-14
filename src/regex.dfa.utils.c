@@ -6,31 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 03:22:57 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 08:47:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-/*
-**	Allocates a dfa structure, and its entrypoint.
-**	TODO: Maybe init the re_expr string here
-*/
-t_dfa	*dfa_new(void)
-{
-	t_dfa	*dfa;
-
-	if (!(dfa = malloc(sizeof(t_dfa))))
-		return (NULL);
-	if (!(dfa->entrypoint = dfa_state_new()))
-	{
-		free(dfa);
-		return (NULL);
-	}
-	return (dfa);
-}
 
 /*
 **	Fill a vector with all addresses of a dfa, in order to free them or

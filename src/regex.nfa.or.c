@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 10:10:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 08:41:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ns	*nfa_build_or(t_ns *beg, t_alphabet **alphabet, t_ns *end, const char **ptr
 
 	if (nfa_surruond(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
-	if (!(reps = state_new()))
+	if (!(reps = nfa_new_state()))
 	{
 		free(new_beg);
 		free(new_end);

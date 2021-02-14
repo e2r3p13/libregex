@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 10:11:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 08:42:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 {
 	t_pattern	epsilon;
 
-	if (!(*nb = state_new()))
+	if (!(*nb = nfa_new_state()))
 		return (-1);
-	if (!(*ne = state_new()))
+	if (!(*ne = nfa_new_state()))
 	{
 		free(*nb);
 		return (-1);
@@ -59,20 +59,18 @@ t_ns	*nfa_create(t_ns *beg, t_alphabet **alphabet, const char **ptr, t_bool nest
 	return (end);
 }
 
-t_nfa	*str_to_nfa(const char *str, t_alphabet **alphabet)
+t_ns	*str_to_nfa(const char *str, t_alphabet **alphabet)
 {
-	t_nfa		*nfa;
-	const char	*ptr;
+	t_ns		*entrypoint;
 	t_ns		*final;
 
-	if (!(nfa = nfa_new(str)))
+	if (!(entrypoint = nfa_new_state()))
 		return (NULL);
-	ptr = nfa->re_expr;
-	if (!(final = nfa_create(nfa->entrypoint, alphabet, &ptr, false)))
+	if (!(final = nfa_create(entrypoint, alphabet, &str, false)))
 	{
-		nfa_free(nfa);
+		nfa_free(entrypoint);
 		return (NULL);
 	}
 	final->is_final = true;
-	return (nfa);
+	return (entrypoint);
 }

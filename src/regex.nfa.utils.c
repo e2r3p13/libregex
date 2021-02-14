@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 12:31:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 08:44:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,27 @@ static void		nfa_get_addresses(t_ns *st, t_vec *v)
 	nfa_get_addresses(st->right.next, v);
 }
 
-t_nfa			*nfa_new(const char *str)
+t_ns	*nfa_new_state(void)
 {
-	t_nfa *nfa;
+	t_ns *st;
 
-	if (!str || !(nfa = malloc(sizeof(t_nfa))))
+	if (!(st = malloc(sizeof(t_ns))))
 		return (NULL);
-	ft_memset(nfa, 0, sizeof(t_nfa));
-	if (!(nfa->re_expr = ft_strdup(str)))
-	{
-		free(nfa);
-		return (NULL);
-	}
-	if (!(nfa->entrypoint = state_new()))
-	{
-		nfa_free(nfa);
-		return (NULL);
-	}
-	return (nfa);
+	st->is_final = false;
+	link_init(&st->left);
+	link_init(&st->right);
+	st->flag = 0;
+	return (st);
 }
 
-void			nfa_free(t_nfa *nfa)
+void			nfa_free(t_ns *nfa)
 {
 	t_vec	vec;
 	size_t	i;
 
 	vec.size = 0;
-	vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa->entrypoint));
-	nfa_get_addresses(nfa->entrypoint, &vec);
+	vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa));
+	nfa_get_addresses(nfa, &vec);
 	i = 0;
 	while (i < vec.size)
 	{
@@ -68,9 +61,6 @@ void			nfa_free(t_nfa *nfa)
 		i++;
 	}
 	free(vec.addr);
-	if (nfa->re_expr)
-		free(nfa->re_expr);
-	free(nfa);
 }
 
 static int	fa(t_ns *st, t_vec *v)
@@ -100,15 +90,15 @@ void		pattern_print(t_pattern pattern)
 	}
 }
 
-void		nfa_print(t_nfa *nfa)
+void		nfa_print(t_ns *nfa)
 {
 	t_vec	vec;
 	size_t	i;
 	t_ns	*node;
 
 	vec.size = 0;
-	vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa->entrypoint));
-	nfa_get_addresses(nfa->entrypoint, &vec);
+	vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa));
+	nfa_get_addresses(nfa, &vec);
 	i = 0;
 	while (i < vec.size)
 	{
