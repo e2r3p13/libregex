@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 18:53:20 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 03:22:57 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,36 @@ static int	fa(t_ds *st, t_vec *v)
 	return (0);
 }
 
+static void		pattern_print(t_pattern pattern)
+{
+	int		i;
+	char	b;
+	char	c;
+
+	i = 0;
+	while (i < PATTERN_MAX_LENGTH)
+	{
+		b = 1;
+		c = pattern[i++];
+		while (b)
+		{
+			printf("%c", c & b ? '1' : '0');
+			b <<= 1;
+		}
+	}
+}
+
 /*
 **	Prints a dfa in a pretty way.
 */
-void		dfa_print(t_dfa *dfa)
+void		dfa_print(t_ds *entrypoint)
 {
 	t_vec	vec;
 	size_t	i;
 
 	vec.size = 0;
-	vec.addr = malloc(sizeof(void *) * dfa_get_size(dfa->entrypoint));
-	dfa_get_addresses(dfa->entrypoint, &vec);
+	vec.addr = malloc(sizeof(void *) * dfa_get_size(entrypoint));
+	dfa_get_addresses(entrypoint, &vec);
 	i = 0;
 	while (i < vec.size)
 	{
@@ -101,11 +120,13 @@ void		dfa_print(t_dfa *dfa)
 		t_ds *st = (t_ds *)(vec.addr[i]);
 		if (st->is_final)
 			printf("f");
-		printf(":");
+		printf(":\n");
 		t_link_lst *links = st->links;
 		while (links)
 		{
-			printf("\t%d", fa(links->link.next, &vec));
+			printf("\t%d ", fa(links->link.next, &vec));
+			pattern_print(links->link.pattern);
+			printf("\n");
 			links = links->next;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/13 18:55:06 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 05:35:10 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void __attribute__((destructor)) calledLast();
 
 int main(int ac, char **av)
 {
+/*
 	t_nfa *nfa;
 	t_dfa *regex;
 
@@ -36,7 +37,26 @@ int main(int ac, char **av)
 	printf("\ndfa:\n");
 	dfa_print(regex);
 	nfa_free(nfa);
+*/
+	t_regex	regex;
+	int		ret;
 
+	if (ac != 3)
+	{
+		printf("Missing arguments\n");
+		return (-1);
+	}
+	ret = re_compile(&regex, av[1]);
+	if (ret < 0)
+	{
+		printf("Regex compilation error.\n");
+		return (-1);
+	}
+	ret = re_execute(&regex, av[2]);
+	if (!ret)
+		printf("Regex not match!\n");
+	else
+		printf("Regex match: %d\n",  ret);
 	return (0);
 }
 

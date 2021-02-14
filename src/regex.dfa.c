@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 18:54:45 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 03:09:43 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 **	Builds the first node of the dfa, and stores it in a t_map structure with
 **	the epsilon closure of our nfa's entrypoint as its set.
 **	The dfa_build call will construct our dfa from its first node.
-*/
+
 t_dfa		*nfa_to_dfa(t_nfa *nfa, t_alphabet *alphabet)
 {
 	t_dfa	*dfa;
@@ -143,4 +143,49 @@ t_dfa		*nfa_to_dfa(t_nfa *nfa, t_alphabet *alphabet)
 	}
 	map_free(map);
 	return (dfa);
+}
+*/
+
+int			nfa_to_dfa(t_ds *entrypoint, t_nfa *nfa, t_alphabet *alphabet)
+{
+	t_map	*map;
+
+	if (!(map = map_new(entrypoint, NULL)))
+		return (-1);
+	if (e_closure(nfa->entrypoint, map->set) < 0)
+	{
+		free(map);
+		return (-1);
+	}
+	if (dfa_build(map, map, alphabet) < 0)
+	{
+		free(map);
+		return (-1);
+	}
+	map_free(map);
+	return (0);
+}
+
+t_ds		*dfa_generate(const char *str)
+{
+	t_ds		*entrypoint;
+	t_nfa		*nfa;
+	t_alphabet	*alphabet;
+
+	alphabet = NULL;
+	if (!(nfa = str_to_nfa(str, &alphabet)))
+		return (NULL);
+	if (!(entrypoint = dfa_state_new()))
+	{
+		nfa_free(nfa);
+		return (NULL);
+	}
+	if (nfa_to_dfa(entrypoint, nfa, alphabet))
+	{
+		nfa_free(nfa);
+		free(entrypoint);
+		return (NULL);
+	}
+	nfa_free(nfa);
+	return (entrypoint);
 }

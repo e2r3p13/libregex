@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 11:10:48 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 04:18:35 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			pattern_match(t_pattern pattern, int c)
 	if (div > PATTERN_MAX_LENGTH)
 		return (0);
 	if (pattern[div] & (1 << (c % 8)))
-		return (-1);
+		return (1);
 	return (0);
 }
 
