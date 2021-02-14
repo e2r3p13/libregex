@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:19:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 12:33:57 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static size_t	nfa_get_size(t_ns *st)
 	return (1 + nfa_get_size(st->left.next) + nfa_get_size(st->right.next));
 }
 
-static void		nfa_get_addresses(t_ns *st, t_vec *v)
+static void	nfa_get_addresses(t_ns *st, t_vec *v)
 {
 	if (!st || st->flag == 0)
 		return ;
@@ -31,11 +31,12 @@ static void		nfa_get_addresses(t_ns *st, t_vec *v)
 	nfa_get_addresses(st->right.next, v);
 }
 
-t_ns			*nfa_new_state(void)
+t_ns	*nfa_new_state(void)
 {
-	t_ns *st;
+	t_ns	*st;
 
-	if (!(st = malloc(sizeof(t_ns))))
+	st = malloc(sizeof(t_ns));
+	if (!st)
 		return (NULL);
 	st->is_final = false;
 	link_init(&st->left);
@@ -44,7 +45,7 @@ t_ns			*nfa_new_state(void)
 	return (st);
 }
 
-void			nfa_free(t_ns *nfa)
+void	nfa_free(t_ns *nfa)
 {
 	t_vec	vec;
 	size_t	i;
@@ -65,7 +66,7 @@ void			nfa_free(t_ns *nfa)
 **	static int		fa(t_ns *st, t_vec *v)
 **	{
 **		size_t	i;
-**	
+**
 **		i = 0;
 **		while (i < v->size)
 **		{
@@ -74,13 +75,13 @@ void			nfa_free(t_ns *nfa)
 **		}
 **		return (0);
 **	}
-**	
+**
 **	void			pattern_print(t_pattern pattern)
 **	{
 **		int		i;
 **		char	b;
 **		char	c;
-**	
+**
 **		i = 0;
 **		while (i < PATTERN_BYTES_LENGTH)
 **		{
@@ -93,13 +94,13 @@ void			nfa_free(t_ns *nfa)
 **			}
 **		}
 **	}
-**	
+**
 **	void			nfa_print(t_ns *nfa)
 **	{
 **		t_vec	vec;
 **		size_t	i;
 **		t_ns	*node;
-**	
+**
 **		vec.size = 0;
 **		vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa));
 **		nfa_get_addresses(nfa, &vec);

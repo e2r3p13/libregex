@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.nfa.build.c                                  :+:      :+:    :+:   */
+/*   regex.nfa.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:58:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 12:57:34 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
 #include <stdlib.h>
 
-static t_ns *nfa_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bool nstd)
+static t_ns	*nfa_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bool nstd)
 {
 	t_ns		*new_beg;
 	t_ns		*new_end;
@@ -23,7 +23,8 @@ static t_ns *nfa_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bo
 
 	if (nfa_surruond(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
-	if (!(reps = nfa_new_state()))
+	reps = nfa_new_state();
+	if (!reps)
 	{
 		free(new_beg);
 		free(new_end);
@@ -32,7 +33,8 @@ static t_ns *nfa_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bo
 	pattern_epsilon(&epsilon);
 	link_add(beg, epsilon, reps);
 	(*ptr)++;
-	if (!(rend = nfa_create(reps, a, ptr, nstd)))
+	rend = nfa_create(reps, a, ptr, nstd);
+	if (!rend)
 	{
 		free(new_end);
 		free(new_end);
@@ -43,7 +45,7 @@ static t_ns *nfa_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bo
 	return (new_end);
 }
 
-static t_ns *nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
+static t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
 {
 	t_ns		*new_beg;
 	t_ns		*new_end;
@@ -68,7 +70,7 @@ static t_ns *nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
 **	begin --> NULL	to	begin -[pattern]-> next_ns
 */
 
-static t_ns *nfa_pattern(t_ns *ns_begin, t_alphabet **a, const char **ptr)
+static t_ns	*nfa_pattern(t_ns *ns_begin, t_alphabet **a, const char **ptr)
 {
 	t_ns		*ns_next;
 	t_pattern	pattern;
@@ -90,19 +92,22 @@ static t_ns *nfa_pattern(t_ns *ns_begin, t_alphabet **a, const char **ptr)
 		return (NULL);
 	if (alphabet_add_pattern(a, pattern))
 		return (NULL);
-	if (!(ns_next = nfa_new_state()))
+	ns_next = nfa_new_state();
+	if (!ns_next)
 		return (NULL);
 	link_add(ns_begin, pattern, ns_next);
 	return (ns_next);
 }
 
-int nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
+int	nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 {
 	t_pattern	epsilon;
 
-	if (!(*nb = nfa_new_state()))
+	*nb = nfa_new_state();
+	if (!*nb)
 		return (-1);
-	if (!(*ne = nfa_new_state()))
+	*ne = nfa_new_state();
+	if (!*ne)
 	{
 		free(*nb);
 		return (-1);
@@ -115,7 +120,7 @@ int nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 	return (0);
 }
 
-t_ns *nfa_create(t_ns *beg, t_alphabet **a, const char **ptr, t_bool nested)
+t_ns	*nfa_create(t_ns *beg, t_alphabet **a, const char **ptr, t_bool nested)
 {
 	t_ns		*end;
 	t_ns		*tmp;
@@ -128,14 +133,15 @@ t_ns *nfa_create(t_ns *beg, t_alphabet **a, const char **ptr, t_bool nested)
 		tmp = end;
 		if (**ptr == '(' && (*ptr)++)
 		{
-			if (!(end = nfa_create(end, a, ptr, true)) || **ptr != ')')
+			end = nfa_create(end, a, ptr, true);
+			if (!end || **ptr != ')')
 				return (NULL);
 			(*ptr)++;
 		}
 		else if (!(end = nfa_pattern(end, a, ptr)))
 			return (NULL);
-		if (ft_isinset("*+?", **ptr) &&
-			!(end = nfa_quantifier(tmp, end, ptr)))
+		if (ft_isinset("*+?", **ptr)
+			&& !(end = nfa_quantifier(tmp, end, ptr)))
 			return (NULL);
 		if (**ptr == '|' && !(end = nfa_or(beg, a, end, ptr, nested)))
 			return (NULL);
@@ -143,14 +149,16 @@ t_ns *nfa_create(t_ns *beg, t_alphabet **a, const char **ptr, t_bool nested)
 	return (end);
 }
 
-t_ns		*str_to_nfa(const char *str, t_alphabet **a)
+t_ns	*str_to_nfa(const char *str, t_alphabet **a)
 {
 	t_ns		*entrypoint;
 	t_ns		*final;
 
-	if (!(entrypoint = nfa_new_state()))
+	entrypoint = nfa_new_state();
+	if (!entrypoint)
 		return (NULL);
-	if (!(final = nfa_create(entrypoint, a, &str, false)))
+	final = nfa_create(entrypoint, a, &str, false);
+	if (!final)
 	{
 		nfa_free(entrypoint);
 		return (NULL);

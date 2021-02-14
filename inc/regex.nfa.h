@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 11:52:31 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 13:05:14 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <regex.fa.h>
 
 typedef struct s_nfa_state	t_ns;
+typedef struct s_vec		t_vec;
 
 /*
 **	t_ns represents a state of an automaton.
