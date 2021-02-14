@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:57:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 09:33:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 10:30:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strdup(const char *s1);
+t_bool	ft_isinset(const char *charset, char c);
 
 #endif
