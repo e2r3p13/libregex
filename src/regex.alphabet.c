@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.nfa.alphabet.c                               :+:      :+:    :+:   */
+/*   regex.alphabet.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 05:13:38 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/13 10:03:54 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 10:47:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.nfa.h>
 #include <regex.fa.h>
 #include <stdlib.h>
 
@@ -27,22 +26,18 @@ static t_alphabet	*alphabet_new_pattern(t_pattern pattern)
 
 int					alphabet_add_pattern(t_alphabet **head, t_pattern pattern)
 {
-	t_alphabet	*walk;
+	t_alphabet	*tmp;
 
-	if (!*head)
+	tmp = *head;
+	while (tmp)
 	{
-		if (!(*head = alphabet_new_pattern(pattern)))
-			return (-1);
-		return (0);
-	}
-	walk = *head;
-	while (walk->next)
-	{
-		if (!pattern_cmp(pattern, walk->pattern))
+		if (!pattern_cmp(pattern, tmp->pattern))
 			return (0);
-		walk = walk->next;
+		tmp = tmp->next;
 	}
-	if (!(walk->next = alphabet_new_pattern(pattern)))
+	if (!(tmp = alphabet_new_pattern(pattern)))
 		return (-1);
+	tmp->next = *head;
+	*head = tmp;
 	return (0);
 }
