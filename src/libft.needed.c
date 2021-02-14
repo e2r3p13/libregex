@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:15:25 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 10:48:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 11:54:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	const unsigned char	*s_1;
 	const unsigned char	*s_2;
@@ -64,7 +64,8 @@ char	*ft_strdup(const char *s1)
 	len = 0;
 	while (s1[len])
 		len++;
-	if (!(s2 = malloc(sizeof(char) * (len + 1))))
+	s2 = malloc(sizeof(char) * (len + 1));
+	if (!s2)
 		return (NULL);
 	ft_memcpy(s2, s1, len + 1);
 	return (s2);
