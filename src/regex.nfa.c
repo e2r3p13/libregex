@@ -6,12 +6,33 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 12:57:34 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 19:09:02 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
 #include <stdlib.h>
+
+static int	nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
+{
+	t_pattern	epsilon;
+
+	*nb = nfa_new_state();
+	if (!*nb)
+		return (-1);
+	*ne = nfa_new_state();
+	if (!*ne)
+	{
+		free(*nb);
+		return (-1);
+	}
+	links_cpy(*nb, b);
+	links_destroy(b);
+	pattern_epsilon(&epsilon);
+	link_add(b, epsilon, *nb);
+	link_add(e, epsilon, *ne);
+	return (0);
+}
 
 static t_ns	*nfa_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bool nstd)
 {
@@ -51,6 +72,11 @@ static t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
 	t_ns		*new_end;
 	t_pattern	epsilon;
 
+	if (**ptr == '{')
+	{
+		// TODO
+		return (NULL);
+	}
 	if (nfa_surruond(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
 	pattern_epsilon(&epsilon);
@@ -99,27 +125,6 @@ static t_ns	*nfa_pattern(t_ns *ns_begin, t_alphabet **a, const char **ptr)
 	return (ns_next);
 }
 
-int	nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
-{
-	t_pattern	epsilon;
-
-	*nb = nfa_new_state();
-	if (!*nb)
-		return (-1);
-	*ne = nfa_new_state();
-	if (!*ne)
-	{
-		free(*nb);
-		return (-1);
-	}
-	links_cpy(*nb, b);
-	links_destroy(b);
-	pattern_epsilon(&epsilon);
-	link_add(b, epsilon, *nb);
-	link_add(e, epsilon, *ne);
-	return (0);
-}
-
 t_ns	*nfa_create(t_ns *beg, t_alphabet **a, const char **ptr, t_bool nested)
 {
 	t_ns		*end;
@@ -140,7 +145,7 @@ t_ns	*nfa_create(t_ns *beg, t_alphabet **a, const char **ptr, t_bool nested)
 		}
 		else if (!(end = nfa_pattern(end, a, ptr)))
 			return (NULL);
-		if (ft_isinset("*+?", **ptr)
+		if (ft_isinset("*+?{", **ptr)
 			&& !(end = nfa_quantifier(tmp, end, ptr)))
 			return (NULL);
 		if (**ptr == '|' && !(end = nfa_or(beg, a, end, ptr, nested)))

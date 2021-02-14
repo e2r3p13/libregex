@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:40:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 13:05:14 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 19:04:46 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	links_cpy(t_ns *dst, t_ns *src);
 t_ns	*str_to_nfa(const char *str, t_alphabet **a);
 void	nfa_free(t_ns *nfa);
 t_ns	*nfa_create(t_ns *b, t_alphabet **a, const char **p, t_bool n);
-int		nfa_surruond(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
 t_bool	nfa_has_link(t_pattern *p, t_ns *state);
 
 #endif
