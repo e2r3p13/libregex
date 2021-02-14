@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 08:41:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 09:37:20 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
 #include <stdlib.h>
 
-t_ns	*nfa_build_or(t_ns *beg, t_alphabet **alphabet, t_ns *end, const char **ptr, t_bool nstd)
+t_ns	*nfa_build_or(t_ns *beg, t_alphabet **a, t_ns *end, const char **ptr, t_bool nstd)
 {
 	t_ns		*new_beg;
 	t_ns		*new_end;
@@ -32,7 +32,7 @@ t_ns	*nfa_build_or(t_ns *beg, t_alphabet **alphabet, t_ns *end, const char **ptr
 	pattern_epsilon(&epsilon);
 	link_add(beg, epsilon, reps);
 	(*ptr)++;
-	if (!(rend = nfa_create(reps, alphabet, ptr, nstd)))
+	if (!(rend = nfa_create(reps, a, ptr, nstd)))
 	{
 		free(new_end);
 		free(new_end);

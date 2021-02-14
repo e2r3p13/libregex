@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 18:40:09 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 09:16:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 **	argument, or allocated here. state member is always given and should be
 **	valid.
 */
+
 t_map	*map_new(t_ds *state, t_set *set)
 {
 	t_map	*map;
@@ -41,6 +42,7 @@ t_map	*map_new(t_ds *state, t_set *set)
 **	As t_map acts also as a linked list, this function pushes a t_map node
 **	(src) at the end of a t_map list (src).
 */
+
 void	map_push(t_map *dst, t_map *src)
 {
 	if (!dst)
@@ -54,6 +56,7 @@ void	map_push(t_map *dst, t_map *src)
 **	If the given set already exists in map (unordered), this function returns
 **	the corresponding map's state.
 */
+
 t_ds	*state_in_map(t_map *map, t_set *set)
 {
 	while (map)
@@ -65,9 +68,6 @@ t_ds	*state_in_map(t_map *map, t_set *set)
 	return (NULL);
 }
 
-/*
-**	Too obvious to be commented.
-*/
 void	map_free(t_map *map)
 {
 	if (map)
@@ -76,20 +76,4 @@ void	map_free(t_map *map)
 		set_free(map->set);
 		free(map);
 	}
-}
-
-void	map_print(t_map *map)
-{
-	if (!map)
-		return ;
-	printf("state: %p set: ", map->state);
-	set_print(map->set);
-	printf("\n");
-	t_link_lst	*lst = map->state->links;
-	while (lst)
-	{
-		printf("connected to %p\n", lst->link.next);
-		lst = lst->next;
-	}
-	map_print(map->next);
 }

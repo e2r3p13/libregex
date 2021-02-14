@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 19:43:03 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/14 09:14:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 **	p pattern is added in front of links linked list of first if not
 **	already present.
 */
+
 int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 {
 	t_link_lst	*new_link;
@@ -43,6 +44,7 @@ int		dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 /*
 **	Recursively free a link linked list. Used by dfa_free
 */
+
 void	dfa_links_free(t_link_lst *links)
 {
 	if (links)

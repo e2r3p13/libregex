@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 08:44:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 09:34:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		nfa_get_addresses(t_ns *st, t_vec *v)
 	nfa_get_addresses(st->right.next, v);
 }
 
-t_ns	*nfa_new_state(void)
+t_ns			*nfa_new_state(void)
 {
 	t_ns *st;
 
@@ -63,15 +63,20 @@ void			nfa_free(t_ns *nfa)
 	free(vec.addr);
 }
 
-static int	fa(t_ns *st, t_vec *v)
+static int		fa(t_ns *st, t_vec *v)
 {
-	for (size_t i = 0; i < v->size; i++)
+	size_t	i;
+
+	i = 0;
+	while (i < v->size)
+	{
 		if (v->addr[i] == st)
 			return (i + 1);
+	}
 	return (0);
 }
 
-void		pattern_print(t_pattern pattern)
+void			pattern_print(t_pattern pattern)
 {
 	int		i;
 	char	b;
@@ -90,7 +95,7 @@ void		pattern_print(t_pattern pattern)
 	}
 }
 
-void		nfa_print(t_ns *nfa)
+void			nfa_print(t_ns *nfa)
 {
 	t_vec	vec;
 	size_t	i;
@@ -103,12 +108,8 @@ void		nfa_print(t_ns *nfa)
 	while (i < vec.size)
 	{
 		node = (t_nfa_state *)(vec.addr)[i];
-		int l = fa(node->left.next, &vec);
-		int r = fa(node->right.next, &vec);
-		printf("%zu: left -> %d ", i + 1, l);
-		// pattern_print(node->left.pattern);
-		printf(" right -> %d ", r);
-		// pattern_print(node->right.pattern);
+		printf("%zu: left -> %d ", i + 1, fa(node->left.next, &vec));
+		printf(" right -> %d ", fa(node->right.next, &vec));
 		printf("\n");
 		i++;
 	}

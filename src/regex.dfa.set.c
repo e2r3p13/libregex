@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/13 12:36:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 09:24:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 **	Allocates a new set (which basically is a dynamic array of states addresses)
 **	SET_DFL_SIZE is the size of the array before a reallocation.
 */
-t_set		*set_new()
+
+t_set		*set_new(void)
 {
 	t_set	*set;
 
@@ -39,6 +40,7 @@ t_set		*set_new()
 /*
 **	Allocates twice as space as current, in order to store more addresses
 */
+
 static int	set_realloc(t_set *set)
 {
 	t_ns	**new_addr;
@@ -63,6 +65,7 @@ static int	set_realloc(t_set *set)
 /*
 **	Pushes a state address into a set
 */
+
 int			set_push(t_ns *state, t_set *set)
 {
 	if (set->size == set->capacity && set_realloc(set) < 0)
@@ -74,6 +77,7 @@ int			set_push(t_ns *state, t_set *set)
 /*
 **	Return true if a state is in a set, false otherwise
 */
+
 t_bool		is_state_in_set(t_ns *state, t_set *set)
 {
 	size_t i;
@@ -105,6 +109,7 @@ t_bool		set_contains_final_state(t_set *set)
 /*
 **	Too obvious to comment, I guess
 */
+
 void		set_free(t_set *set)
 {
 	if (set)
@@ -119,6 +124,7 @@ void		set_free(t_set *set)
 **	Compares two sets. The order of the elements doesn't matter, e.g.
 **	{0, 3, 2, 1} and {0, 1, 2, 3} are equal
 */
+
 t_bool		set_cmp(t_set *a, t_set *b)
 {
 	t_bool	found;
@@ -141,16 +147,4 @@ t_bool		set_cmp(t_set *a, t_set *b)
 		i++;
 	}
 	return (true);
-}
-
-void	set_print(t_set *set)
-{
-	printf("{");
-	for (size_t i = 0; i < set->size; i++)
-	{
-		printf("%p", set->addr[i]);
-		if (i < set->size - 1)
-			printf(", ");
-	}
-	printf("}");
 }

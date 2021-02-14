@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 08:46:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/14 09:42:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 **	Fill a dst set with all states that can be reached after a e* move
 **	from a given nfa state.
 */
+
 static int	e_closure(t_ns *state, t_set *dst)
 {
 	if (!is_state_in_set(state, dst))
@@ -44,15 +45,19 @@ static int	e_closure(t_ns *state, t_set *dst)
 **	Fill a dst set with all states that can be reached after a p move, followed
 **	by e* moves, from each nfa states of src set.
 */
+
 static int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
 {
-	size_t i = 0;
+	size_t i;
 
+	i = 0;
 	while (i < src->size)
 	{
-		if (!pattern_cmp(*p, src->addr[i]->left.pattern) && e_closure(src->addr[i]->left.next, dst) < 0)
+		if (!pattern_cmp(*p, src->addr[i]->left.pattern) &&
+			e_closure(src->addr[i]->left.next, dst) < 0)
 			return (-1);
-		if (!pattern_cmp(*p, src->addr[i]->right.pattern) && e_closure(src->addr[i]->right.next, dst) < 0)
+		if (!pattern_cmp(*p, src->addr[i]->right.pattern) &&
+			e_closure(src->addr[i]->right.next, dst) < 0)
 			return (-1);
 		i++;
 	}
@@ -63,6 +68,7 @@ static int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
 **	Converts an nfa into a dfa, following the subset construction method:
 **	https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf
 */
+
 int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 {
 	t_alphabet	*current_letter;
@@ -94,7 +100,7 @@ int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 				if (!(next_st_map = map_new(next_state, move_set)))
 				{
 					set_free(move_set);
-					dfa_state_free(next_state);
+					dfa_free(next_state);
 					return (-1);
 				}
 				map_push(hole_map, next_st_map);
@@ -108,7 +114,7 @@ int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 		else
 			set_free(move_set);
 		current_letter = current_letter->next;
- 	}
+	}
 	return (0);
 }
 
@@ -117,6 +123,7 @@ int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 **	the epsilon closure of our nfa's entrypoint as its set.
 **	The dfa_build call will construct our dfa from its first node.
 */
+
 int			nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet)
 {
 	t_map	*map;
@@ -157,6 +164,7 @@ t_ds		*dfa_generate(const char *str)
 		free(entrypoint);
 		return (NULL);
 	}
+	dfa_print(entrypoint);
 	nfa_free(nfa);
 	return (entrypoint);
 }

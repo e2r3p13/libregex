@@ -6,14 +6,14 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 04:18:35 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 09:41:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <libft.h>
 
-static char *esc_table[128] =
+static char *g_esc_table[128] =
 {
 	['c'] = "\x80\x3f\x00\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
 	['s'] = "\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
@@ -39,7 +39,7 @@ static int	pattern_add_range(t_pattern *pattern, int s, int e)
 		return (-1);
 	while (s <= e)
 	{
-		(*pattern)[s/8] |= (1 << (s % 8));
+		(*pattern)[s / 8] |= (1 << (s % 8));
 		s++;
 	}
 	return (0);
@@ -60,8 +60,8 @@ int			pattern_escape(t_pattern *pattern, const char **ptr)
 {
 	if (**ptr == '\0')
 		return (-1);
-	if (esc_table[(int)**ptr])
-		ft_memcpy(*pattern, esc_table[(int)*(*ptr)++], PATTERN_MAX_LENGTH);
+	if (g_esc_table[(int)**ptr])
+		ft_memcpy(*pattern, g_esc_table[(int)*(*ptr)++], PATTERN_MAX_LENGTH);
 	else
 		pattern_add_char(pattern, *(*ptr)++);
 	return (0);
@@ -84,7 +84,7 @@ int			pattern_parse(t_pattern *pattern, const char **ptr)
 			*ptr += 3;
 		}
 		else if (pattern_add_char(pattern, *(*ptr)++))
-				return (-1);
+			return (-1);
 	}
 	if (!**ptr)
 		return (-1);
@@ -123,7 +123,8 @@ int			pattern_copy(t_pattern dest, t_pattern src)
 /*
 **	Returns 0 if patterns a end b are equal
 */
-int		pattern_cmp(t_pattern a, t_pattern b)
+
+int			pattern_cmp(t_pattern a, t_pattern b)
 {
 	return (ft_memcmp(a, b, sizeof(t_pattern)));
 }

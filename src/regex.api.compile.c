@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.compile.c                                    :+:      :+:    :+:   */
+/*   regex.api.compile.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:11:02 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 03:30:24 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/14 09:14:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.dfa.h>
 
-int		re_compile(t_regex	*regex, const char *str)
+int	re_compile(t_regex *regex, const char *str)
 {
 	regex->entrypoint = dfa_generate(str);
 	if (!regex->entrypoint)
