@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/15 01:03:26 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/15 11:50:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 */
 # define PATTERN_BYTES_LENGTH 16
 
-typedef uint8_t t_pattern[PATTERN_BYTES_LENGTH];
+typedef uint8_t	t_pattern[PATTERN_BYTES_LENGTH];
 
 /*
 **	A linked list containing all accepted patterns
@@ -30,7 +30,7 @@ typedef struct s_alphabet
 {
 	t_pattern			pattern;
 	struct s_alphabet	*next;
-}				t_alphabet;
+}	t_alphabet;
 
 /*
 **	This structure represents a link to go from one state to another.
@@ -42,10 +42,10 @@ typedef struct s_alphabet
 */
 typedef struct s_link
 {
-	int					(*match)(t_pattern s, int c);
-	t_pattern			pattern;
-	void				*next;
-}				t_link;
+	int			(*match)(t_pattern s, int c);
+	t_pattern	pattern;
+	void		*next;
+}	t_link;
 
 int				pattern_add_char(t_pattern *p, int c);
 int				pattern_parse(t_pattern *p, const char **ptr);

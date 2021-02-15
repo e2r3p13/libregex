@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 12:33:57 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/15 11:48:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.nfa.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static size_t	nfa_get_size(t_ns *st)
 {
@@ -62,6 +63,29 @@ void	nfa_free(t_ns *nfa)
 	free(vec.addr);
 }
 
+int	nfa_surround(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
+{
+	t_pattern	epsilon;
+
+	if (!e)
+		return (-1);
+	*nb = nfa_new_state();
+	if (!*nb)
+		return (-1);
+	*ne = nfa_new_state();
+	if (!*ne)
+	{
+		free(*nb);
+		return (-1);
+	}
+	links_cpy(*nb, b);
+	links_destroy(b);
+	pattern_epsilon(&epsilon);
+	link_add(b, epsilon, *nb);
+	link_add(e, epsilon, *ne);
+	return (0);
+}
+
 /*
 **	static int		fa(t_ns *st, t_vec *v)
 **	{
@@ -72,6 +96,7 @@ void	nfa_free(t_ns *nfa)
 **		{
 **			if (v->addr[i] == st)
 **				return (i + 1);
+**			i++;
 **		}
 **		return (0);
 **	}
