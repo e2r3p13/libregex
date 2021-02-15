@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 11:56:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/15 01:13:59 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,16 @@ int	re_execute(t_regex *regex, const char *str)
 	while (*str)
 	{
 		ret = match(regex->entrypoint, str);
-		if (!ret || ret == str)
+		if (!ret)
 		{
 			str++;
 			continue ;
 		}
 		nb_match++;
-		str = (const char *)ret;
+		if (ret == str)
+			str++;
+		else
+			str = (const char *)ret;
 	}
 	return (nb_match);
 }
