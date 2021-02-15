@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/15 11:50:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/15 11:54:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 */
 # define PATTERN_BYTES_LENGTH 16
 
-typedef uint8_t	t_pattern[PATTERN_BYTES_LENGTH];
+typedef uint8_t	t_pattern[16]; // PATTERN_BYTES_LENGTH but norminetteV3...
 
 /*
 **	A linked list containing all accepted patterns
