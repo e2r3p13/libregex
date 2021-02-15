@@ -6,11 +6,12 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/15 01:13:59 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/15 08:24:25 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
+#include <stdio.h>
 
 static char	*match(t_ds *state, const char *str)
 {
@@ -50,16 +51,13 @@ int	re_execute(t_regex *regex, const char *str)
 	while (*str)
 	{
 		ret = match(regex->entrypoint, str);
-		if (!ret)
+		if (!ret && ret == str)
 		{
 			str++;
 			continue ;
 		}
 		nb_match++;
-		if (ret == str)
-			str++;
-		else
-			str = (const char *)ret;
+		str = (const char *)ret;
 	}
 	return (nb_match);
 }
