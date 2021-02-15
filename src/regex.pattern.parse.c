@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 13:08:45 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/15 07:10:49 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ static int	pattern_add_range(t_pattern *pattern, int s, int e)
 	return (0);
 }
 
+static int	pattern_invert(t_pattern *pattern)
+{
+	int			index;
+
+	index = 0;
+	while (index < PATTERN_BYTES_LENGTH)
+		(*pattern)[index++] ^= 0xff;
+	return (0);
+}
+
 int	pattern_add_char(t_pattern *pattern, int c)
 {
 	int			div;
@@ -68,6 +78,14 @@ int	pattern_escape(t_pattern *pattern, const char **ptr)
 
 int	pattern_parse(t_pattern *pattern, const char **ptr)
 {
+	int			invert;
+
+	if (**ptr == '^')
+	{
+		pattern_add_char(pattern, '\0');
+		invert = 1;
+		(*ptr)++;
+	}
 	while (**ptr && **ptr != ']')
 	{
 		if (**ptr == '\\')
@@ -88,5 +106,7 @@ int	pattern_parse(t_pattern *pattern, const char **ptr)
 	if (!**ptr)
 		return (-1);
 	(*ptr)++;
+	if (invert)
+		pattern_invert(pattern);
 	return (0);
 }
