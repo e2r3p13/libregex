@@ -1,40 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   regex.api.free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/16 16:27:10 by bccyv            ###   ########.fr       */
+/*   Created: 2021/02/16 16:08:04 by bccyv             #+#    #+#             */
+/*   Updated: 2021/02/16 16:24:49 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <libregex.h>
+#include <regex.dfa.h>
 #include <stdlib.h>
 
-int	main(int ac, char **av)
+void	re_free(t_regex *re)
 {
-	t_regex	regex;
-	int		ret;
-
-	if (ac != 3)
-	{
-		printf("Missing arguments\n");
-		return (-1);
-	}
-	ret = re_compile(&regex, av[1]);
-	if (ret < 0)
-	{
-		printf("Regex compilation error.\n");
-		return (-1);
-	}
-	ret = re_execute(&regex, av[2]);
-	if (!ret)
-		printf("No match found!\n");
-	else
-		printf("Regex matches: %d\n", ret);
-	re_free(regex);
-	return (0);
+	free(re->re_string);
+	dfa_free(re->entrypoint);
 }

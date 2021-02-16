@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/15 11:47:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/16 15:35:08 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,5 @@ t_ns	*str_to_nfa(const char *str, t_alphabet **a)
 		return (NULL);
 	}
 	final->is_final = true;
-	nfa_print(entrypoint);
 	return (entrypoint);
 }
