@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/15 07:10:49 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/16 16:56:12 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	pattern_parse(t_pattern *pattern, const char **ptr)
 {
 	int			invert;
 
+	invert = 0;
 	if (**ptr == '^')
 	{
 		pattern_add_char(pattern, '\0');
