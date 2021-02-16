@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 05:13:38 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/14 11:56:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/16 16:39:03 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,13 @@ int	alphabet_add_pattern(t_alphabet **head, t_pattern pattern)
 	tmp->next = *head;
 	*head = tmp;
 	return (0);
+}
+
+void	alphabet_free(t_alphabet *a)
+{
+	if (a)
+	{
+		alphabet_free(a->next);
+		free(a);
+	}
 }

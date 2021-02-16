@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:41:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/16 16:44:50 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:00:57 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_ds		*dfa_generate(const char *str);
 int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a);
 int			e_closure(t_ns *state, t_set *dst);
 int			e_move_closure(t_set *src, t_pattern *p, t_set *dst);
+void		alphabet_free(t_alphabet *a);
 
 void		dfa_print(t_ds *entrypoint);
 
