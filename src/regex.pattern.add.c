@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 08:58:37 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/17 09:06:23 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:33:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ int	pattern_add_char(t_pattern *pattern, int c)
 	return (0);
 }
 
-int	pattern_add_pattern(t_pattern *dest, t_pattern src)
+int	pattern_add_pattern(t_pattern *dest, char *src)
 {
 	int			index;
 
 	index = 0;
 	while (index < PATTERN_BYTES_LENGTH)
-		(*dest)[index++] |= src[index++];
+	{
+		(*dest)[index] |= src[index];
+		index++;
+	}
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/16 16:35:07 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/17 14:38:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int		re_compile(t_regex *regex, const char *str);
 int		re_execute(t_regex *regex, const char *str);
 int		re_match(t_regex *regex, const char *str);
 void	re_free(t_regex *regex);
+char	*re_bmatch(t_regex *regex, const char *str);
 
 #endif
