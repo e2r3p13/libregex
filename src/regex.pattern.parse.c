@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/16 16:56:12 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/17 09:16:28 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ static char	*g_esc_table[128] = {
 	['f'] = "\x00\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 };
 
-static int	pattern_add_range(t_pattern *pattern, int s, int e)
-{
-	if (s > e)
-		return (-1);
-	if (s / 8 > PATTERN_BYTES_LENGTH || e / 8 > PATTERN_BYTES_LENGTH)
-		return (-1);
-	while (s <= e)
-	{
-		(*pattern)[s / 8] |= (1 << (s % 8));
-		s++;
-	}
-	return (0);
-}
-
 static int	pattern_invert(t_pattern *pattern)
 {
 	int			index;
@@ -54,23 +40,12 @@ static int	pattern_invert(t_pattern *pattern)
 	return (0);
 }
 
-int	pattern_add_char(t_pattern *pattern, int c)
-{
-	int			div;
-
-	div = c / 8;
-	if (div > PATTERN_BYTES_LENGTH)
-		return (-1);
-	(*pattern)[div] |= (1 << (c % 8));
-	return (0);
-}
-
 int	pattern_escape(t_pattern *pattern, const char **ptr)
 {
 	if (**ptr == '\0')
 		return (-1);
 	if (g_esc_table[(int)**ptr])
-		ft_memcpy(*pattern, g_esc_table[(int)*(*ptr)++], PATTERN_BYTES_LENGTH);
+		pattern_add_pattern(pattern, g_esc_table[(int)*(*ptr)++]);
 	else
 		pattern_add_char(pattern, *(*ptr)++);
 	return (0);
