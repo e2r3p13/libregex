@@ -6,10 +6,11 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/17 07:41:39 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/18 18:56:49 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <libregex.h>
 #include <stdlib.h>
@@ -41,6 +42,7 @@ char	*readfile(const char *filename)
 int	main(int ac, char **av)
 {
 	t_regex	regex;
+	char	*ptr;
 	int		ret;
 	char	*string;
 
@@ -50,7 +52,7 @@ int	main(int ac, char **av)
 		printf("usage: %s regex file\n", av[0]);
 		return (-1);
 	}
-	ret = re_compile(&regex, av[1]);
+	ret = re_compile(&regex, "/\\*(\\*+[\\W\\w]|[\\W\\w]|/)*\\*+/");
 	if (ret < 0)
 	{
 		printf("Regex compilation error.\n");
@@ -62,12 +64,16 @@ int	main(int ac, char **av)
 		re_free(&regex);
 		return (-1);
 	}
+	printf("%s", string);
 //	dfa_print(regex.entrypoint);
-	ret = re_execute(&regex, string);
-	if (!ret)
+	ptr = re_bmatch(&regex, string);
+	if (!ptr)
 		printf("No match found!\n");
 	else
-		printf("Regex matches: %d\n", ret);
+	{
+		printf("Regex matches: \n");
+		write(1, string, ptr - string);
+	}
 	re_free(&regex);
 	return (0);
 }
