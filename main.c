@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/18 18:56:49 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/18 19:12:25 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*readfile(const char *filename)
 	fsize = ftell(f);
 	fseek(f, 0, SEEK_SET);
 	string = malloc(fsize + 1);
+	string[fsize] = 0;
 	if (!string)
 	{
 		fclose(f);
@@ -64,7 +65,7 @@ int	main(int ac, char **av)
 		re_free(&regex);
 		return (-1);
 	}
-	printf("%s", string);
+	printf("%s\n", string);
 //	dfa_print(regex.entrypoint);
 	ptr = re_bmatch(&regex, string);
 	if (!ptr)
