@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/16 16:29:00 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/18 10:41:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **ptr, t_bool nstd, t_alpha
 	(*ptr)++;
 	rend = nfa_create(reps, ptr, nstd, a);
 	if (!rend)
-	{
-		free(reps);
 		return (NULL);
-	}
 	link_add(rend, epsilon, new_end);
 	return (new_end);
 }
@@ -139,5 +136,6 @@ t_ns	*str_to_nfa(const char *str, t_alphabet **a)
 		return (NULL);
 	}
 	final->is_final = true;
+	nfa_print(entrypoint);
 	return (entrypoint);
 }
