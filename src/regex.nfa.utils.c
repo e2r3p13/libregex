@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:30:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:55:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	nfa_get_addresses(t_ns *st, t_vec *v)
 	nfa_get_addresses(st->right.next, v);
 }
 
-t_ns	*nfa_new_state(void)
+t_ns	*nfa_state_new(void)
 {
 	t_ns	*st;
 
@@ -40,8 +40,8 @@ t_ns	*nfa_new_state(void)
 	if (!st)
 		return (NULL);
 	st->is_final = 0;
-	link_init(&st->left);
-	link_init(&st->right);
+	nfa_link_init(&st->left);
+	nfa_link_init(&st->right);
 	st->flag = 0;
 	return (st);
 }
@@ -61,27 +61,4 @@ void	nfa_free(t_ns *nfa)
 		i++;
 	}
 	free(vec.addr);
-}
-
-int	nfa_surround(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
-{
-	t_pattern	epsilon;
-
-	if (!e)
-		return (-1);
-	*nb = nfa_new_state();
-	if (!*nb)
-		return (-1);
-	*ne = nfa_new_state();
-	if (!*ne)
-	{
-		free(*nb);
-		return (-1);
-	}
-	links_cpy(*nb, b);
-	links_destroy(b);
-	pattern_epsilon(&epsilon);
-	link_add(b, epsilon, *nb);
-	link_add(e, epsilon, *ne);
-	return (0);
 }

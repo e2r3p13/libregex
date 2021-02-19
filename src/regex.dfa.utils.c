@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:29:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:59:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 /*
 **	Allocates and initialize a new dfa state.

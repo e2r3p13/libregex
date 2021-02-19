@@ -6,12 +6,60 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 13:42:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:03:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
+
+/*
+**	Fill a dst set with all states that can be reached after a e* move
+**	from a given nfa state.
+*/
+
+int	e_closure(t_ns *state, t_set *dst)
+{
+	if (!is_state_in_set(state, dst))
+	{
+		if (set_push(state, dst) < 0)
+			return (-1);
+		if (is_epsilon(state->left.pattern))
+		{
+			if (e_closure(state->left.next, dst) < 0)
+				return (-1);
+		}
+		if (is_epsilon(state->right.pattern))
+		{
+			if (e_closure(state->right.next, dst) < 0)
+				return (-1);
+		}
+	}
+	return (0);
+}
+
+/*
+**	Fill a dst set with all states that can be reached after a p move, followed
+**	by e* moves, from each nfa states of src set.
+*/
+
+int	e_move_closure(t_set *src, t_pattern *p, t_set *dst)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < src->size)
+	{
+		if (!pattern_cmp(*p, src->addr[i]->left.pattern)
+			&& e_closure(src->addr[i]->left.next, dst) < 0)
+			return (-1);
+		if (!pattern_cmp(*p, src->addr[i]->right.pattern)
+			&& e_closure(src->addr[i]->right.next, dst) < 0)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
 static t_ds	*dfa_use_set(t_set *move_set, t_map *hole_map, t_alphabet *a)
 {
@@ -31,7 +79,7 @@ static t_ds	*dfa_use_set(t_set *move_set, t_map *hole_map, t_alphabet *a)
 			return (NULL);
 		}
 		map_push(hole_map, next_st_map);
-		dfa_build(next_st_map, hole_map, a);
+		dfa_create(next_st_map, hole_map, a);
 	}
 	else
 		set_free(move_set);
@@ -45,7 +93,7 @@ static t_ds	*dfa_use_set(t_set *move_set, t_map *hole_map, t_alphabet *a)
 **	https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf
 */
 
-int	dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
+int	dfa_create(t_map *st_map, t_map *hole_map, t_alphabet *a)
 {
 	t_alphabet	*c;
 	t_set		*move_set;
@@ -91,7 +139,7 @@ static int	nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet)
 		free(map);
 		return (-1);
 	}
-	if (dfa_build(map, map, alphabet) < 0)
+	if (dfa_create(map, map, alphabet) < 0)
 	{
 		free(map);
 		return (-1);
@@ -107,7 +155,7 @@ t_ds	*dfa_generate(const char *str)
 	t_alphabet	*alphabet;
 
 	alphabet = NULL;
-	nfa = str_to_nfa(str, &alphabet);
+	nfa = nfa_generate(str, &alphabet);
 	if (!nfa)
 		return (NULL);
 	entrypoint = dfa_state_new();

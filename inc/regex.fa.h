@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:30:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:57:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,34 @@ typedef struct s_map
 /*	NFA related functions                                                     */
 /* ************************************************************************** */
 
-t_ns		*str_to_nfa(const char *str, t_alphabet **a);
+t_ns		*nfa_generate(const char *str, t_alphabet **a);
 t_ns		*nfa_create(t_ns *b, const char **p, int nested, t_alphabet **a);
-t_ns		*nfa_new_state(void);
-int			nfa_surround(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
+t_ns		*nfa_state_new(void);
 void		nfa_free(t_ns *nfa);
 
 size_t		nfa_get_size(t_ns *st);
 void		nfa_get_addresses(t_ns *st, t_vec *v);
 
+void		nfa_link_init(t_link *ln);
+void		nfa_link_add(t_ns *st, t_pattern pattern, t_ns *next);
+void		nfa_links_destroy(t_ns *st);
+void		nfa_links_cpy(t_ns *dst, t_ns *src);
 int			nfa_has_link(t_pattern *p, t_ns *state);
-void		link_init(t_link *ln);
-void		link_add(t_ns *st, t_pattern pattern, t_ns *next);
-void		links_destroy(t_ns *st);
-void		links_cpy(t_ns *dst, t_ns *src);
+
 
 /* ************************************************************************** */
 /*	DFA related functions                                                     */
 /* ************************************************************************** */
 
 t_ds		*dfa_generate(const char *str);
-int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a);
+int			dfa_create(t_map *st_map, t_map *hole_map, t_alphabet *a);
 t_ds		*dfa_state_new(void);
-int			dfa_create_connection(t_ds *f, t_pattern *p, t_ds *l);
 void		dfa_free(t_ds *dfa);
 
 void		dfa_get_addresses(t_ds *st, t_vec *v);
 size_t		dfa_get_size(t_ds *st);
+
+int			dfa_create_connection(t_ds *f, t_pattern *p, t_ds *l);
 
 t_set		*set_new(void);
 int			set_push(t_ns *state, t_set *set);
