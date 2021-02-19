@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 15:03:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:44:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ static t_ds	*dfa_use_set(t_set *move_set, t_map *hole_map, t_alphabet *a)
 }
 
 /*
-**	Converts an nfa into a dfa, following the subset construction method:
-**	https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf
+**	Converts an nfa into a dfa, following the subset construction method.
+**	See ttps://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf.
 */
 
 int	dfa_create(t_map *st_map, t_map *hole_map, t_alphabet *a)
@@ -147,6 +147,11 @@ static int	nfa_to_dfa(t_ds *entrypoint, t_ns *nfa, t_alphabet *alphabet)
 	map_free(map);
 	return (0);
 }
+
+/*
+**	First tries to generate a NFA, then convert it to a DFA.
+**	Returns the DFA entry state on success, NULL on error.
+*/
 
 t_ds	*dfa_generate(const char *str)
 {

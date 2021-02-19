@@ -6,29 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:51:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:59:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:40:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
-
-/*
-**	Allocates and initialize a new dfa state.
-*/
-
-t_ds	*dfa_state_new(void)
-{
-	t_ds	*st;
-
-	st = malloc(sizeof(t_ds));
-	if (!st)
-		return (NULL);
-	st->is_final = 0;
-	st->links = NULL;
-	st->flag = 0;
-	return (st);
-}
 
 /*
 **	Fills a vector with all addresses of a dfa, in order to free them or
@@ -55,7 +38,7 @@ void	dfa_get_addresses(t_ds *st, t_vec *v)
 /*
 **	Computes recursively the size of a dfa, in order to free them or
 **	whatever else (printing...).
-**	Sets all states flag of the dfa to 0.
+**	Sets all states flag of the dfa to 1.
 */
 
 size_t	dfa_get_size(t_ds *st)
@@ -74,6 +57,23 @@ size_t	dfa_get_size(t_ds *st)
 		links = links->next;
 	}
 	return (total);
+}
+
+/*
+**	Allocates and initialize a new dfa state.
+*/
+
+t_ds	*dfa_state_new(void)
+{
+	t_ds	*st;
+
+	st = malloc(sizeof(t_ds));
+	if (!st)
+		return (NULL);
+	st->is_final = 0;
+	st->links = NULL;
+	st->flag = 0;
+	return (st);
 }
 
 /*

@@ -6,13 +6,18 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:55:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:38:39 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+/*
+**	Go through a NFA to get its size.
+**	You must call nfa_get_addresses after a call to nfa_get_size.
+*/
 
 size_t	nfa_get_size(t_ns *st)
 {
@@ -21,6 +26,11 @@ size_t	nfa_get_size(t_ns *st)
 	st->flag = 1;
 	return (1 + nfa_get_size(st->left.next) + nfa_get_size(st->right.next));
 }
+
+/*
+**	Go through a NFA to fill a vector with all state addresses.
+**	Have to be called after nfa_get_size.
+*/
 
 void	nfa_get_addresses(t_ns *st, t_vec *v)
 {
@@ -31,6 +41,10 @@ void	nfa_get_addresses(t_ns *st, t_vec *v)
 	nfa_get_addresses(st->left.next, v);
 	nfa_get_addresses(st->right.next, v);
 }
+
+/*
+**	Allocates and initialize a new nfa state and returns a pointer to.
+*/
 
 t_ns	*nfa_state_new(void)
 {
@@ -45,6 +59,10 @@ t_ns	*nfa_state_new(void)
 	st->flag = 0;
 	return (st);
 }
+
+/*
+**	Free a hole given nfa.
+*/
 
 void	nfa_free(t_ns *nfa)
 {

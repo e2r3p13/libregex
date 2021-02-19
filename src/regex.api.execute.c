@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/19 13:36:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:46:10 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ static char	*match(t_ds *state, const char *str)
 	return (NULL);
 }
 
+/*
+**	TODO: Big function with flags
+*/
+
 int	re_execute(t_regex *regex, const char *str)
 {
 	char		*ret;
@@ -62,6 +66,10 @@ int	re_execute(t_regex *regex, const char *str)
 	return (nb_match);
 }
 
+/*
+**	Returns 1 if the hole string str match the given regex struct, 0 otherwise.
+*/
+
 int	re_match(t_regex *regex, const char *str)
 {
 	char		*ret;
@@ -71,6 +79,10 @@ int	re_match(t_regex *regex, const char *str)
 		return (0);
 	return (1);
 }
+
+/*
+**	Bastard function, waiting for re_execute to be improved to be deleted.
+*/
 
 char	*re_bmatch(t_regex *regex, const char *str)
 {
