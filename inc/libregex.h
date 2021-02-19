@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/19 21:33:10 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:35:12 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_regex
 **	re_compile - Creates a t_regex structure from a literal regular expression.
 **	@regex:	A pointer to an uninitialized t_regex structure.
 **	@str: The literal regular expression you want to compile.
-**	Return: 0 on success, -1 on failure.
+**	Return: 0 if successful, -1 on failure.
 */
 int		re_compile(t_regex *regex, const char *str);
 
@@ -89,7 +89,7 @@ int		re_execute(t_regex *regex, const char *str);
 /*
 **	re_full_match - Checks for a full match.
 **	@regex: A compiled regex pointer.
-**	@str: The string to search the match from.
+**	@str: The string in which to search the match.
 **	Return: 1 if str fully matches regex, 0 otherwise.
 */
 int		re_full_match(t_regex *regex, const char *str);
