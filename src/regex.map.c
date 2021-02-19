@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 15:39:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:47:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_ds	*state_in_map(t_map *map, t_set *set)
 	}
 	return (NULL);
 }
-
 
 /*
 **	Free a map linked list.

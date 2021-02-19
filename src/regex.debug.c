@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:23:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:28:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:47:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	fa(t_ds *st, t_vec *v, int flag)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < v->size)

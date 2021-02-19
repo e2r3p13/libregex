@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 14:57:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 15:47:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void		nfa_link_add(t_ns *st, t_pattern pattern, t_ns *next);
 void		nfa_links_destroy(t_ns *st);
 void		nfa_links_cpy(t_ns *dst, t_ns *src);
 int			nfa_has_link(t_pattern *p, t_ns *state);
-
 
 /* ************************************************************************** */
 /*	DFA related functions                                                     */
