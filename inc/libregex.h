@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/20 00:35:12 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:55:58 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_link_lst
 **	t_ds - State of a deterministic finite automaton.
 **	@is_final: 1 if the state is an accepting state, 0 otherwise.
 **	@links: A linked list containing all links from one state to another.
-**	@flag: A bit used to cross a hole DFA.
+**	@flag: A bit used to cross a complete DFA.
 */
 typedef struct s_ds
 {

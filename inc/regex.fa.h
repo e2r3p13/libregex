@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 00:41:12 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:56:04 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 **	@is_final: 1 if the state is an accepting state, 0 otherwise.
 **	@left: First link of a NFA state.
 **	@right: Second link of a NFA state.
-**	@flag: A bit used to cross a hole NFA.
+**	@flag: A bit used to cross a complete NFA.
 */
 typedef struct s_ns
 {
@@ -105,7 +105,7 @@ typedef struct s_alphabet
 t_ns	*nfa_generate(const char *str, t_alphabet **a);
 
 /*
-**	nfa_free - Frees a NFA hole.
+**	nfa_free - Frees a complete NFA.
 **	@entrypoint: NFA to be freed.
 */
 void	nfa_free(t_ns *entrypoint);
@@ -167,7 +167,7 @@ void	nfa_links_cpy(t_ns *dst, t_ns *src);
 t_ds	*dfa_generate(const char *str);
 
 /*
-**	dfa_free - Frees a hole DFA.
+**	dfa_free - Frees a complete DFA.
 **	@entrypoint: The NFA to be freed.
 */
 void	dfa_free(t_ds *entrypoint);
