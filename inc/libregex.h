@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/19 14:19:19 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 21:33:10 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,11 @@
 typedef uint8_t	t_pattern[PATTERN_BYTES_LENGTH];
 
 /*
-**	t_alphabet is a linked list containing all accepted patterns.
-**
-**	pattern: The pattern stored by this node.
-**	next: A pointer to the next node.
-*/
-typedef struct s_alphabet
-{
-	t_pattern			pattern;
-	struct s_alphabet	*next;
-}	t_alphabet;
-
-/*
-**	t_link represents a link from one state to another.
-**
-**	match: A function that returns 1 if the input character c can cross the link
-**	with the pattern s.
-**	pattern: The pattern that must be matched to take the link.
-**	next: The nfa or dfa state the link points to.
+**	t_link - Link from one state to another.
+**	@match: A function that returns 1 if the input character c can cross
+**	the link with the pattern s.
+**	@pattern: The pattern that must be matched to go over the link.
+**	@next: The state the link points to.
 */
 typedef struct s_link
 {
@@ -52,7 +39,9 @@ typedef struct s_link
 }	t_link;
 
 /*
-**	s_link_lst is a linked list of t_link.
+**	t_link_lst - A t_link linked list.
+**	@link: The link stored by this node.
+**	@next: The next node.
 */
 typedef struct s_link_lst
 {
@@ -61,13 +50,12 @@ typedef struct s_link_lst
 }	t_link_lst;
 
 /*
-**	t_ds represents a state of a deterministic finite automaton.
-**
-**	is_final: 1 if the state is an accepting state, 0 otherwise.
-**	links: A linked list containing all links from one state to another.
-**	flag: A bit used to cross a hole NFA (set of nfa states).
+**	t_ds - State of a deterministic finite automaton.
+**	@is_final: 1 if the state is an accepting state, 0 otherwise.
+**	@links: A linked list containing all links from one state to another.
+**	@flag: A bit used to cross a hole DFA.
 */
-typedef struct s_dfa_state
+typedef struct s_ds
 {
 	int			is_final;
 	t_link_lst	*links;
@@ -75,11 +63,9 @@ typedef struct s_dfa_state
 }	t_ds;
 
 /*
-**	t_regex stores a dfa and its related regular expresion.
-**
-**	entrypoint: A pointer to the first dfa entry state.
-**	re_string: A string containing the literal regular expression.
-**
+**	t_regex - Finite tate machine representation of a regular expression.
+**	@entrypoint: A pointer to the DFA entry state.
+**	@re_string: A string containing the literal regular expression.
 */
 typedef struct s_regex
 {
@@ -87,13 +73,11 @@ typedef struct s_regex
 	char	*re_string;
 }	t_regex;
 
-/* ************************************************************************** */
-/*	Public API functions                                                      */
-/* ************************************************************************** */
-
 /*
-**	Create a t_regex structure from a literal regex expression.
-**	Returns 0 on success, -1 on failure.
+**	re_compile - Creates a t_regex structure from a literal regular expression.
+**	@regex:	A pointer to an uninitialized t_regex structure.
+**	@str: The literal regular expression you want to compile.
+**	Return: 0 on success, -1 on failure.
 */
 int		re_compile(t_regex *regex, const char *str);
 
@@ -103,18 +87,21 @@ int		re_compile(t_regex *regex, const char *str);
 int		re_execute(t_regex *regex, const char *str);
 
 /*
-**	Returns 1 if the hole string str match the given regex struct, 0 otherwise.
+**	re_full_match - Checks for a full match.
+**	@regex: A compiled regex pointer.
+**	@str: The string to search the match from.
+**	Return: 1 if str fully matches regex, 0 otherwise.
 */
-int		re_match(t_regex *regex, const char *str);
+int		re_full_match(t_regex *regex, const char *str);
 
 /*
-**	Free the regex struct. Needs to be called after each re_compile call, on its
-**	return value.
+**	re_free - Frees a t_regex.
+**	@regex: A compiled t_regex pointer.
 */
 void	re_free(t_regex *regex);
 
 /*
-**	Bastard function, waiting for re_execute to be improved to be deleted.
+**	TODO: remove this function when re_execute will be improved.
 */
 char	*re_bmatch(t_regex *regex, const char *str);
 

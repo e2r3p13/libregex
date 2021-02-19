@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 15:35:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 22:52:08 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,106 +14,86 @@
 #include <stdlib.h>
 #include <libft.h>
 
-/*
-**	Followings functions builds a NFA (non deterministic finite automaton),
-**	using the Thompson's construct.
-**	see https://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf.
-*/
+static t_ns	*nfa_create(t_ns *, const char **, int, t_alphabet **);
 
-/*
-**	nfa_surrond is useful for nfa_or and nfa_quantifier functions.
-**
-**	return value: A pointer to the end of the structure on success,
-**	NULL on error.
-*/
-
-static int	nfa_surround(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
+static t_ns	*nfa_state_new(void)
 {
-	t_pattern	epsilon;
+	t_ns	*st;
 
-	if (!e)
+	st = malloc(sizeof(t_ns));
+	if (!st)
+		return (NULL);
+	st->is_final = 0;
+	nfa_link_init(&st->left);
+	nfa_link_init(&st->right);
+	st->flag = 0;
+	return (st);
+}
+
+static int	nfa_surround(t_ns *beg, t_ns *end, t_ns **new_beg, t_ns **new_end)
+{
+	t_pattern	p;
+
+	if (!end)
 		return (-1);
-	*nb = nfa_state_new();
-	if (!*nb)
+	*new_beg = nfa_state_new();
+	if (!*new_beg)
 		return (-1);
-	*ne = nfa_state_new();
-	if (!*ne)
+	*new_end = nfa_state_new();
+	if (!*new_end)
 	{
-		free(*nb);
+		free(*new_beg);
 		return (-1);
 	}
-	nfa_links_cpy(*nb, b);
-	nfa_links_destroy(b);
-	pattern_epsilon(&epsilon);
-	nfa_link_add(b, epsilon, *nb);
-	nfa_link_add(e, epsilon, *ne);
+	nfa_links_cpy(*new_beg, beg);
+	nfa_links_destroy(beg);
+	pattern_epsilon(&p);
+	nfa_link_add(*new_beg, beg, p);
+	nfa_link_add(*new_end, end, p);
 	return (0);
 }
 
-/*
-**	nfa_or builds a or structure if the next input character
-**	is a pipe.
-**
-**	return value: A pointer to the end of the structure on success,
-**	NULL on error.
-*/
-
-static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **p, int n, t_alphabet **a)
+static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **ptr, int nested, t_alphabet **a)
 {
 	t_ns		*new_beg;
 	t_ns		*new_end;
-	t_ns		*rend;
-	t_ns		*reps;
-	t_pattern	epsilon;
+	t_ns		*right_beg;
+	t_ns		*right_end;
+	t_pattern	p;
 
 	if (nfa_surround(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
-	reps = nfa_state_new();
-	if (!reps)
+	right_beg = nfa_state_new();
+	if (!right_beg)
 		return (NULL);
-	pattern_epsilon(&epsilon);
-	nfa_link_add(beg, epsilon, reps);
-	(*p)++;
-	rend = nfa_create(reps, p, n, a);
-	if (!rend)
+	pattern_epsilon(&p);
+	nfa_link_add(right_beg, beg, p);
+	(*ptr)++;
+	right_end = nfa_create(right_beg, ptr, nested, a);
+	if (!right_end)
 		return (NULL);
-	nfa_link_add(rend, epsilon, new_end);
+	nfa_link_add(new_end, right_end, p);
 	return (new_end);
 }
-
-/*
-**	nfa_quantifier builds a quantifier structure if the next input character
-**	is a quantifier (*+?).
-**
-**	return value: A pointer to the end of the structure on success,
-**	NULL on error.
-*/
 
 static t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
 {
 	t_ns		*new_beg;
 	t_ns		*new_end;
-	t_pattern	epsilon;
+	t_pattern	p;
 
 	if (nfa_surround(beg, end, &new_beg, &new_end) < 0)
 		return (NULL);
-	pattern_epsilon(&epsilon);
+	pattern_epsilon(&p);
 	if (**ptr != '+')
-		nfa_link_add(beg, epsilon, new_end);
+		nfa_link_add(new_end, beg, p);
 	if (**ptr != '?')
-		nfa_link_add(end, epsilon, new_beg);
+		nfa_link_add(new_beg, end, p);
 	(*ptr)++;
 	return (new_end);
 }
 
-/*
-**	nfa_pattern pushes a new state to the nfa and tries to create a link
-**	between begin and this new state, with the next pattern in *ptr.
-**
-**	return value: A pointer to the new state on success, NULL on error.
-*/
-
-static t_ns	*nfa_pattern(t_ns *beg, t_alphabet **a, const char **ptr)
+static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
 {
 	t_ns		*new_end;
 	t_pattern	pattern;
@@ -138,27 +118,20 @@ static t_ns	*nfa_pattern(t_ns *beg, t_alphabet **a, const char **ptr)
 	new_end = nfa_state_new();
 	if (!new_end)
 		return (NULL);
-	nfa_link_add(beg, pattern, new_end);
+	nfa_link_add(new_end, beg, pattern);
 	return (new_end);
 }
 
 /*
-**	nfa_create creates the nfa. It first gets the next character of the input.
-**	If it is a vharacter, it builds it, else if ot is an opening brace,
-**	nfa_create calls itself to build the braced nfa and concatenate it with the
-**	one it already has.
-**	Next, it tries to build a quantifier structure, then a or structure.
-**	Repeats until it reaches the end of the input, or finds an error.
-**
-**	beg: A pointer to the currently last allocated state.
-**	ptr: A pointer going through the literal regular expression.
-**	nested: Indicates weither we build a braced nfa or not. (1 or 0).
-**	a: The alphabet to fill.
-**
-**	return value: The entry state of the created nfa, NULL on error.
+**	Go through ptr from left to right until the '\0', expecting a repeating
+**	sequence of:
+**	pattern or nested expression / optional quantifier / optional or
+**	Builds appropriates states and links accordingly to the read character from
+**	beg.
+**	Returns a pointer to the last state.
 */
 
-t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
+static t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
 {
 	t_ns		*end;
 	t_ns		*tmp;
@@ -176,7 +149,7 @@ t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
 				return (NULL);
 		}
 		else
-			end = nfa_pattern(end, a, ptr);
+			end = nfa_pattern(end, ptr, a);
 		if (ft_isinset("*+?", **ptr))
 			end = nfa_quantifier(tmp, end, ptr);
 		if (**ptr == '|')
@@ -187,31 +160,22 @@ t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
 	return (end);
 }
 
-/*
-**	nfa_generate tries to create a nfa from a string.
-**
-**	str: The literal regular expression.
-**	a: A pointer to pointer to the head of the fa's alphabet (empty at start).
-**
-**	return value: the nfa entry state on success, NULL on failure.
-*/
-
 t_ns	*nfa_generate(const char *str, t_alphabet **a)
 {
 	t_ns	*entrypoint;
-	t_ns	*final;
+	t_ns	*final_state;
 
 	if (*str == '\0')
 		return (NULL);
 	entrypoint = nfa_state_new();
 	if (!entrypoint)
 		return (NULL);
-	final = nfa_create(entrypoint, &str, 0, a);
-	if (!final)
+	final_state = nfa_create(entrypoint, &str, 0, a);
+	if (!final_state)
 	{
 		nfa_free(entrypoint);
 		return (NULL);
 	}
-	final->is_final = 1;
+	final_state->is_final = 1;
 	return (entrypoint);
 }

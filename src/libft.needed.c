@@ -6,12 +6,19 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:15:25 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 13:29:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 20:34:59 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <stdlib.h>
+
+/*
+**	As we built the libregex from nothing, we decided to reimplement several
+**	functions from the libc.
+**	They should behave the same, so see the man of each related function
+**	to get more informations about them.
+*/
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 15:47:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 22:53:53 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
 # include <stddef.h>
 
 /*
-**	Size of the first allocation for the t_set dynamic array.
+** First allocation size for t_set dynamic arrays.
 */
 # define SET_DFL_SIZE 8
 
 /*
-**	t_ns represents a state of a non deterministic finite automaton.
+**	t_ds - State of a non deterministic finite automaton.
+**	@is_final: 1 if the state is an accepting state, 0 otherwise.
+**	@left: First link of a NFA state.
+**	@right: Second link of a NFA state.
+**	@flag: A bit used to cross a hole NFA.
 */
-typedef struct s_nfa_state
+typedef struct s_ns
 {
 	int			is_final;
 	t_link		left;
@@ -33,7 +37,11 @@ typedef struct s_nfa_state
 }	t_ns;
 
 /*
-**	A simple vector structure used to store nfa states addresses.
+**	t_vec - Array of finite automaton states.
+**	@size: The size of the array.
+**	@addr: The FA states addresses array.
+**
+**	Used to cross a FA, in order to print or free it.
 */
 typedef struct s_vec
 {
@@ -42,20 +50,27 @@ typedef struct s_vec
 }	t_vec;
 
 /*
-**	t_set is a dynamic array of nfa states pointers.
-**	Used to generate a dfa from a nfa.
+**	t_set - Dynamic array of NFA states addresses.
+**	@size: The size of the array.
+**	@capacity: The current allocated size of the array.
+**	@addr: The NFA states addresses array.
+**
+**	Only used to generate an DFA from a NFA.
 */
 typedef struct s_set
 {
-	t_ns	**addr;
 	size_t	size;
 	size_t	capacity;
+	t_ns	**addr;
 }	t_set;
 
 /*
-**	t_map associates a t_set with a dfa state. It stores a list of those
-**	associations.
-**	Used to generate a dfa from a nfa.
+**	t_map - Linked list of t_set and t_ds binded pairs.
+**	@state: The binded DFA state.
+**	@set: The binded t_set.
+**	@next: The next t_map node.
+**
+**	Only used to generate an DFA from a NFA.
 */
 typedef struct s_map
 {
@@ -64,23 +79,81 @@ typedef struct s_map
 	struct s_map	*next;
 }	t_map;
 
+/*
+**	t_alphabet - Linked list of accepted patterns.
+**	@pattern: The pattern stored by this node.
+**	@next: A pointer to the next node.
+**
+**	Only used to generate an DFA from a NFA.
+*/
+typedef struct s_alphabet
+{
+	t_pattern			pattern;
+	struct s_alphabet	*next;
+}	t_alphabet;
+
 /* ************************************************************************** */
 /*	NFA related functions                                                     */
 /* ************************************************************************** */
 
-t_ns		*nfa_generate(const char *str, t_alphabet **a);
-t_ns		*nfa_create(t_ns *b, const char **p, int nested, t_alphabet **a);
-t_ns		*nfa_state_new(void);
-void		nfa_free(t_ns *nfa);
+/*
+**	nfa_generate - Generates a NFA from a regular expression string.
+**	@str: The literal regular expression.
+**	@a: The set of non epsilon transitions the NFA will contain.
+**	Return: A pointer to the entrypoint of the generated NFA.
+*/
+t_ns	*nfa_generate(const char *str, t_alphabet **a);
 
-size_t		nfa_get_size(t_ns *st);
-void		nfa_get_addresses(t_ns *st, t_vec *v);
+/*
+**	nfa_free - Frees a hole NFA.
+**	@entrypoint: The NFA to be freed.
+*/
+void	nfa_free(t_ns *entrypoint);
 
-void		nfa_link_init(t_link *ln);
-void		nfa_link_add(t_ns *st, t_pattern pattern, t_ns *next);
-void		nfa_links_destroy(t_ns *st);
-void		nfa_links_cpy(t_ns *dst, t_ns *src);
-int			nfa_has_link(t_pattern *p, t_ns *state);
+/*
+**	nfa_get_size - Gets the number of states of an NFA.
+**	@state: The entrypoint of the NFA.
+**	Return: The size of the NFA.
+**
+**	nfa_get_addresses has to be called after nfa_get_size.
+*/
+size_t	nfa_get_size(t_ns *st);
+
+/*
+**	nfa_get_addresses - Fill a vector with all state addresses of a NFA.
+**	@state: The entrypoint of the NFA.
+**	@vec: The vector to be filled with addresses.
+**
+**	Has to be called after a nfa_get_size call.
+*/
+void	nfa_get_addresses(t_ns *st, t_vec *vec);
+
+/*
+**	nfa_link_init - Initializes a link.
+**	@ln: The link to be initialized.
+*/
+void	nfa_link_init(t_link *ln);
+
+/*
+**	nfa_link_add - Links two NFA states.
+**	@src: The "from" state.
+**	@dst: The "to" state.
+**	@p: The pattern to go from src to dst.
+*/
+void	nfa_link_add(t_ns *dst, t_ns *src, t_pattern p);
+
+/*
+**	nfa_links_destroy - Destroys links of a NFA state.
+**	@st: The state to destroy links.
+*/
+void	nfa_links_destroy(t_ns *st);
+
+/*
+**	nfa_links_cpy - Copies links from a NFA state to another.
+**	@dst: The NFA state that receives links.
+**	@src: The NFA state that send links.
+*/
+void	nfa_links_cpy(t_ns *dst, t_ns *src);
 
 /* ************************************************************************** */
 /*	DFA related functions                                                     */
