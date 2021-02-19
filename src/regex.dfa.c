@@ -6,12 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/16 16:37:16 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/19 13:42:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.nfa.h>
-#include <regex.dfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
 
 static t_ds	*dfa_use_set(t_set *move_set, t_map *hole_map, t_alphabet *a)
@@ -53,7 +52,7 @@ int	dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a)
 	t_ds		*ns;
 
 	if (set_contains_final_state(st_map->set))
-		st_map->state->is_final = true;
+		st_map->state->is_final = 1;
 	c = a;
 	while (c)
 	{

@@ -6,12 +6,12 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/17 14:38:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 13:36:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
-#include <stdio.h>
+#include <regex.fa.h>
 
 static char	*match(t_ds *state, const char *str)
 {

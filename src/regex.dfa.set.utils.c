@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 10:16:32 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 12:02:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 13:42:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
 #include <libft.h>
 

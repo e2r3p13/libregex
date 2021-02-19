@@ -6,57 +6,133 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/17 11:33:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:30:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REGEX_FA_H
 # define REGEX_FA_H
 
-# include <stdint.h>
+# include <libregex.h>
+# include <stddef.h>
 
 /*
-**	This typedef stores accepted characters in the pattern
-**	with a 128 bits bitfield. (always a mupliple of 8 bytes)
+**	Size of the first allocation for the t_set dynamic array.
 */
-# define PATTERN_BYTES_LENGTH 16
-
-typedef uint8_t	t_pattern[16]; // PATTERN_BYTES_LENGTH but norminetteV3...
+# define SET_DFL_SIZE 8
 
 /*
-**	A linked list containing all accepted patterns
+**	t_ns represents a state of a non deterministic finite automaton.
 */
-typedef struct s_alphabet
+typedef struct s_nfa_state
 {
-	t_pattern			pattern;
-	struct s_alphabet	*next;
-}	t_alphabet;
+	int			is_final;
+	t_link		left;
+	t_link		right;
+	uint8_t		flag : 1;
+}	t_ns;
 
 /*
-**	This structure represents a link to go from one state to another.
-**	In order to follow the link, the next input character must
-**	match the stored pattern.
-**	It can be evaluated with the match function.
-**	A link with a next set to NULL is considered to be an epsilon link,
-**	meaning the match function will always return true.
+**	A simple vector structure used to store nfa states addresses.
 */
-typedef struct s_link
+typedef struct s_vec
 {
-	int			(*match)(t_pattern s, int c);
-	t_pattern	pattern;
-	void		*next;
-}	t_link;
+	size_t	size;
+	void	**addr;
+}	t_vec;
 
-int				pattern_add_char(t_pattern *p, int c);
-int				pattern_add_range(t_pattern *p, int s, int e);
-int				pattern_add_pattern(t_pattern *dest, char *src);
-int				pattern_parse(t_pattern *p, const char **ptr);
-int				pattern_escape(t_pattern *p, const char **ptr);
-void			pattern_epsilon(t_pattern *p);
-int				is_epsilon(t_pattern p);
-int				pattern_match(t_pattern p, int c);
-int				pattern_copy(t_pattern dst, t_pattern src);
-int				pattern_cmp(t_pattern a, t_pattern b);
-int				alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
+/*
+**	t_set is a dynamic array of nfa states pointers.
+**	Used to generate a dfa from a nfa.
+*/
+typedef struct s_set
+{
+	t_ns	**addr;
+	size_t	size;
+	size_t	capacity;
+}	t_set;
+
+/*
+**	t_map associates a t_set with a dfa state. It stores a list of those
+**	associations.
+**	Used to generate a dfa from a nfa.
+*/
+typedef struct s_map
+{
+	t_ds			*state;
+	t_set			*set;
+	struct s_map	*next;
+}	t_map;
+
+/* ************************************************************************** */
+/*	NFA related functions                                                     */
+/* ************************************************************************** */
+
+t_ns		*str_to_nfa(const char *str, t_alphabet **a);
+t_ns		*nfa_create(t_ns *b, const char **p, int nested, t_alphabet **a);
+t_ns		*nfa_new_state(void);
+int			nfa_surround(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne);
+void		nfa_free(t_ns *nfa);
+
+size_t		nfa_get_size(t_ns *st);
+void		nfa_get_addresses(t_ns *st, t_vec *v);
+
+int			nfa_has_link(t_pattern *p, t_ns *state);
+void		link_init(t_link *ln);
+void		link_add(t_ns *st, t_pattern pattern, t_ns *next);
+void		links_destroy(t_ns *st);
+void		links_cpy(t_ns *dst, t_ns *src);
+
+/* ************************************************************************** */
+/*	DFA related functions                                                     */
+/* ************************************************************************** */
+
+t_ds		*dfa_generate(const char *str);
+int			dfa_build(t_map *st_map, t_map *hole_map, t_alphabet *a);
+t_ds		*dfa_state_new(void);
+int			dfa_create_connection(t_ds *f, t_pattern *p, t_ds *l);
+void		dfa_free(t_ds *dfa);
+
+void		dfa_get_addresses(t_ds *st, t_vec *v);
+size_t		dfa_get_size(t_ds *st);
+
+t_set		*set_new(void);
+int			set_push(t_ns *state, t_set *set);
+void		set_free(t_set *set);
+int			is_state_in_set(t_ns *state, t_set *set);
+int			set_cmp(t_set *a, t_set *b);
+int			set_contains_final_state(t_set *set);
+int			e_closure(t_ns *state, t_set *dst);
+int			e_move_closure(t_set *src, t_pattern *p, t_set *dst);
+
+t_map		*map_new(t_ds *state, t_set *set);
+void		map_push(t_map *dst, t_map *src);
+void		map_free(t_map *map);
+t_ds		*state_in_map(t_map *map, t_set *set);
+
+/* ************************************************************************** */
+/*	Pattern related functions                                                 */
+/* ************************************************************************** */
+
+int			pattern_add_char(t_pattern *p, int c);
+int			pattern_add_range(t_pattern *p, int s, int e);
+int			pattern_add_pattern(t_pattern *dest, char *src);
+int			pattern_parse(t_pattern *p, const char **ptr);
+int			pattern_escape(t_pattern *p, const char **ptr);
+void		pattern_epsilon(t_pattern *p);
+int			is_epsilon(t_pattern p);
+int			pattern_match(t_pattern p, int c);
+int			pattern_copy(t_pattern dst, t_pattern src);
+int			pattern_cmp(t_pattern a, t_pattern b);
+int			alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
+void		alphabet_free(t_alphabet *a);
+
+/* ************************************************************************** */
+/*	Debug functions                                                           */
+/* ************************************************************************** */
+
+void		pattern_print(t_pattern pattern);
+void		nfa_print(t_ns *nfa);
+void		dfa_print(t_ds *entrypoint);
 
 #endif

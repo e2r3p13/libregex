@@ -6,19 +6,19 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 12:00:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:21:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
 #include <libft.h>
 
 /*
-**	Return true if a state is in a set, false otherwise
+**	Return 1 if a state is in a set, 0 otherwise
 */
 
-t_bool	is_state_in_set(t_ns *state, t_set *set)
+int	is_state_in_set(t_ns *state, t_set *set)
 {
 	size_t	i;
 
@@ -26,13 +26,13 @@ t_bool	is_state_in_set(t_ns *state, t_set *set)
 	while (i < set->size)
 	{
 		if (set->addr[i] == state)
-			return (true);
+			return (1);
 		i++;
 	}
-	return (false);
+	return (0);
 }
 
-t_bool	set_contains_final_state(t_set *set)
+int	set_contains_final_state(t_set *set)
 {
 	size_t	i;
 
@@ -40,10 +40,10 @@ t_bool	set_contains_final_state(t_set *set)
 	while (i < set->size)
 	{
 		if (set->addr[i]->is_final)
-			return (true);
+			return (1);
 		i++;
 	}
-	return (false);
+	return (0);
 }
 
 /*
@@ -51,26 +51,26 @@ t_bool	set_contains_final_state(t_set *set)
 **	{0, 3, 2, 1} and {0, 1, 2, 3} are equal
 */
 
-t_bool	set_cmp(t_set *a, t_set *b)
+int	set_cmp(t_set *a, t_set *b)
 {
-	t_bool	found;
+	int		found;
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	while (i < a->size)
 	{
-		found = false;
+		found = 0;
 		j = 0;
 		while (j < b->size)
 		{
 			if (a->addr[i] == b->addr[j])
-				found = true;
+				found = 1;
 			j++;
 		}
 		if (!found)
-			return (false);
+			return (0);
 		i++;
 	}
-	return (true);
+	return (1);
 }

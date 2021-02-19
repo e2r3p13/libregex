@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:15:25 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 11:54:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 13:29:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ char	*ft_strdup(const char *s1)
 	return (s2);
 }
 
-t_bool	ft_isinset(const char *charset, char c)
+int	ft_isinset(const char *charset, char c)
 {
 	while (*charset)
 	{
 		if (c == *charset)
-			return (true);
+			return (1);
 		charset++;
 	}
-	return (false);
+	return (0);
 }

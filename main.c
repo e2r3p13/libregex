@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/18 19:12:25 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/19 14:21:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 char	*readfile(const char *filename)
 {
-	FILE *f;
-	long fsize;
-	char *string;
+	FILE	*f;
+	long	fsize;
+	char	*string;
 
 	f = fopen(filename, "rb");
 	if (!f)
@@ -66,7 +66,6 @@ int	main(int ac, char **av)
 		return (-1);
 	}
 	printf("%s\n", string);
-//	dfa_print(regex.entrypoint);
 	ptr = re_bmatch(&regex, string);
 	if (!ptr)
 		printf("No match found!\n");

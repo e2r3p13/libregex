@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 12:45:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 11:57:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:07:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
 
 /*
@@ -39,17 +39,4 @@ int	dfa_create_connection(t_ds *first, t_pattern *p, t_ds *last)
 	new_link->next = first->links;
 	first->links = new_link;
 	return (0);
-}
-
-/*
-**	Recursively free a link linked list. Used by dfa_free
-*/
-
-void	dfa_links_free(t_link_lst *links)
-{
-	if (links)
-	{
-		dfa_links_free(links->next);
-		free(links);
-	}
 }

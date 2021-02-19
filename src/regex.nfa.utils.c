@@ -6,15 +6,15 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:40:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/18 10:44:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:30:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.nfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-static size_t	nfa_get_size(t_ns *st)
+size_t	nfa_get_size(t_ns *st)
 {
 	if (!st || st->flag == 1)
 		return (0);
@@ -22,7 +22,7 @@ static size_t	nfa_get_size(t_ns *st)
 	return (1 + nfa_get_size(st->left.next) + nfa_get_size(st->right.next));
 }
 
-static void	nfa_get_addresses(t_ns *st, t_vec *v)
+void	nfa_get_addresses(t_ns *st, t_vec *v)
 {
 	if (!st || st->flag == 0)
 		return ;
@@ -39,7 +39,7 @@ t_ns	*nfa_new_state(void)
 	st = malloc(sizeof(t_ns));
 	if (!st)
 		return (NULL);
-	st->is_final = false;
+	st->is_final = 0;
 	link_init(&st->left);
 	link_init(&st->right);
 	st->flag = 0;
@@ -85,38 +85,3 @@ int	nfa_surround(t_ns *b, t_ns *e, t_ns **nb, t_ns **ne)
 	link_add(e, epsilon, *ne);
 	return (0);
 }
-
-
-	static int		fa(t_ns *st, t_vec *v)
-	{
-		size_t	i;
-
-		i = 0;
-		while (i < v->size)
-		{
-			if (v->addr[i] == st)
-				return (i + 1);
-			i++;
-		}
-		return (0);
-	}
-
-	void			nfa_print(t_ns *nfa)
-	{
-		t_vec	vec;
-		size_t	i;
-		t_ns	*node;
-
-		vec.size = 0;
-		vec.addr = malloc(sizeof(void *) * nfa_get_size(nfa));
-		nfa_get_addresses(nfa, &vec);
-		i = 0;
-		while (i < vec.size)
-		{
-			node = (t_ns *)(vec.addr)[i];
-			printf("%zu: left -> %d ", i + 1, fa(node->left.next, &vec));
-			printf(" right -> %d ", fa(node->right.next, &vec));
-			printf("\n");
-			i++;
-		}
-	}

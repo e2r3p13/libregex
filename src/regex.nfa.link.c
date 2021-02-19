@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:34:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/14 12:32:42 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/19 13:45:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.nfa.h>
+#include <regex.fa.h>
 #include <libft.h>
 
 void	link_add(t_ns *st, t_pattern pattern, t_ns *next)
@@ -45,7 +45,7 @@ void	link_init(t_link *ln)
 	ln->match = &pattern_match;
 }
 
-t_bool	nfa_has_link(t_pattern *p, t_ns *state)
+int	nfa_has_link(t_pattern *p, t_ns *state)
 {
 	return (!pattern_cmp(*p, state->left.pattern)
 		|| !pattern_cmp(*p, state->right.pattern));

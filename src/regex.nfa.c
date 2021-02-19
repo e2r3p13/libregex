@@ -6,14 +6,15 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/18 21:03:36 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/19 14:31:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.nfa.h>
+#include <regex.fa.h>
 #include <stdlib.h>
+#include <libft.h>
 
-static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **ptr, t_bool nstd, t_alphabet **a)
+static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **p, int n, t_alphabet **a)
 {
 	t_ns		*new_beg;
 	t_ns		*new_end;
@@ -28,8 +29,8 @@ static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **ptr, t_bool nstd, t_alpha
 		return (NULL);
 	pattern_epsilon(&epsilon);
 	link_add(beg, epsilon, reps);
-	(*ptr)++;
-	rend = nfa_create(reps, ptr, nstd, a);
+	(*p)++;
+	rend = nfa_create(reps, p, n, a);
 	if (!rend)
 		return (NULL);
 	link_add(rend, epsilon, new_end);
@@ -90,7 +91,7 @@ static t_ns	*nfa_pattern(t_ns *beg, t_alphabet **a, const char **ptr)
 	return (new_end);
 }
 
-t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested, t_alphabet **a)
+t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
 {
 	t_ns		*end;
 	t_ns		*tmp;
@@ -103,7 +104,7 @@ t_ns	*nfa_create(t_ns *beg, const char **ptr, t_bool nested, t_alphabet **a)
 		tmp = end;
 		if (**ptr == '(' && (*ptr)++)
 		{
-			end = nfa_create(end, ptr, true, a);
+			end = nfa_create(end, ptr, 1, a);
 			if (!end || *(*ptr)++ != ')')
 				return (NULL);
 		}
@@ -129,13 +130,13 @@ t_ns	*str_to_nfa(const char *str, t_alphabet **a)
 	entrypoint = nfa_new_state();
 	if (!entrypoint)
 		return (NULL);
-	final = nfa_create(entrypoint, &str, false, a);
+	final = nfa_create(entrypoint, &str, 0, a);
 	if (!final)
 	{
 		nfa_free(entrypoint);
 		return (NULL);
 	}
-	final->is_final = true;
+	final->is_final = 1;
 	// nfa_print(entrypoint);
 	return (entrypoint);
 }

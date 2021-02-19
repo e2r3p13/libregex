@@ -6,11 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 14:35:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/15 14:37:20 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/19 13:42:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.dfa.h>
+#include <regex.fa.h>
 
 /*
 **	Fill a dst set with all states that can be reached after a e* move
