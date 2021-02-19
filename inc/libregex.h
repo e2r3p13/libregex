@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/20 00:55:58 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:56:36 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_ds
 }	t_ds;
 
 /*
-**	t_regex - Finite tate machine representation of a regular expression.
+**	t_regex - Finite state machine representation of a regular expression.
 **	@entrypoint: A pointer to the DFA entry state.
 **	@re_string: A string containing the literal regular expression.
 */
