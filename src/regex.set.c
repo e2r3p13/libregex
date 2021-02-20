@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex.dfa.set.c                                    :+:      :+:    :+:   */
+/*   regex.set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 15:01:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/20 19:43:59 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
 #include <libft.h>
-
-/*
-**	Allocates a new set (which basically is a dynamic array of states addresses)
-**	SET_DFL_SIZE is the size of the array before a reallocation.
-*/
 
 t_set	*set_new(void)
 {
@@ -37,10 +32,6 @@ t_set	*set_new(void)
 	set->size = 0;
 	return (set);
 }
-
-/*
-**	Allocates twice as space as current, in order to store more addresses
-*/
 
 static int	set_realloc(t_set *set)
 {
@@ -64,21 +55,13 @@ static int	set_realloc(t_set *set)
 	return (0);
 }
 
-/*
-**	Pushes a state address into a set
-*/
-
-int	set_push(t_ns *state, t_set *set)
+int	set_push(t_ns *st, t_set *set)
 {
 	if (set->size == set->capacity && set_realloc(set) < 0)
 		return (-1);
-	set->addr[set->size++] = state;
+	set->addr[set->size++] = st;
 	return (0);
 }
-
-/*
-**	Too obvious to comment, I guess
-*/
 
 void	set_free(t_set *set)
 {
@@ -90,18 +73,14 @@ void	set_free(t_set *set)
 	}
 }
 
-/*
-**	Return 1 if a state is in a set, 0 otherwise
-*/
-
-int	is_state_in_set(t_ns *state, t_set *set)
+int	is_state_in_set(t_ns *st, t_set *set)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < set->size)
 	{
-		if (set->addr[i] == state)
+		if (set->addr[i] == st)
 			return (1);
 		i++;
 	}
@@ -121,12 +100,6 @@ int	set_contains_final_state(t_set *set)
 	}
 	return (0);
 }
-
-/*
-**	Compares two sets. The order of the elements doesn't matter, e.g.
-**	{0, 3, 2, 1} and {0, 1, 2, 3} are equal.
-**	return value: 1 if equal, 0 otherwise.
-*/
 
 int	set_cmp(t_set *a, t_set *b)
 {

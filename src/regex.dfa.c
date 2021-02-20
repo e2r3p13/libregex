@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 01:04:00 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 19:49:27 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@ static t_ds	*dfa_state_new(void)
 	return (st);
 }
 
-int	e_closure(t_ns *st, t_set *dst)
+static int	e_closure(t_ns *st, t_set *set)
 {
-	if (!is_state_in_set(st, dst))
+	if (!is_state_in_set(st, set))
 	{
-		if (set_push(st, dst) < 0)
+		if (set_push(st, set) < 0)
 			return (-1);
 		if (is_epsilon(st->left.pattern))
 		{
-			if (e_closure(st->left.next, dst) < 0)
+			if (e_closure(st->left.next, set) < 0)
 				return (-1);
 		}
 		if (is_epsilon(st->right.pattern))
 		{
-			if (e_closure(st->right.next, dst) < 0)
+			if (e_closure(st->right.next, set) < 0)
 				return (-1);
 		}
 	}
 	return (0);
 }
 
-int	move_closure(t_set *dst, t_set *src, t_pattern *p)
+static int	move_closure(t_set *dst, t_set *src, t_pattern *p)
 {
 	size_t	i;
 

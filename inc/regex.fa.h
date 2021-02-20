@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 02:26:06 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 19:59:54 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_alphabet
 }	t_alphabet;
 
 /* ************************************************************************** */
-/*	NFA related functions                                                     */
+/*	NFA                                                                       */
 /* ************************************************************************** */
 
 /*
@@ -156,7 +156,7 @@ void	nfa_links_destroy(t_ns *st);
 void	nfa_links_cpy(t_ns *dst, t_ns *src);
 
 /* ************************************************************************** */
-/*	DFA related functions                                                     */
+/*	DFA                                                                       */
 /* ************************************************************************** */
 
 /*
@@ -199,22 +199,88 @@ void	dfa_get_addresses(t_ds *st, t_vec *v);
 */
 int		dfa_link_add(t_ds *dst, t_ds *src, t_pattern *p);
 
-t_set	*set_new(void);
-int		set_push(t_ns *state, t_set *set);
-void	set_free(t_set *set);
-int		is_state_in_set(t_ns *state, t_set *set);
-int		set_cmp(t_set *a, t_set *b);
-int		set_contains_final_state(t_set *set);
-int		e_closure(t_ns *state, t_set *dst);
-int		e_move_closure(t_set *src, t_pattern *p, t_set *dst);
+/* ************************************************************************** */
+/*	Set                                                                       */
+/* ************************************************************************** */
 
-t_map	*map_new(t_ds *state, t_set *set);
+/*
+**	set_new - Allocates a new t_set.
+**	Return: A pointer to the set.
+*/
+t_set	*set_new(void);
+
+/*
+**	set_push - Adds a state to a set.
+**	@st: The state which is pushed.
+**	@set: The set in which to push st.
+**	Return: 0 if successful, -1 on failure.
+*/
+int		set_push(t_ns *st, t_set *set);
+
+/*
+**	set_free - Frees a set.
+**	@set: The set to be freed.
+*/
+void	set_free(t_set *set);
+
+/*
+**	is_state_in_set - Searches for a state in a set.
+**	@st: The state to search.
+**	@set: The set in which to search.
+**	Return: 1 if st is found, 0 otherwise.
+*/
+int		is_state_in_set(t_ns *st, t_set *set);
+
+/*
+**	set_contains_final_state - Search for a final state in a set.
+**	@set: The set in which to search.
+**	Return: 1 if a final state is found, 0 otherwise.
+*/
+int		set_contains_final_state(t_set *set);
+
+/*
+**	set_cmp - Compares two sets (order doesn't matter).
+**	@a: First set.
+**	@b: Second set.
+**	Return: 1 if both sets contains same states, 0 otherwise.
+*/
+int		set_cmp(t_set *a, t_set *b);
+
+/* ************************************************************************** */
+/*	Map                                                                       */
+/* ************************************************************************** */
+
+/*
+**	map_new - Allocates a new map node.
+**	@st: The state of the new map node.
+**	@set: The set of the new map node.
+**	Return: The new allocated map node.
+*/
+t_map	*map_new(t_ds *st, t_set *set);
+
+/*
+**	map_push - Pushes a new map node to the existing list.
+**	@dst: The map linked list.
+**	@src: The map node to be pushed.
+*/
 void	map_push(t_map *dst, t_map *src);
+
+/*
+**	map_free - Frees a complete map linked list.
+**	@map: A pointer to the head of the list.
+*/
 void	map_free(t_map *map);
+
+/*
+**	state_in_map - Searches for a DFA state binded to a certain set.
+**	@map: A map linked list.
+**	@set: The set to search in map.
+**	Return: The DFA state binded to an equal set, NULL if there isn't any.
+*/
 t_ds	*state_in_map(t_map *map, t_set *set);
 
 /* ************************************************************************** */
-/*	Pattern related functions                                                 */
+/*	Pattern                                                                   */
 /* ************************************************************************** */
 
 int			pattern_add_char(t_pattern *p, int c);
@@ -231,7 +297,7 @@ int			alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
 void		alphabet_free(t_alphabet *a);
 
 /* ************************************************************************** */
-/*	Debug functions                                                           */
+/*	Debug                                                                     */
 /* ************************************************************************** */
 
 void		pattern_print(t_pattern pattern);
