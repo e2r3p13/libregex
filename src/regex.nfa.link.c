@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:34:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 22:52:41 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 02:04:40 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	nfa_link_init(t_link *ln)
 **	existing left link.
 */
 
-void	nfa_link_add(t_ns *src, t_ns *dst, t_pattern p)
+void	nfa_link_add(t_ns *dst, t_ns *src, t_pattern p)
 {
 	if (!src->left.next)
 	{

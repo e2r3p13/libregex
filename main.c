@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/19 14:21:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/20 02:24:01 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <libregex.h>
 #include <stdlib.h>
-#include <regex.dfa.h>
+#include <regex.fa.h>
 
 char	*readfile(const char *filename)
 {
@@ -53,7 +53,7 @@ int	main(int ac, char **av)
 		printf("usage: %s regex file\n", av[0]);
 		return (-1);
 	}
-	ret = re_compile(&regex, "/\\*(\\*+[\\W\\w]|[\\W\\w]|/)*\\*+/");
+	ret = re_compile(&regex, av[1]);
 	if (ret < 0)
 	{
 		printf("Regex compilation error.\n");

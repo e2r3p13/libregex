@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 01:22:45 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 02:26:06 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ void	nfa_link_init(t_link *ln);
 
 /*
 **	nfa_link_add - Links two NFA states.
-**	@src: The "from" state.
 **	@dst: The "to" state.
+**	@src: The "from" state.
 **	@p: The pattern to go from src to dst.
 */
 void	nfa_link_add(t_ns *dst, t_ns *src, t_pattern p);
@@ -192,8 +192,8 @@ void	dfa_get_addresses(t_ds *st, t_vec *v);
 
 /*
 **	dfa_link_add - Links two DFA states.
-**	@src: The "from" state.
 **	@dst: The "to" state.
+**	@src: The "from" state.
 **	@p: The pattern to go from src to dst.
 **	Return: 0 if successful, -1 on error.
 */
