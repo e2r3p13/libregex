@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 00:56:04 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 01:22:45 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_vec
 }	t_vec;
 
 /*
-**	t_set - Dynamic array of NFA states addresses.
+**	t_set - Dynamic array of NFA state addresses.
 **	@size: Size of the array.
 **	@capacity: The current allocated size of the array.
 **	@addr: The NFA state addresses array.
@@ -106,7 +106,7 @@ t_ns	*nfa_generate(const char *str, t_alphabet **a);
 
 /*
 **	nfa_free - Frees a complete NFA.
-**	@entrypoint: NFA to be freed.
+**	@entrypoint: The NFA to be freed.
 */
 void	nfa_free(t_ns *entrypoint);
 
@@ -144,7 +144,7 @@ void	nfa_link_add(t_ns *dst, t_ns *src, t_pattern p);
 
 /*
 **	nfa_links_destroy - Destroys links of a NFA state.
-**	@st: The state to destroy links.
+**	@st: The state in which links are destroyed.
 */
 void	nfa_links_destroy(t_ns *st);
 
@@ -173,16 +173,16 @@ t_ds	*dfa_generate(const char *str);
 void	dfa_free(t_ds *entrypoint);
 
 /*
-**	dfa_get_size - Gets the number of states of an DFA.
+**	dfa_get_size - Gets the number of states of a DFA.
 **	@st: The entrypoint of the NFA.
-**	Return: The size of the NFA.
+**	Return: Size of the NFA.
 **
 **	dfa_get_addresses has to be called after dfa_get_size.
 */
 size_t	dfa_get_size(t_ds *st);
 
 /*
-**	dfa_get_addresses - Fill a vector with all state addresses of a DFA.
+**	dfa_get_addresses - Fills a vector with all state addresses of a DFA.
 **	@st: The entrypoint of the DFA.
 **	@vec: The vector to be filled with addresses.
 **
