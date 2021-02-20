@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 22:52:08 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/20 01:02:23 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,8 @@ static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
 }
 
 /*
-**	Go through ptr from left to right until the '\0', expecting a repeating
-**	sequence of:
-**	pattern or nested expression / optional quantifier / optional or
-**	Builds appropriates states and links accordingly to the read character from
-**	beg.
-**	Returns a pointer to the last state.
+**	Converts a string into a NFA, following the Thompson's construction method.
+**	See ttps://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf.
 */
 
 static t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
