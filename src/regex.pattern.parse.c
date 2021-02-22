@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/22 12:44:20 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/22 20:14:32 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	pattern_charset(t_pattern *pattern, const char **ptr)
 	return (0);
 }
 
-int			pattern_parse(t_pattern *pattern, const char **ptr)
+int	pattern_parse(t_pattern *pattern, const char **ptr)
 {
 	if (**ptr == '\\')
 	{

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/22 18:23:32 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 20:17:03 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,25 +283,25 @@ t_ds	*set_in_map(t_map *map, t_set *set);
 /*	Pattern                                                                   */
 /* ************************************************************************** */
 
-int			pattern_add_char(t_pattern *p, int c);
-int			pattern_add_range(t_pattern *p, int s, int e);
-int			pattern_add_pattern(t_pattern *dest, char *src);
-int			pattern_parse(t_pattern *p, const char **ptr);
-int			pattern_escape(t_pattern *p, const char **ptr);
-void		pattern_epsilon(t_pattern *p);
-int			is_epsilon(t_pattern p);
-int			pattern_match(t_pattern p, int c);
-int			pattern_copy(t_pattern dst, t_pattern src);
-int			pattern_cmp(t_pattern a, t_pattern b);
-int			alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
-void		alphabet_free(t_alphabet *a);
+int		pattern_add_char(t_pattern *p, int c);
+int		pattern_add_range(t_pattern *p, int s, int e);
+int		pattern_add_pattern(t_pattern *dest, char *src);
+int		pattern_parse(t_pattern *p, const char **ptr);
+int		pattern_escape(t_pattern *p, const char **ptr);
+void	pattern_epsilon(t_pattern *p);
+int		is_epsilon(t_pattern p);
+int		pattern_match(t_pattern p, int c);
+int		pattern_copy(t_pattern dst, t_pattern src);
+int		pattern_cmp(t_pattern a, t_pattern b);
+int		alphabet_add_pattern(t_alphabet **head, t_pattern pattern);
+void	alphabet_free(t_alphabet *a);
 
 /* ************************************************************************** */
 /*	Debug                                                                     */
 /* ************************************************************************** */
 
-void		pattern_print(t_pattern pattern);
-void		nfa_print(t_ns *nfa);
-void		dfa_print(t_ds *entrypoint);
+void	pattern_print(t_pattern pattern);
+void	nfa_print(t_ns *nfa);
+void	dfa_print(t_ds *entrypoint);
 
 #endif

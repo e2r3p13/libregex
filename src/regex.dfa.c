@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/22 18:26:09 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 20:18:17 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
 
-static int	dfa_create(t_map *, t_map *, t_alphabet *);
+static int	dfa_create(t_map *cm, t_map *wm, t_alphabet *a);
 
 static t_ds	*dfa_state_new(void)
 {

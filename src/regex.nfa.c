@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/22 12:54:50 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/02/22 20:15:25 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <libft.h>
 
-static t_ns	*nfa_create(t_ns *, const char **, int, t_alphabet **);
+static t_ns	*nfa_create(t_ns e*, const char **p, int n, t_alphabet **a);
 
 static t_ns	*nfa_state_new(void)
 {
@@ -92,8 +92,6 @@ static t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
 	(*ptr)++;
 	return (new_end);
 }
-
-#include <stdio.h>
 
 static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
 {
