@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/20 00:56:36 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 10:14:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_regex
 {
 	t_ds	*entrypoint;
 	char	*re_string;
+	uint8_t	flags : 2;
 }	t_regex;
 
 /*
