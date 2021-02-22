@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/22 20:15:25 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 20:19:14 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <libft.h>
 
-static t_ns	*nfa_create(t_ns e*, const char **p, int n, t_alphabet **a);
+static t_ns	*nfa_create(t_ns *e, const char **p, int n, t_alphabet **a);
 
 static t_ns	*nfa_state_new(void)
 {
