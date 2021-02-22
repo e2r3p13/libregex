@@ -6,7 +6,7 @@
 #    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
-#    Updated: 2021/02/22 17:39:27 by bccyv            ###   ########.fr        #
+#    Updated: 2021/02/22 18:45:10 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ AR		=	ar
 ARFLAGS	=	rc
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror
+FSAN	=	-g3 -fsanitize=address
 
 SRCDIR	=	src
 INCDIR	=	inc
@@ -41,7 +42,7 @@ $(LIBNAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) -MMD -I$(INCDIR) -c $< -o $@
+	@$(CC) $(CFLAGS) $(FSAN) -MMD -I$(INCDIR) -c $< -o $@
 	@printf "[\e[32mOK\e[0m] %s\n" $@
 
 clean: _clean
@@ -60,3 +61,12 @@ ifeq ($(shell ls -1 | grep $(OBJDIR)),$(OBJDIR))
 endif
 
 re: fclean all
+
+test: all
+	@$(CC) $(CFLAGS) $(FSAN) -I$(INCDIR) main.c $(LIBNAME) -o a.out
+	@printf "[\e[32mOK\e[0m] %s\n" "a.out"
+
+test_clean: fclean
+	@rm a.out
+	@printf "[\e[31mCLEAN\e[0m] %s\n" "a.out"
+
