@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 01:02:23 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 12:54:50 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
 	return (new_end);
 }
 
+#include <stdio.h>
+
 static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
 {
 	t_ns		*new_end;
@@ -101,14 +103,9 @@ static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
 	if (!beg)
 		return (NULL);
 	ft_memset(pattern, 0, sizeof(pattern));
-	if (**ptr == '[')
+	if (**ptr == '[' || **ptr == '\\' || **ptr == '.')
 	{
-		if (!(*ptr)++ || pattern_parse(&pattern, ptr))
-			return (NULL);
-	}
-	else if (**ptr == '\\')
-	{
-		if (!(*ptr)++ || pattern_escape(&pattern, ptr))
+		if (pattern_parse(&pattern, ptr))
 			return (NULL);
 	}
 	else if (pattern_add_char(&pattern, *(*ptr)++))

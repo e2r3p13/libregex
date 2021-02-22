@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/17 11:31:39 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/22 12:44:20 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,47 +27,42 @@ static char	*g_esc_table[128] = {
 	['r'] = "\x00\x20\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
 	['t'] = "\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
 	['v'] = "\x00\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
-	['f'] = "\x00\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	['f'] = "\x00\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
+	[0] = "\xfe\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f"
 };
 
-static int	pattern_invert(t_pattern *pattern)
+static int	pattern_invert(t_pattern *pattern, int action, const char **ptr)
 {
 	int			index;
 
-	index = 0;
-	while (index < PATTERN_BYTES_LENGTH)
-		(*pattern)[index++] ^= 0xff;
-	return (0);
-}
-
-int	pattern_escape(t_pattern *pattern, const char **ptr)
-{
-	if (**ptr == '\0')
-		return (-1);
-	if (g_esc_table[(int)**ptr])
-		pattern_add_pattern(pattern, g_esc_table[(int)*(*ptr)++]);
+	if (action)
+	{
+		if (**ptr == '[')
+			(*ptr)++;
+		if (**ptr != '^')
+			return (0);
+		pattern_add_char(pattern, '\0');
+		(*ptr)++;
+	}
 	else
-		pattern_add_char(pattern, *(*ptr)++);
-	return (0);
+	{
+		index = 0;
+		while (index < PATTERN_BYTES_LENGTH)
+			(*pattern)[index++] ^= 0xff;
+	}
+	return (1);
 }
 
-int	pattern_parse(t_pattern *pattern, const char **ptr)
+static int	pattern_charset(t_pattern *pattern, const char **ptr)
 {
 	int			invert;
 
-	invert = 0;
-	if (**ptr == '^')
-	{
-		pattern_add_char(pattern, '\0');
-		invert = 1;
-		(*ptr)++;
-	}
+	invert = pattern_invert(pattern, 1, ptr);
 	while (**ptr && **ptr != ']')
 	{
 		if (**ptr == '\\')
 		{
-			(*ptr)++;
-			if (pattern_escape(pattern, ptr))
+			if (pattern_parse(pattern, ptr))
 				return (-1);
 		}
 		else if (*(*ptr + 1) == '-' && *(*ptr + 2) && *(*ptr + 2) != ']')
@@ -83,6 +78,32 @@ int	pattern_parse(t_pattern *pattern, const char **ptr)
 		return (-1);
 	(*ptr)++;
 	if (invert)
-		pattern_invert(pattern);
+		pattern_invert(pattern, 0, NULL);
+	return (0);
+}
+
+int			pattern_parse(t_pattern *pattern, const char **ptr)
+{
+	if (**ptr == '\\')
+	{
+		if (*++(*ptr) == '\0')
+			return (-1);
+		if (g_esc_table[(int)**ptr])
+			pattern_add_pattern(pattern, g_esc_table[(int)*(*ptr)++]);
+		else
+			pattern_add_char(pattern, *(*ptr)++);
+	}
+	else if (**ptr == '.')
+	{
+		pattern_add_pattern(pattern, g_esc_table[0]);
+		(*ptr)++;
+	}
+	else if (**ptr == '[')
+	{
+		if (pattern_charset(pattern, ptr))
+			return (0);
+	}
+	else
+		return (-1);
 	return (0);
 }
