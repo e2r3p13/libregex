@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:11:02 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/22 10:15:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/22 18:47:52 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	re_compile(t_regex *regex, const char *str)
 	regex->entrypoint = dfa_generate(tmp);
 	if (!regex->entrypoint)
 	{
-		dfa_free(regex->entrypoint);
+		free(regex->re_string);
 		return (-1);
 	}
 	if (regex->flags & 0x2)
