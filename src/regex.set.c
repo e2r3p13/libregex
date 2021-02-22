@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 19:43:59 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 17:51:15 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int	set_cmp(t_set *a, t_set *b)
 	size_t	i;
 	size_t	j;
 
+	if (a->size != b->size)
+		return (0);
 	i = 0;
 	while (i < a->size)
 	{

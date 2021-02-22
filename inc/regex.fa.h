@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 19:59:54 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 18:23:32 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ void	map_free(t_map *map);
 **	@set: The set to search in map.
 **	Return: The DFA state binded to an equal set, NULL if there isn't any.
 */
-t_ds	*state_in_map(t_map *map, t_set *set);
+t_ds	*set_in_map(t_map *map, t_set *set);
 
 /* ************************************************************************** */
 /*	Pattern                                                                   */

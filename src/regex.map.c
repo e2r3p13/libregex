@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:05:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 20:00:21 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 18:23:12 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	map_free(t_map *map)
 	}
 }
 
-t_ds	*state_in_map(t_map *map, t_set *set)
+t_ds	*set_in_map(t_map *map, t_set *set)
 {
 	while (map)
 	{

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 19:49:27 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/22 18:26:09 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_ds	*dfa_get_next_state(t_set *set, t_map *wmap, t_alphabet *a)
 	t_map	*nmap;
 	t_ds	*st;
 
-	st = state_in_map(wmap, set);
+	st = set_in_map(wmap, set);
 	if (set->size > 0 && !st)
 	{
 		st = dfa_state_new();
@@ -88,9 +88,7 @@ static t_ds	*dfa_get_next_state(t_set *set, t_map *wmap, t_alphabet *a)
 	}
 	else
 		set_free(set);
-	if (set->size > 0)
-		return (st);
-	return (NULL);
+	return (st);
 }
 
 /*
@@ -118,7 +116,7 @@ static int	dfa_create(t_map *cmap, t_map *wmap, t_alphabet *a)
 			return (-1);
 		}
 		st = dfa_get_next_state(set, wmap, a);
-		if (set->size && (!st || dfa_link_add(st, cmap->state, &c->pattern)))
+		if (st && dfa_link_add(st, cmap->state, &c->pattern))
 			return (-1);
 		c = c->next;
 	}
@@ -165,6 +163,7 @@ t_ds	*dfa_generate(const char *str)
 		free(entrypoint);
 		return (NULL);
 	}
+	dfa_print(entrypoint);
 	nfa_free(nfa);
 	alphabet_free(a);
 	return (entrypoint);
