@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/22 20:16:34 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/23 10:22:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int	main(int ac, char **av)
 		re_free(&regex);
 		return (-1);
 	}
-	ret = re_execute(&regex, string);
+	ret = re_count_matches(&regex, string);
 	if (!ret)
 		printf("No match found!\n");
 	else
 	{
-		printf("Regex matches:%d\n", ret);
+		printf("|%s| matches :%d\n", regex.re_string, ret);
 	}
 	free(string);
 	re_free(&regex);

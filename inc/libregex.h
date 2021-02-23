@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/22 10:14:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/02/23 10:18:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,12 @@ typedef struct s_regex
 int		re_compile(t_regex *regex, const char *str);
 
 /*
-**	TODO: Big function with flags
+**	re_count_matches - Count the occurencies of a regex in a string.
+**	@regex: The regex to match.
+**	@str: The string in which to search for matches.
+**	Return: The number of matches.
 */
-int		re_execute(t_regex *regex, const char *str);
+int		re_count_matches(t_regex *regex, const char *str);
 
 /*
 **	re_full_match - Checks for a full match.

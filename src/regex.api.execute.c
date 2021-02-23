@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/19 20:55:57 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/02/23 10:15:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*match(t_ds *state, const char *str)
 	return (NULL);
 }
 
-int	re_execute(t_regex *regex, const char *str)
+int	re_count_matches(t_regex *regex, const char *str)
 {
 	char		*ret;
 	int			nb_match;
