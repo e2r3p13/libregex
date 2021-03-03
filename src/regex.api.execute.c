@@ -6,41 +6,12 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/23 10:15:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/03/03 10:57:35 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <regex.fa.h>
-
-static char	*match(t_ds *state, const char *str)
-{
-	const char	*ptr;
-	t_link_lst	*links;
-
-	ptr = str;
-	while (*ptr)
-	{
-		links = state->links;
-		if (!links)
-			break ;
-		while (!pattern_match(links->link.pattern, *ptr))
-		{
-			links = links->next;
-			if (!links)
-			{
-				if (state->is_final)
-					return ((char *)ptr);
-				return (NULL);
-			}
-		}
-		state = (t_ds *)links->link.next;
-		ptr++;
-	}
-	if (state->is_final)
-		return ((char *)ptr);
-	return (NULL);
-}
 
 int	re_count_matches(t_regex *regex, const char *str)
 {
@@ -50,7 +21,7 @@ int	re_count_matches(t_regex *regex, const char *str)
 	nb_match = 0;
 	while (*str)
 	{
-		ret = match(regex->entrypoint, str);
+		ret = re_match(regex->entrypoint, str);
 		if (!ret || ret == str)
 		{
 			str++;
@@ -66,7 +37,7 @@ int	re_full_match(t_regex *regex, const char *str)
 {
 	char		*ret;
 
-	ret = match(regex->entrypoint, str);
+	ret = re_match(regex->entrypoint, str);
 	if (!ret || *ret)
 		return (0);
 	return (1);
@@ -74,5 +45,5 @@ int	re_full_match(t_regex *regex, const char *str)
 
 char	*re_bmatch(t_regex *regex, const char *str)
 {
-	return (match(regex->entrypoint, str));
+	return (re_match(regex->entrypoint, str));
 }

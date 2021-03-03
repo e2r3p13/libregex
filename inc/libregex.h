@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/23 10:18:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/03/03 10:58:06 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ typedef struct s_regex
 	uint8_t	flags : 2;
 }	t_regex;
 
+typedef struct s_rematch
+{
+	char	*start;
+	char	*end;
+}	t_rematch;
+
 /*
 **	re_compile - Creates a t_regex structure from a literal regular expression.
 **	@regex:	A pointer to an uninitialized t_regex structure.
@@ -108,5 +114,8 @@ void	re_free(t_regex *regex);
 **	TODO: remove this function when re_execute will be improved.
 */
 char	*re_bmatch(t_regex *regex, const char *str);
+
+char	*re_match(t_ds *state, const char *str);
+int		re_nextmatch(t_regex *r, const char *str, char **saveptr, t_rematch *m);
 
 #endif

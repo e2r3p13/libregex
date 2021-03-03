@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/23 10:22:57 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/03/03 11:00:08 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ char	*readfile(const char *filename)
 
 int	main(int ac, char **av)
 {
-	t_regex	regex;
-	int		ret;
-	char	*string;
+	t_regex		regex;
+	int			ret;
+	char		*string;
+	char		*save;
+	t_rematch	match;
+	int			n;
 
 	if (ac != 3)
 	{
@@ -64,12 +67,15 @@ int	main(int ac, char **av)
 		re_free(&regex);
 		return (-1);
 	}
-	ret = re_count_matches(&regex, string);
-	if (!ret)
-		printf("No match found!\n");
-	else
+	n = 0;
+	ret = re_nextmatch(&regex, string, &save, &match);
+	while (!ret)
 	{
-		printf("|%s| matches :%d\n", regex.re_string, ret);
+		n++;
+		write(1, "-> '", 4);
+		write(1, match.start, (match.end + 2) - match.start);
+		write(1, "'\n", 2);
+		ret = re_nextmatch(&regex, NULL, &save, &match);
 	}
 	free(string);
 	re_free(&regex);
