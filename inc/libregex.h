@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/03/03 10:58:06 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/03/04 13:25:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBREGEX_H
 
 # include <stdint.h>
+# include <stddef.h>
 
 /*
 **	t_pattern is a bitfield. Each bit represents a character of the ascii table.
@@ -117,5 +118,8 @@ char	*re_bmatch(t_regex *regex, const char *str);
 
 char	*re_match(t_ds *state, const char *str);
 int		re_nextmatch(t_regex *r, const char *str, char **saveptr, t_rematch *m);
+void	re_arr_free(t_regex *re, size_t count);
+t_regex	*re_arr_create(const char *rexp[], size_t count);
+
 
 #endif
