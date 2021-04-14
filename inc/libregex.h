@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/03/04 13:25:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/04/14 15:24:06 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <stdint.h>
 # include <stddef.h>
+
+enum	e_error
+{
+	RE_NOERROR = 0,
+	RE_NEMATCH
+};
 
 /*
 **	t_pattern is a bitfield. Each bit represents a character of the ascii table.
@@ -90,12 +96,32 @@ typedef struct s_rematch
 int		re_compile(t_regex *regex, const char *str);
 
 /*
+**	save the match in match and set saveptr at the end of the match.
+**	use saveptr insteed of str if saveptr and *saveptr is not equal to null.
+**	return -1 if no match.
+*/
+int		re_nextmatch(t_regex *r, const char *str, char **saveptr,
+				t_rematch *match);
+
+/*
+**	save nmatch in pmatch. If there is no nmatch  set pmatch.start to NULL
+**	of every restant match.
+**	Return the number of match.
+*/
+size_t	re_execute(t_regex *regex, const char *str, size_t nmatch,
+				t_rematch *pmatch);
+/*
+**	Internal.
+*/
+char	*re_match(t_ds *state, const char *str);
+
+/*
 **	re_count_matches - Count the occurencies of a regex in a string.
 **	@regex: The regex to match.
 **	@str: The string in which to search for matches.
 **	Return: The number of matches.
 */
-int		re_count_matches(t_regex *regex, const char *str);
+size_t	re_count_matches(t_regex *regex, const char *str);
 
 /*
 **	re_full_match - Checks for a full match.
@@ -116,8 +142,6 @@ void	re_free(t_regex *regex);
 */
 char	*re_bmatch(t_regex *regex, const char *str);
 
-char	*re_match(t_ds *state, const char *str);
-int		re_nextmatch(t_regex *r, const char *str, char **saveptr, t_rematch *m);
 void	re_arr_free(t_regex *re, size_t count);
 t_regex	*re_arr_create(const char *rexp[], size_t count);
 

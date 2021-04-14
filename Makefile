@@ -6,7 +6,7 @@
 #    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
-#    Updated: 2021/02/22 18:45:10 by glafond-         ###   ########.fr        #
+#    Updated: 2021/04/14 15:25:42 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ARFLAGS	=	rc
 
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
-FSAN	=	-g3 -fsanitize=address
+#FSAN	=	-g3 -fsanitize=address
 
 SRCDIR	=	src
 INCDIR	=	inc

@@ -6,7 +6,7 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 22:09:37 by glafond-          #+#    #+#             */
-/*   Updated: 2021/03/03 10:58:25 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/14 14:57:21 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	re_nextmatch(t_regex *regex, const char *str, char **saveptr, t_rematch *m)
 {
-	if (!str)
+	if (saveptr && *saveptr)
 		str = *saveptr;
 	while (*str)
 	{

@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:59:56 by bccyv             #+#    #+#             */
-/*   Updated: 2021/03/03 11:00:08 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/14 15:57:31 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ char	*readfile(const char *filename)
 	return (string);
 }
 
+#define SIZE 200
+
 int	main(int ac, char **av)
 {
 	t_regex		regex;
 	int			ret;
 	char		*string;
 	char		*save;
-	t_rematch	match;
+	t_rematch	match[SIZE];
 	int			n;
 
 	if (ac != 3)
@@ -68,14 +70,15 @@ int	main(int ac, char **av)
 		return (-1);
 	}
 	n = 0;
-	ret = re_nextmatch(&regex, string, &save, &match);
-	while (!ret)
+	ret = re_execute(&regex, string, SIZE, match);
+	if (ret != SIZE)
+		write(1, "Not enough match!\n", 18);
+	while (n < ret)
 	{
-		n++;
 		write(1, "-> '", 4);
-		write(1, match.start, (match.end + 2) - match.start);
+		write(1, match[n].start, (match[n].end + 1) - match[n].start);
 		write(1, "'\n", 2);
-		ret = re_nextmatch(&regex, NULL, &save, &match);
+		n++;
 	}
 	free(string);
 	re_free(&regex);

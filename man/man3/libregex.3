@@ -1,0 +1,20 @@
+.TH	LIBREGEX 3 2021-03-14 "42" "Regex library"
+.SH NAME
+re_compile, re_count_match, re_full_match, re_free
+.SH SYNOPSIS
+.nf
+.B #include <libregex.h>
+.PP
+.BI "int re_compile(t_regex *" regex ", const char *" str );
+.PP
+.BI "int re_count_matches(t_regex *" regex ", const char *" str );
+.BI	"int re_full_match(t_regex *" regex ", const char *" str );
+.PP
+.BI "void re_free(t_regex *" regex ");
+.fi
+.SH DESCRIPTION
+.SS Regex compiling
+.BR re_compile ()
+is used to compile a regular expression into a suitable form for subsequent
+.BR re_exec ()
+searches.
