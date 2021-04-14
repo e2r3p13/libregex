@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/04/14 15:24:06 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/15 00:10:38 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		re_compile(t_regex *regex, const char *str);
 **	use saveptr insteed of str if saveptr and *saveptr is not equal to null.
 **	return -1 if no match.
 */
-int		re_nextmatch(t_regex *r, const char *str, char **saveptr,
+int		re_nextmatch(t_regex *regex, const char *str, char **saveptr,
 				t_rematch *match);
 
 /*
@@ -121,7 +121,7 @@ char	*re_match(t_ds *state, const char *str);
 **	@str: The string in which to search for matches.
 **	Return: The number of matches.
 */
-size_t	re_count_matches(t_regex *regex, const char *str);
+size_t	re_count(t_regex *regex, const char *str);
 
 /*
 **	re_full_match - Checks for a full match.
