@@ -34,11 +34,9 @@ make install
 
 ## Supported regex operators
 ### Character classes
-`\c` Control character
-
-`\s` Whitespace [ \t\r\n\v\f]
-
-`\S` Not Whitespace [^ \t\r\n\v\f]
+|`\c`|Control character|
+|`\s`|Whitespace [ \t\r\n\v\f]|
+|`\S`|Not Whitespace [^ \t\r\n\v\f]|
 
 `\d` Digit [0-9]
 
