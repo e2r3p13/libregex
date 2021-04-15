@@ -14,8 +14,8 @@ size_t re_count(t_regex *regex, const char *str);
 void   re_free(t_regex *regex);
 ```
 
-## Compilation & Instalation
-Clone the repository and Compile
+## Compilation & Installation
+Clone the repository and compile
 ```
 git clone https://gitlab.com/bccyv/libregex.git
 cd libregex
@@ -33,26 +33,35 @@ make
 make install
 ```
 
-## supported regex operators
-### Character Classes
+## Supported regex operators
+### Character classes
 `\c` Control character
+
 `\s` Whitespace [ \t\r\n\v\f]
+
 `\S` Not Whitespace [^ \t\r\n\v\f]
+
 `\d` Digit [0-9]
+
 `\D` Not digit [^0-9]
+
 `\w` Word [A-Za-z0-9_]
+
 `\W` Not Word [^A-Za-z0-9_]
+
 `\x` Hexadecimal digit [A-Fa-f0-9]
+
 `\O` Octal Digit [0-7]
-### Special Characters
+
+### Special characters
 `\n` New line
 `\r` Carriage return
 `\t` Tab
 `\v` Vertical tab
 `\f` Form feed
-### Escape Sequences
+### Escape sequences
 `\` Escape following character
-### Groups and Ranges
+### Groups and ranges
 `.` Any character except newline (\n)
 `(a|b)` a or b
 `(...)` Group
@@ -64,4 +73,4 @@ make install
 ### Quantifiers
 `*` 0 or more
 `+` 1 or more
-`?` 0 or 1 (optional) 
+`?` 0 or 1 (optional)
