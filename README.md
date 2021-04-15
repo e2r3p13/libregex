@@ -10,7 +10,6 @@ size_t re_execute(t_regex *regex, const char *str, size_t nmatch, t_rematch *pma
 int    re_nextmatch(t_regex *regex, const char *str, char **saveptr, t_rematch *match);
 int    re_fullmatch(t_regex *regex, const char *str);
 size_t re_count(t_regex *regex, const char *str);
-
 void   re_free(t_regex *regex);
 ```
 
@@ -55,22 +54,38 @@ make install
 
 ### Special characters
 `\n` New line
+
 `\r` Carriage return
+
 `\t` Tab
+
 `\v` Vertical tab
+
 `\f` Form feed
+
 ### Escape sequences
 `\` Escape following character
+
 ### Groups and ranges
 `.` Any character except newline (\n)
+
 `(a|b)` a or b
+
 `(...)` Group
+
 `[abc]` Single character (a or b or c)
+
 `[^abc]` Single character (not a or b or c)
+
 `[a-q]` Single character range (a or b ... or q)
+
 `[A-Z]` Single character range (A or B ... or Z)
+
 `[0-9]` Single digit from 0 to 9
+
 ### Quantifiers
 `*` 0 or more
+
 `+` 1 or more
+
 `?` 0 or 1 (optional)
