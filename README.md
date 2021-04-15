@@ -33,57 +33,52 @@ make install
 ```
 
 ## Supported regex operators
-### Character classes
-|`\c`|Control character|
-|`\s`|Whitespace [ \t\r\n\v\f]|
-|`\S`|Not Whitespace [^ \t\r\n\v\f]|
+| Character classes | Special characters | Escape sequences | Groups and ranges | Quantifiers |
+| ----------------- | ------------------ | ---------------- | ----------------- | ----------- |
 
-`\d` Digit [0-9]
+| `\c` Control character | `\n` New line | `\` Escape following character | `.` Any character except newline (\n) | `*` 0 or more |
 
-`\D` Not digit [^0-9]
 
-`\w` Word [A-Za-z0-9_]
+| `\s` Whitespace [ \t\r\n\v\f] | `\r` Carriage return | | `(a|b)` a or b | `+` 1 or more |
 
-`\W` Not Word [^A-Za-z0-9_]
+| `\S` Not Whitespace [^ \t\r\n\v\f] | `\t` Tab | | `(...)` Group | `?` 0 or 1 (optional) |
 
-`\x` Hexadecimal digit [A-Fa-f0-9]
+| `\d` Digit [0-9] | `\v` Vertical tab | | `[abc]` Single character (a or b or c) | |
 
-`\O` Octal Digit [0-7]
+| `\D` Not digit [^0-9] | `\f` Form feed | | `[^abc]` Single character (not a or b or c) | |
+
+| `\w` Word [A-Za-z0-9_] | | | `[a-q]` Single character range (a or b ... or q) | |
+
+| `\W` Not Word [^A-Za-z0-9_] | | | `[A-Z]` Single character range (A or B ... or Z) | |
+
+| `\x` Hexadecimal digit [A-Fa-f0-9] | | | `[0-9]` Single digit from 0 to 9 | |
+
+| `\O` Octal Digit [0-7] | | | | |
 
 ### Special characters
-`\n` New line
-
-`\r` Carriage return
-
-`\t` Tab
-
-`\v` Vertical tab
-
-`\f` Form feed
 
 ### Escape sequences
-`\` Escape following character
+
 
 ### Groups and ranges
-`.` Any character except newline (\n)
 
-`(a|b)` a or b
 
-`(...)` Group
 
-`[abc]` Single character (a or b or c)
 
-`[^abc]` Single character (not a or b or c)
 
-`[a-q]` Single character range (a or b ... or q)
 
-`[A-Z]` Single character range (A or B ... or Z)
 
-`[0-9]` Single digit from 0 to 9
+
+
+
+
+
+
+
 
 ### Quantifiers
-`*` 0 or more
 
-`+` 1 or more
 
-`?` 0 or 1 (optional)
+
+
+
