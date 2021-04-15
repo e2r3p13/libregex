@@ -36,7 +36,7 @@ make install
 | Character classes | Special characters | Escape sequences | Groups and ranges | Quantifiers |
 | ----------------- | ------------------ | ---------------- | ----------------- | ----------- |
 | `\c` Control character | `\n` New line | `\` Escape following character | `.` Any character except newline (\n) | `*` 0 or more |
-| `\s` Whitespace [ \t\r\n\v\f] | `\r` Carriage return | | `(a|b)` a or b | `+` 1 or more |
+| `\s` Whitespace [ \t\r\n\v\f] | `\r` Carriage return | | `(a⃒b)` a or b | `+` 1 or more |
 | `\S` Not Whitespace [^ \t\r\n\v\f] | `\t` Tab | | `(...)` Group | `?` 0 or 1 (optional) |
 | `\d` Digit [0-9] | `\v` Vertical tab | | `[abc]` Single character (a or b or c) | |
 | `\D` Not digit [^0-9] | `\f` Form feed | | `[^abc]` Single character (not a or b or c) | |
