@@ -6,10 +6,8 @@ Regex expressions are very useful to describe a formal language. We made a small
 ## Public API
 ```C
 int re_compile(t_regex *regex, const char *str);
-size_t re_execute(t_regex *regex, const char *str, size_t nmatch,
-                  t_rematch *pmatch);
-int re_nextmatch(t_regex *regex, const char *str, char **saveptr,
-                 t_rematch *match);
+size_t re_execute(t_regex *regex, const char *str, size_t nmatch, t_rematch *pmatch);
+int re_nextmatch(t_regex *regex, const char *str, char **saveptr, t_rematch *match);
 int re_fullmatch(t_regex *regex, const char *str);
 size_t re_count(t_regex *regex, const char *str);
 
@@ -19,7 +17,7 @@ void re_free(t_regex *regex);
 ## Compilation & Instalation
 Clone the repository
 ```
-git clont https://gitlab.com/bccyv/libregex.git
+git clone https://gitlab.com/bccyv/libregex.git
 ```
 Compile
 ```

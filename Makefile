@@ -6,14 +6,15 @@
 #    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
-#    Updated: 2021/04/15 14:14:45 by glafond-         ###   ########.fr        #
+#    Updated: 2021/04/15 14:53:51 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ****************
-#	Varriables:
+#	Variables:
 
 LIBNAME	=	libregex.a
+LIBH	=	libregex.h
 
 AR		=	ar
 ARFLAGS	=	rc
@@ -56,14 +57,23 @@ all: $(LIBNAME)
 
 $(LIBNAME): $(OBJS)
 	@$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
-	@printf "[\e[32mOK\e[0m] %s\n" $@
+	@printf "[\e[32mCC\e[0m] %s\n" $@
+
+install:
+	@cp $(LIBNAME) /usr/local/lib/$(LIBNAME)
+	@printf "[\e[32mCP\e[0m] /usr/local/lib/%s\n" $(LIBNAME)
+	@cp $(INCDIR)/$(LIBH) /usr/local/include/$(LIBH)
+	@printf "[\e[32mCP\e[0m] /usr/local/include/%s\n" $(LIBH)
+	@mkdir -p /usr/local/man/man3
+	@cp man/man3/*.3.gz /usr/local/man/man3/
+	@printf "[\e[32mCP\e[0m] /usr/local/%s\n" $(shell ls -1 man/man3/*.3.gz)
 
 -include $(DPDCS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) $(FSAN) -MMD -I$(INCDIR) -c $< -o $@
-	@printf "[\e[32mOK\e[0m] %s\n" $@
+	@printf "[\e[32mCC\e[0m] %s\n" $@
 
 clean: _clean
 
