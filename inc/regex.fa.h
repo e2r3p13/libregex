@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/22 20:17:03 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/04/28 18:44:40 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,9 @@ void	dfa_get_addresses(t_ds *st, t_vec *v);
 **	Return: 0 if successful, -1 on error.
 */
 int		dfa_link_add(t_ds *dst, t_ds *src, t_pattern *p);
+
+int		e_closure(t_ns *st, t_set *set);
+t_ds	*dfa_state_new(void);
 
 /* ************************************************************************** */
 /*	Set                                                                       */

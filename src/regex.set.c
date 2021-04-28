@@ -6,32 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/22 17:51:15 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/04/28 18:39:41 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
 #include <stdlib.h>
 #include <libft.h>
-
-t_set	*set_new(void)
-{
-	t_set	*set;
-
-	set = malloc(sizeof(t_set));
-	if (!set)
-		return (NULL);
-	set->addr = malloc(sizeof(t_ns *) * SET_DFL_SIZE);
-	if (!set->addr)
-	{
-		free(set);
-		return (NULL);
-	}
-	ft_memset(set->addr, 0, sizeof(t_ns *) * SET_DFL_SIZE);
-	set->capacity = SET_DFL_SIZE;
-	set->size = 0;
-	return (set);
-}
 
 static int	set_realloc(t_set *set)
 {
@@ -55,22 +36,23 @@ static int	set_realloc(t_set *set)
 	return (0);
 }
 
-int	set_push(t_ns *st, t_set *set)
+t_set	*set_new(void)
 {
-	if (set->size == set->capacity && set_realloc(set) < 0)
-		return (-1);
-	set->addr[set->size++] = st;
-	return (0);
-}
+	t_set	*set;
 
-void	set_free(t_set *set)
-{
-	if (set)
+	set = malloc(sizeof(t_set));
+	if (!set)
+		return (NULL);
+	set->addr = malloc(sizeof(t_ns *) * SET_DFL_SIZE);
+	if (!set->addr)
 	{
-		if (set->addr)
-			free(set->addr);
 		free(set);
+		return (NULL);
 	}
+	ft_memset(set->addr, 0, sizeof(t_ns *) * SET_DFL_SIZE);
+	set->capacity = SET_DFL_SIZE;
+	set->size = 0;
+	return (set);
 }
 
 int	is_state_in_set(t_ns *st, t_set *set)
@@ -99,30 +81,4 @@ int	set_contains_final_state(t_set *set)
 		i++;
 	}
 	return (0);
-}
-
-int	set_cmp(t_set *a, t_set *b)
-{
-	int		found;
-	size_t	i;
-	size_t	j;
-
-	if (a->size != b->size)
-		return (0);
-	i = 0;
-	while (i < a->size)
-	{
-		found = 0;
-		j = 0;
-		while (j < b->size)
-		{
-			if (a->addr[i] == b->addr[j])
-				found = 1;
-			j++;
-		}
-		if (!found)
-			return (0);
-		i++;
-	}
-	return (1);
 }

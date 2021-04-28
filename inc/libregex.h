@@ -6,7 +6,7 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:40:30 by bccyv             #+#    #+#             */
-/*   Updated: 2021/04/15 00:10:38 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/28 18:36:50 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		re_compile(t_regex *regex, const char *str);
 **	return -1 if no match.
 */
 int		re_nextmatch(t_regex *regex, const char *str, char **saveptr,
-				t_rematch *match);
+			t_rematch *match);
 
 /*
 **	save nmatch in pmatch. If there is no nmatch  set pmatch.start to NULL
@@ -109,7 +109,7 @@ int		re_nextmatch(t_regex *regex, const char *str, char **saveptr,
 **	Return the number of match.
 */
 size_t	re_execute(t_regex *regex, const char *str, size_t nmatch,
-				t_rematch *pmatch);
+			t_rematch *pmatch);
 /*
 **	Internal.
 */
@@ -144,6 +144,5 @@ char	*re_bmatch(t_regex *regex, const char *str);
 
 void	re_arr_free(t_regex *re, size_t count);
 t_regex	*re_arr_create(const char *rexp[], size_t count);
-
 
 #endif

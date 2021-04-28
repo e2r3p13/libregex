@@ -6,14 +6,14 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 03:34:58 by glafond-          #+#    #+#             */
-/*   Updated: 2021/04/15 00:21:36 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/28 18:45:21 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <regex.fa.h>
 
-size_t re_count(t_regex *regex, const char *str)
+size_t	re_count(t_regex *regex, const char *str)
 {
 	char		*ret;
 	int			nb_match;

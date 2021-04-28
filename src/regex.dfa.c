@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 08:12:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/23 11:13:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/04/28 18:43:23 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,6 @@
 #include <stdlib.h>
 
 static int	dfa_create(t_map *cm, t_map *wm, t_alphabet *a);
-
-static t_ds	*dfa_state_new(void)
-{
-	t_ds	*st;
-
-	st = malloc(sizeof(t_ds));
-	if (!st)
-		return (NULL);
-	st->is_final = 0;
-	st->links = NULL;
-	st->flag = 0;
-	return (st);
-}
-
-static int	e_closure(t_ns *st, t_set *set)
-{
-	if (!is_state_in_set(st, set))
-	{
-		if (set_push(st, set) < 0)
-			return (-1);
-		if (is_epsilon(st->left.pattern))
-		{
-			if (e_closure(st->left.next, set) < 0)
-				return (-1);
-		}
-		if (is_epsilon(st->right.pattern))
-		{
-			if (e_closure(st->right.next, set) < 0)
-				return (-1);
-		}
-	}
-	return (0);
-}
 
 static int	move_closure(t_set *dst, t_set *src, t_pattern *p)
 {
