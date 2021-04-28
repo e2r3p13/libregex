@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:27:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/04/28 18:44:40 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/28 19:54:25 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,13 @@ void	nfa_links_destroy(t_ns *st);
 **	@src: The NFA state that sends links.
 */
 void	nfa_links_cpy(t_ns *dst, t_ns *src);
+
+t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a);
+t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a);
+t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr);
+t_ns	*nfa_or(t_ns *ns[2], const char **ptr, int nested, t_alphabet **a);
+int		nfa_surround(t_ns *beg, t_ns *end, t_ns **new_beg, t_ns **new_end);
+t_ns	*nfa_state_new(void);
 
 /* ************************************************************************** */
 /*	DFA                                                                       */

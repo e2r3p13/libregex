@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 08:37:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/04/28 19:07:05 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/28 19:54:06 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,107 +14,19 @@
 #include <regex.fa.h>
 #include <regex.ft.h>
 
-static t_ns	*nfa_create(t_ns *e, const char **p, int n, t_alphabet **a);
-
-static t_ns	*nfa_state_new(void)
+static void	nfa_modifier(t_ns *ns[3], const char **ptr, int nested,
+				t_alphabet **a)
 {
-	t_ns	*st;
+	t_ns		*beg_end[2];
 
-	st = malloc(sizeof(t_ns));
-	if (!st)
-		return (NULL);
-	st->is_final = 0;
-	nfa_link_init(&st->left);
-	nfa_link_init(&st->right);
-	st->flag = 0;
-	return (st);
-}
-
-static int	nfa_surround(t_ns *beg, t_ns *end, t_ns **new_beg, t_ns **new_end)
-{
-	t_pattern	p;
-
-	if (!end)
-		return (-1);
-	*new_beg = nfa_state_new();
-	if (!*new_beg)
-		return (-1);
-	*new_end = nfa_state_new();
-	if (!*new_end)
+	if (ft_isinset("*+?", **ptr))
+		ns[1] = nfa_quantifier(ns[2], ns[1], ptr);
+	if (**ptr == '|')
 	{
-		free(*new_beg);
-		return (-1);
+		beg_end[0] = ns[0];
+		beg_end[1] = ns[1];
+		ns[1] = nfa_or(beg_end, ptr, nested, a);
 	}
-	nfa_links_cpy(*new_beg, beg);
-	nfa_links_destroy(beg);
-	pattern_epsilon(&p);
-	nfa_link_add(*new_beg, beg, p);
-	nfa_link_add(*new_end, end, p);
-	return (0);
-}
-
-static t_ns	*nfa_or(t_ns *beg, t_ns *end, const char **ptr, int nested, t_alphabet **a)
-{
-	t_ns		*new_beg;
-	t_ns		*new_end;
-	t_ns		*right_beg;
-	t_ns		*right_end;
-	t_pattern	p;
-
-	if (nfa_surround(beg, end, &new_beg, &new_end) < 0)
-		return (NULL);
-	right_beg = nfa_state_new();
-	if (!right_beg)
-		return (NULL);
-	pattern_epsilon(&p);
-	nfa_link_add(right_beg, beg, p);
-	(*ptr)++;
-	right_end = nfa_create(right_beg, ptr, nested, a);
-	if (!right_end)
-		return (NULL);
-	nfa_link_add(new_end, right_end, p);
-	return (new_end);
-}
-
-static t_ns	*nfa_quantifier(t_ns *beg, t_ns *end, const char **ptr)
-{
-	t_ns		*new_beg;
-	t_ns		*new_end;
-	t_pattern	p;
-
-	if (nfa_surround(beg, end, &new_beg, &new_end) < 0)
-		return (NULL);
-	pattern_epsilon(&p);
-	if (**ptr != '+')
-		nfa_link_add(new_end, beg, p);
-	if (**ptr != '?')
-		nfa_link_add(new_beg, end, p);
-	(*ptr)++;
-	return (new_end);
-}
-
-static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
-{
-	t_ns		*new_end;
-	t_pattern	pattern;
-
-	if (!beg)
-		return (NULL);
-	ft_memset(pattern, 0, sizeof(pattern));
-	if (**ptr == '[' || **ptr == '\\' || **ptr == '.')
-	{
-		if (pattern_parse(&pattern, ptr))
-			return (NULL);
-	}
-	else if (pattern_add_char(&pattern, *(*ptr)++))
-		return (NULL);
-	if (alphabet_add_pattern(a, pattern))
-		return (NULL);
-	new_end = nfa_state_new();
-	if (!new_end)
-		return (NULL);
-	nfa_link_add(new_end, beg, pattern);
-	return (new_end);
 }
 
 /*
@@ -122,33 +34,30 @@ static t_ns	*nfa_pattern(t_ns *beg, const char **ptr, t_alphabet **a)
 **	See ttps://tajseer.files.wordpress.com/2014/06/re-nfa-dfa.pdf.
 */
 
-static t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
+t_ns	*nfa_create(t_ns *beg, const char **ptr, int nested, t_alphabet **a)
 {
-	t_ns		*end;
-	t_ns		*tmp;
+	t_ns		*ns[3];
 
 	if (!beg)
 		return (NULL);
-	end = beg;
-	while (nested ? **ptr && **ptr != ')' : **ptr)
+	ns[0] = beg;
+	ns[1] = beg;
+	while (**ptr && (!nested || **ptr != ')'))
 	{
-		tmp = end;
+		ns[2] = ns[1];
 		if (**ptr == '(' && (*ptr)++)
 		{
-			end = nfa_create(end, ptr, 1, a);
-			if (!end || *(*ptr)++ != ')')
+			ns[1] = nfa_create(ns[1], ptr, 1, a);
+			if (!ns[1] || *(*ptr)++ != ')')
 				return (NULL);
 		}
 		else
-			end = nfa_pattern(end, ptr, a);
-		if (ft_isinset("*+?", **ptr))
-			end = nfa_quantifier(tmp, end, ptr);
-		if (**ptr == '|')
-			end = nfa_or(beg, end, ptr, nested, a);
-		if (!end)
+			ns[1] = nfa_pattern(ns[1], ptr, a);
+		nfa_modifier(ns, ptr, nested, a);
+		if (!ns[1])
 			return (NULL);
 	}
-	return (end);
+	return (ns[1]);
 }
 
 t_ns	*nfa_generate(const char *str, t_alphabet **a)
