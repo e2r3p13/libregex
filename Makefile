@@ -6,7 +6,7 @@
 #    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
-#    Updated: 2021/04/15 14:53:51 by glafond-         ###   ########.fr        #
+#    Updated: 2021/04/28 18:52:25 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 #FSAN	=	-g3 -fsanitize=address
 
 SRCDIR	=	src
-INCDIR	=	inc
+INCDIR	=	include
 OBJDIR	=	obj
 SRCS	=	libft.needed.c \
 			regex.alphabet.c \
@@ -33,8 +33,8 @@ SRCS	=	libft.needed.c \
 			regex.api.execute.c \
 			regex.api.match.c \
 			regex.api.nextmatch.c \
-			regex.debug.c \
 			regex.dfa.c \
+			regex.dfa.tools.c \
 			regex.dfa.utils.c \
 			regex.map.c \
 			regex.nfa.c \
@@ -43,7 +43,8 @@ SRCS	=	libft.needed.c \
 			regex.pattern.add.c \
 			regex.pattern.parse.c \
 			regex.pattern.utils.c \
-			regex.set.c
+			regex.set.c \
+			regex.set.tools.c
 OBJS	=	$(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
 DPDCS	=	$(OBJS:.o=.d)
 
@@ -72,7 +73,7 @@ install:
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) $(FSAN) -MMD -I$(INCDIR) -c $< -o $@
+	@$(CC) $(CFLAGS) $(FSAN) -MMD -I$(INCDIR) -I. -c $< -o $@
 	@printf "[\e[32mCC\e[0m] %s\n" $@
 
 clean: _clean
