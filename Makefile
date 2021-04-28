@@ -6,7 +6,7 @@
 #    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
-#    Updated: 2021/04/28 19:05:00 by glafond-         ###   ########.fr        #
+#    Updated: 2021/04/28 21:19:07 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,6 @@ CFLAGS	=	-Wall -Wextra -Werror
 #FSAN	=	-g3 -fsanitize=address
 
 SRCDIR	=	src
-INCDIR	=	include
-OBJDIR	=	obj
 SRCS	=	regex.alphabet.c \
 			regex.api.array.c \
 			regex.api.compile.c \
@@ -45,11 +43,15 @@ SRCS	=	regex.alphabet.c \
 			regex.pattern.utils.c \
 			regex.set.c \
 			regex.set.tools.c
+
+OBJDIR	=	obj
 OBJS	=	$(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
 DPDCS	=	$(OBJS:.o=.d)
 
 OBJDIROBJCONTENT	=	$(shell ls $(OBJDIR)/*.o)
 OBJDIRDPDCSCONTENT	=	$(shell ls $(OBJDIR)/*.d)
+
+INCDIR	=	include .
 
 # ****************
 #	Rules:
@@ -58,7 +60,7 @@ all: $(LIBNAME)
 
 $(LIBNAME): $(OBJS)
 	@$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
-	@printf "[\e[32mCC\e[0m] %s\n" $@
+	@printf "[\e[32mAR\e[0m] %s\n" $@
 
 install:
 	@cp $(LIBNAME) /usr/local/lib/$(LIBNAME)
@@ -73,8 +75,8 @@ install:
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) $(FSAN) -MMD -I$(INCDIR) -I. -c $< -o $@
-	@printf "[\e[32mCC\e[0m] %s\n" $@
+	@$(CC) $(CFLAGS) $(FSAN) -MMD $(addprefix -I,$(INCDIR)) -c $< -o $@
+	@printf "[\e[32mCC\e[0m] %s -> %s\n" $< $@
 
 clean: _clean
 
@@ -91,13 +93,4 @@ ifeq ($(shell ls -1 | grep $(OBJDIR)),$(OBJDIR))
 	@rm -rf $(OBJDIR)
 endif
 
-re: fclean all
-
-#test: all
-#	@$(CC) $(CFLAGS) $(FSAN) -I$(INCDIR) main.c $(LIBNAME) -o a.out
-#	@printf "[\e[32mOK\e[0m] %s\n" "a.out"
-#
-#test_clean: fclean
-#	@rm a.out
-#	@printf "[\e[31mCLEAN\e[0m] %s\n" "a.out"
-
+re: fclean clean _clean all
