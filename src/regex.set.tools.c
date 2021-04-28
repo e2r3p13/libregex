@@ -6,13 +6,13 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:38:00 by glafond-          #+#    #+#             */
-/*   Updated: 2021/04/28 18:53:31 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/28 19:09:01 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.fa.h>
 #include <stdlib.h>
-#include <libft.h>
+#include <regex.fa.h>
+#include <regex.ft.h>
 
 static int	set_realloc(t_set *set)
 {

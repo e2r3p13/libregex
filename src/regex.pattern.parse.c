@@ -6,12 +6,12 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 04:57:16 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/22 20:14:32 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/04/28 19:03:01 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
-#include <libft.h>
+#include <regex.ft.h>
 
 static char	*g_esc_table[128] = {
 	['c'] = "\x80\x3f\x00\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",

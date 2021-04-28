@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:01:45 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/04/28 18:53:27 by glafond-         ###   ########.fr       */
+/*   Updated: 2021/04/28 19:08:45 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <regex.fa.h>
 #include <stdlib.h>
-#include <libft.h>
+#include <regex.fa.h>
+#include <regex.ft.h>
 
 t_set	*set_new(void)
 {

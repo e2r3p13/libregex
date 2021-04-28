@@ -6,7 +6,7 @@
 #    By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 03:12:43 by glafond-          #+#    #+#              #
-#    Updated: 2021/04/28 18:52:25 by glafond-         ###   ########.fr        #
+#    Updated: 2021/04/28 19:05:00 by glafond-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 SRCDIR	=	src
 INCDIR	=	include
 OBJDIR	=	obj
-SRCS	=	libft.needed.c \
-			regex.alphabet.c \
+SRCS	=	regex.alphabet.c \
 			regex.api.array.c \
 			regex.api.compile.c \
 			regex.api.execute.c \
@@ -36,6 +35,7 @@ SRCS	=	libft.needed.c \
 			regex.dfa.c \
 			regex.dfa.tools.c \
 			regex.dfa.utils.c \
+			regex.ft.c \
 			regex.map.c \
 			regex.nfa.c \
 			regex.nfa.link.c \

@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   regex.ft.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:57:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/19 13:57:20 by lfalkau          ###   ########.fr       */
+/*   Updated: 2021/04/28 19:02:37 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef REGEX_FT_H
+# define REGEX_FT_H
 
 # include <stddef.h>
-# include <sys/stat.h>
 
 /*
 **	As we built the libregex from nothing, we decided to reimplement several

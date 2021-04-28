@@ -6,14 +6,14 @@
 /*   By: glafond- <glafond-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 09:11:02 by glafond-          #+#    #+#             */
-/*   Updated: 2021/02/22 18:47:52 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/04/28 19:06:23 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libregex.h>
 #include <regex.fa.h>
 #include <stdlib.h>
-#include <libft.h>
+#include <regex.ft.h>
 
 static char	*re_set_flags(t_regex *re)
 {

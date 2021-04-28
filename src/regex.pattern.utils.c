@@ -6,12 +6,12 @@
 /*   By: bccyv <bccyv@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:00:11 by bccyv             #+#    #+#             */
-/*   Updated: 2021/02/14 13:03:53 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/04/28 19:08:12 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
-#include <libft.h>
+#include <regex.ft.h>
 
 int	pattern_match(t_pattern pattern, int c)
 {

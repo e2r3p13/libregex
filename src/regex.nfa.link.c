@@ -6,12 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:34:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2021/02/20 02:04:40 by bccyv            ###   ########.fr       */
+/*   Updated: 2021/04/28 19:07:16 by glafond-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <regex.fa.h>
-#include <libft.h>
+#include <regex.ft.h>
 
 void	nfa_link_init(t_link *ln)
 {
