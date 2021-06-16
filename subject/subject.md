@@ -1,7 +1,9 @@
 # ft_regex
 
 Loic buckwell – lfalkau@student.42.fr
+
 Gabriel Lafond-Thenailles – glafond-@student.42.fr
+
 42AI – contact@42ai.fr
 
 # module01 – Regular languages & automatons
@@ -45,10 +47,15 @@ Allowed math functions: none
 You must write the following functions that will allow you to interpret regular expressions and use them. Depending on the language that you use, you will implement or not the function that frees the memory that you allocate.
 ### Instructions:
 Here are the functions to write:
+
 `int ft_regcomp(regex_t *restrict preg, const char *restrict regex);`
+
 `int ft_regexec(const regex_t *restrict preg, const char *restrict string, size_t nmatch, regmatch_t pmatch[restrict]);`
+
 `int ft_regexec(const regex_t *restrict preg, const char *restrict string, size_t nmatch, regmatch_t pmatch[restrict]);`
+
 `void ft_regfree(regex_t *preg);`
+
 They are adapted from the standard C regex Library, you’ll find their man page on your favorite browser. Note that depending on the language that you use, the ft_regfree function may be omitted.
 Your regex engine must implement at least the following symbols:
 
