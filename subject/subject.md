@@ -53,8 +53,8 @@ They are adapted from the standard C regex Library, you’ll find their man page
 Your regex engine must implement at least the following symbols:
 
 **Quantifiers:**
-* *
-* +
+* \*
+* \+
 * ?
 
 **Groups and Ranges:**
