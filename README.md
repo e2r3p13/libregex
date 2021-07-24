@@ -1,4 +1,4 @@
-# libregex - regular expressions library for C
+# libregex - Regular expressions library for C
 
 ## Overview
 Regex expressions are very useful to describe a formal language. We made a small library that converts a given regular expression into a language (represented by a DFA). Then, several functions helps you to find occurrences of a valid sentence for this language.
