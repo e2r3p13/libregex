@@ -16,7 +16,7 @@ void   re_free(t_regex *regex);
 ## Compilation & Installation
 Clone the repository and compile
 ```
-git clone https://gitlab.com/bccyv/libregex.git
+git clone https://github.com/lfalkau/libregex
 cd libregex
 make
 ```
