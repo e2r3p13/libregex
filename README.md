@@ -44,3 +44,10 @@ make install
 | `\W` Not word | | | `[A-Z]` Single character range (A or B ... or Z) | |
 | `\x` Hexadecimal digit | | | `[0-9]` Single digit from 0 to 9 | |
 | `\O` Octal digit | | | | |
+
+## Ressources
+
+[Computerphile - Regular Expressions](https://www.youtube.com/watch?v=528Jc3q86F8)
+[Regular Expression to NFA](https://www.youtube.com/watch?v=RYNN-tb9WxI)
+[NFA to DFA](https://www.youtube.com/watch?v=taClnxU-nao&pp=ugMICgJmchABGAE=)
+[Minimizing a DFA](https://www.youtube.com/watch?v=0XaGAkY09Wc)
