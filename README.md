@@ -48,6 +48,9 @@ make install
 ## Ressources
 
 [Computerphile - Regular Expressions](https://www.youtube.com/watch?v=528Jc3q86F8)
+
 [Regular Expression to NFA](https://www.youtube.com/watch?v=RYNN-tb9WxI)
+
 [NFA to DFA](https://www.youtube.com/watch?v=taClnxU-nao&pp=ugMICgJmchABGAE=)
+
 [Minimizing a DFA](https://www.youtube.com/watch?v=0XaGAkY09Wc)
