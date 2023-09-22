@@ -1,7 +1,7 @@
-# libregex - Regular expressions library for C
+# libregex - A lightweight regular expressions C library
 
 ## Overview
-Regex expressions are very useful to describe a formal language. We made a small library that converts a given regular expression into a language (represented by a DFA). Then, several functions helps you to find occurrences of a valid sentence for this language.
+Regular expressions are very useful to describe a formal language. We made a small library that converts a given regular expression into a language (represented by a DFA). Then, several functions helps you to find occurrences of a valid sentence for this language.
 
 ## Public API
 ```C
@@ -13,24 +13,18 @@ size_t re_count(t_regex *regex, const char *str);
 void   re_free(t_regex *regex);
 ```
 
-## Compilation & Installation
-Clone the repository and compile
-```
+## Installation
+
+```sh
+# Download & compile the project
 git clone https://github.com/lfalkau/libregex
 cd libregex
 make
-```
-Install
-```
+
+# Optionally install it
 make install
 ```
-Update
-```
-cd libregex
-git pull
-make
-make install
-```
+
 
 ## Supported regex operators
 | Character classes | Special characters | Escape sequences | Groups and ranges | Quantifiers |
@@ -47,10 +41,7 @@ make install
 
 ## Ressources
 
-[Computerphile - Regular Expressions](https://www.youtube.com/watch?v=528Jc3q86F8)
-
-[Regular Expression to NFA](https://www.youtube.com/watch?v=RYNN-tb9WxI)
-
-[NFA to DFA](https://www.youtube.com/watch?v=taClnxU-nao&pp=ugMICgJmchABGAE=)
-
-[Minimizing a DFA](https://www.youtube.com/watch?v=0XaGAkY09Wc)
+- [Computerphile - Regular Expressions](https://www.youtube.com/watch?v=528Jc3q86F8)
+- [Regular Expression to NFA](https://www.youtube.com/watch?v=RYNN-tb9WxI)
+- [NFA to DFA](https://www.youtube.com/watch?v=taClnxU-nao&pp=ugMICgJmchABGAE=)
+- [Minimizing a DFA](https://www.youtube.com/watch?v=0XaGAkY09Wc)
